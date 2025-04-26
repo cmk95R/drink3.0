@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro - Drunk in the House</title>
+    <link rel="stylesheet" href="../resources/css/register.css">
+    <link rel="stylesheet" href="../resources/css/mainStyle.css">
+</head>
+<body>
+
+    <header>
+        <div class="container-header">
+            <div>
+                <h1><a href="/">Drink in the House</a></h1>
+            </div>
+            <div class="container-listas">
+                <ul class="box-listas">
+                    <li class="listas" style="margin-bottom: 5px;"><a href="/api/register">REGISTRO DE USUARIOS</a></li>
+                    <li class="listas"><a href="/api/profile">INICIO DE SESIÓN</a></li>
+                </ul>
+            </div>
+        </div>
+    </header>
+    <main>
+        <form action="/api/register" method="POST">
+            <h2 class="Registro">Regístrese</h2>
+
+
+
+            <!-- Campos del formulario -->
+            <input 
+                type="text" 
+                placeholder="Nombre de usuario" 
+                id="username" 
+                name="username" 
+                value="<%= formData && formData.username ? formData.username : '' %>" 
+                
+            >
+            <input 
+                type="email" 
+                placeholder="Email" 
+                id="email" 
+                name="email" 
+                value="<%= formData && formData.email ? formData.email : '' %>" 
+                
+            >
+            <input 
+                type="password" 
+                placeholder="Contraseña" 
+                id="contrasena" 
+                name="password" 
+                
+            >
+            <input 
+                type="text" 
+                placeholder="Número de teléfono" 
+                id="phoneNumber" 
+                name="phoneNumber" 
+                value="<%= formData && formData.phoneNumber ? formData.phoneNumber : '' %>" 
+                
+            >
+            
+            <!-- Dirección -->
+            <div class="input-group">
+                <input 
+                    type="text" 
+                    placeholder="Calle" 
+                    id="address.street" 
+                    name="address[street]" 
+                    value="<%= formData && formData.address && formData.address.street ? formData.address.street : '' %>" 
+                    
+                >
+                <input 
+                    type="text" 
+                    placeholder="Ciudad" 
+                    id="address.city" 
+                    name="address[city]" 
+                    value="<%= formData && formData.address && formData.address.city ? formData.address.city : '' %>" 
+                    
+                >
+            </div>
+            <input 
+                type="text" 
+                placeholder="Provincia" 
+                id="address.province" 
+                name="address[province]" 
+                value="<%= formData && formData.address && formData.address.province ? formData.address.province : '' %>" 
+                
+            >
+            <input 
+                type="text" 
+                placeholder="Código Postal" 
+                id="address.postalCode" 
+                name="address[postalCode]" 
+                value="<%= formData && formData.address && formData.address.postalCode ? formData.address.postalCode : '' %>" 
+                
+            >
+
+            <!-- Fecha de nacimiento -->
+            <input 
+                type="date" 
+                placeholder="Fecha de nacimiento" 
+                id="birthdate" 
+                name="birthdate" 
+                value="<%= formData && formData.birthdate ? formData.birthdate : '' %>" 
+                
+            >
+                        <!-- Mostrar errores -->
+                        <% if (typeof errors !== "undefined" && errors.length > 0) { %>
+                            <div class="error-container">
+                                <ul>
+                                    <% errors.forEach(error => { %>
+                                        <li class="error-message"><%= error.msg %></li>
+                                    <% }); %>
+                                </ul>
+                            </div>
+                        <% } %>
+            <button type="submit">Enviar</button>
+            <br>
+            <a href="javascript:history.back()" class="btn">VOLVER</a> <!-- Botón para volver a la página anterior -->
+        </form>        
+    </main>
+
+     <!-- Footer -->
+  <footer class="main-footer">
+    <div class="footer-container">
+      <div class="footer-section">
+        <h4>Navegación</h4>
+        <ul>
+          <li>Inicio</li>
+          <li>Catálogo</li>
+          <li>Ofertas</li>
+          <li>Contacto</li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h4>Medios de Pago</h4>
+        <ul>
+          <li>Visa</li>
+          <li>Mastercard</li>
+          <li>Paypal</li>
+          <li>Transferencia</li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h4>Medios de Envío</h4>
+        <ul>
+          <li>DHL</li>
+          <li>UPS</li>
+          <li>FedEx</li>
+          <li>Envíos locales</li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h4>Info de Sucursales</h4>
+        <ul>
+          <li>Buenos Aires</li>
+          <li>Montevideo</li>
+          <li>Asunción</li>
+          <li>Santiago</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-copyright">
+      &copy; 2024 Drink-in-The-House. Todos los derechos reservados.
+    </div>
+  </footer>
+
+</body>
+</html>

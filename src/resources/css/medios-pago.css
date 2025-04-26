@@ -1,0 +1,138 @@
+/* Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body */
+body {
+    
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+
+
+
+
+
+
+
+
+
+
+/* Estilos para el elemento main */
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centra horizontalmente */
+    padding: 20px;
+    background-color: #e9ecef; /* Color de fondo gris para el main */
+    margin: auto;
+}
+#payment-section {
+    width: 1000px; /* Ancho de 1000px */
+   
+    margin: 20px auto; /* Centrar horizontalmente en la página */
+    background-color: #f1f1f1; /* Fondo claro */
+    padding: 20px; /* Espacio interno */
+    border-radius: 10px; /* Bordes redondeados */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); /* Sombra sutil */
+    height: auto;
+}
+
+#payment-section h3 {
+    font-size: 1.8em; /* Tamaño de fuente para el título */
+    color: #333; /* Color del texto en tono gris oscuro */
+    margin-bottom: 20px; /* Espacio debajo del título */
+}
+
+#payment-methods {
+    background-color: #e0e0e0; /* Fondo gris más oscuro para la lista de métodos de pago */
+    padding: 10px; /* Espacio interno */
+    border-radius: 5px; /* Bordes redondeados */
+    margin-bottom: 20px; /* Espacio debajo de la lista */
+}
+
+#payment-methods p {
+    color: #666; /* Color del texto para los métodos add-payment-method de pago */
+}
+.payment-method{
+    background-color:#bbb;
+    margin: 20px;
+    padding: 5px;
+}
+#add-payment-method{
+    background-color: #ccc; /* Fondo gris claro para los botones */
+    color: #000; /* Texto en negro */
+    border: none; /* Sin borde */
+    border-radius: 5px; /* Bordes redondeados */
+    padding: 10px 15px; /* Espacio interno */
+    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+    margin-right: 10px; /* Espacio entre botones */
+    margin-top: 500px;
+}
+#save-payment-method{
+    background-color: #ccc; /* Fondo gris claro para los botones */
+    color: #000; /* Texto en negro */
+    border: none; /* Sin borde */
+    border-radius: 5px; /* Bordes redondeados */
+    padding: 10px 15px; /* Espacio interno */
+    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+    margin-right: 10px; /* Espacio entre botones */
+    align-items: center; 
+    
+}
+#cancel-payment {
+    background-color: #ccc; /* Fondo gris claro para los botones */
+    color: #000; /* Texto en negro */
+    border: none; /* Sin borde */
+    border-radius: 5px; /* Bordes redondeados */
+    padding: 10px 15px; /* Espacio interno */
+    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+    margin-right: 10px; /* Espacio entre botones */
+    margin-top: 50px;
+    align-items: center; 
+    
+}
+
+#add-payment-method:hover,
+#save-payment-method:hover,
+#cancel-payment:hover {
+    background-color: #bbb; /* Fondo más oscuro al pasar el mouse */
+}
+
+#payment-form {
+    background-color: #e0e0e0; /* Fondo gris más oscuro para el formulario */
+    padding: 20px; /* Espacio interno */
+    border-radius: 5px; /* Bordes redondeados */
+}
+
+#payment-form h4 {
+    color: #333; /* Color del texto en tono gris oscuro */
+    margin-bottom: 15px; /* Espacio debajo del título del formulario */
+}
+
+#payment-form label {
+    color: #444; /* Color de las etiquetas en un tono gris más oscuro */
+    display: block; /* Hacer que las etiquetas ocupen toda la línea */
+    margin-bottom: 5px; /* Espacio debajo de las etiquetas */
+}
+
+#payment-form input[type="text"] {
+    width: 100%; /* Ancho completo para los inputs */
+    padding: 10px; /* Espacio interno */
+    border: 1px solid #bbb; /* Borde gris claro */
+    border-radius: 5px; /* Bordes redondeados */
+    margin-bottom: 15px; /* Espacio debajo de los inputs */
+    background-color: #fff; /* Fondo blanco para los inputs */
+    color: #333; /* Texto en gris oscuro */
+}
+
+#payment-form input[type="text"]:focus {
+    border-color: #888; /* Color del borde en foco */
+    outline: none; /* Sin contorno en foco */
+}

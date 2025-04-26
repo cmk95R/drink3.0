@@ -1,0 +1,17 @@
+.compra h3{
+    color: green;
+    font-weight: bolder;
+}
+.compra button{
+    border-radius: 5px;
+    color: red;
+    width: 275px;
+    height: 75px;
+}
+.producto-item{
+    display: flex;
+    align-items: center;
+}
+.producto-detalles{
+    width: 100%;
+}

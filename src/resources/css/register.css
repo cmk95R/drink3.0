@@ -1,0 +1,69 @@
+/* Estilo global */
+/* Reset */
+
+
+/* Estilo para el footer */
+
+.error-container{
+    color: rgb(255, 255, 255);
+}
+/* Estilo para el formulario */
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centra horizontalmente */
+    padding: 20px;
+    
+    margin: auto;
+}
+.Registro{
+    margin-bottom: 10px;
+    margin-top: 5px;
+    font-family: Arial, sans-serif;
+    font-size: 24px;
+    color: #333;
+    text-align: center; /* Centra el título */
+}
+form {
+    background-color: #888;
+    padding: 30px;
+    border-radius: 20px;
+    border: 2px solid black;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    width: 450px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;  /* Centra los elementos horizontalmente */
+    justify-content: center; /* Centra los elementos verticalmente */
+    padding-top: 20px;
+}
+form input {
+   /* margin-bottom: 15px;*/
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 25px;
+    border-color: #000000;
+    border: 1px solid black;
+    box-sizing: border-box;
+    margin-bottom: 15px;
+}
+.input-group {
+    display: flex; /* Usar Flexbox para alineación en línea */
+    gap: 10px; /* Espacio entre inputs */
+    flex: 1;
+
+}
+button {
+    background-color: white;
+    color: #000000;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+button:hover {
+    background-color: #f2f2f2;
+}

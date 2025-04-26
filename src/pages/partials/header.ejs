@@ -1,0 +1,32 @@
+
+
+<header>
+    <div class="container-header">
+        <div>
+            <h1><a href="/">Drink in the House</a></h1>
+        </div>
+        <div class="container-listas">
+            <ul class="box-listas">
+                <li class="listas">
+                    <a id="cart" data-bs-toggle="modal" data-bs-target="#miModal">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                        <span id="cuenta-carrito">0</span>
+                    </a>
+                </li>
+                <!-- Si el usuario está autenticado, mostrar el nombre y el botón "Mi perfil" -->
+                <% if (user) { %> 
+                    <li class="listas">
+                        <span>Hola, <%= user.nombre %></span>
+                        <a href="/api/profile">Mi perfil</a>
+                    </li>
+                    <li class="listas">
+                        <a href="/api/logout">Cerrar sesión</a>
+                    </li>
+                <% } else { %>
+                    <li class="listas" style="margin-bottom: 5px;"><a href="/api/register">REGISTRO DE USUARIOS</a></li>
+                    <li class="listas"><a href="/api/login">INICIO DE SESIÓN</a></li>
+                <% } %>
+            </ul>
+        </div>
+    </div>
+</header>

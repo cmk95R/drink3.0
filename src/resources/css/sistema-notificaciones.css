@@ -1,0 +1,97 @@
+/* Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body */
+body {
+    
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+
+
+
+
+
+/* Estilos para el elemento main */
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centra horizontalmente */
+    padding: 20px;
+    background-color: #e9ecef; /* Color de fondo gris para el main */
+    margin: auto;
+}
+/* Estilo para el contenedor del sistema de notificaciones */
+#Notification-system {
+    background-color: #f0f0f0; /* Fondo gris claro */
+    padding: 20px; /* Espaciado interno */
+    border-radius: 5px; /* Bordes redondeados */
+}
+
+/* Estilo para los elementos de la lista */
+#Notification-system ul {
+    list-style-type: none; /* Eliminar viñetas de la lista */
+    padding: 0; /* Eliminar padding de la lista */
+}
+
+#Notification-system li {
+    background-color: #e0e0e0; /* Fondo gris claro para los ítems de la lista */
+    border-radius: 5px; /* Bordes redondeados */
+    margin: 10px 0; /* Espacio vertical entre elementos */
+    padding: 10px; /* Espaciado interno */
+}
+
+/* Alinear el contenedor de cada notificación */
+.notification-item {
+    display: flex; /* Para alinear el span y el grupo de botones horizontalmente */
+    justify-content: space-between; /* Espacio entre el texto y los botones */
+    align-items: center; /* Centrar verticalmente */
+}
+
+/* Estilo para los botones de activar */
+#Notification-system .activar,
+#Notification-system .desactivar {
+    background-color: #4CAF50; /* Verde para activar */
+    color: white; /* Color de texto blanco */
+    border: none; /* Sin borde */
+    border-radius: 5px; /* Bordes redondeados */
+    padding: 8px 12px; /* Espaciado interno del botón */
+    cursor: pointer; /* Cambiar el cursor al pasar */
+    transition: background-color 0.3s; /* Transición para efecto hover */
+}
+
+/* Estilo para los botones de desactivar */
+#Notification-system .desactivar {
+    background-color: #f44336; /* Rojo */
+}
+
+/* Efecto hover para botones de activar */
+#Notification-system .activar:hover {
+    background-color: #45a049; /* Color verde más oscuro */
+}
+
+/* Efecto hover para botones de desactivar */
+#Notification-system .desactivar:hover {
+    background-color: #d32f2f; /* Color rojo más oscuro */
+}
+
+/* Alinear botones juntos */
+.button-group {
+    display: flex; /* Para alinear los botones uno al lado del otro */
+}
+
+#Notification-system li button {
+    margin-left: 5px; /* Espacio entre los botones */
+}
+
+
+
+
+

@@ -1,0 +1,214 @@
+/* Estilo global */
+body {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Asegura que el body cubra toda la altura de la pantalla */
+}
+/* Banner Slider */
+.slider-container {
+  position: relative;
+  width: 100%;
+  max-width: 1800px;
+  height: 400px;
+  margin: 0 auto;
+  overflow: hidden;
+  background-color: red;
+}
+
+.slider-container img {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  opacity: 0;
+  animation: slide 15s infinite;
+}
+
+/* Estilos específicos para las imágenes del slider */
+.slider-container img:nth-child(1) {
+  animation-delay: 0s;
+}
+
+.slider-container img:nth-child(2) {
+  animation-delay: 5s;
+}
+
+.slider-container img:nth-child(3) {
+  animation-delay: 10s;
+}
+
+/* Animación de deslizamiento */
+@keyframes slide {
+  0% { opacity: 1; }
+  33.33% { opacity: 1; }
+  66.66% { opacity: 0; }
+  100% { opacity: 0; }
+}
+
+.card-container {
+    padding: 4rem;
+  }
+  
+  .card-section {
+    display: grid;
+    gap: 1.75rem;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  }
+  
+  .product-card {
+    border-radius: 36px 36px 36px 36px;
+    -webkit-border-radius: 36px 36px 36px 36px;
+    -moz-border-radius: 36px 36px 36px 36px;
+  
+    box-shadow: 10px 10px 5px 0px rgba(194, 194, 194, 0.75);
+    -webkit-box-shadow: 10px 10px 5px 0px rgba(194, 194, 194, 0.75);
+    -moz-box-shadow: 10px 10px 5px 0px rgba(194, 194, 194, 0.75);
+    max-width: 300px;
+    height: 500px;
+    margin: auto;
+    text-align: center;
+    font-family: arial;
+    display: flex;
+    flex-wrap: wrap;
+    background-color: white;
+  }
+  
+  .badge {
+    position: absolute;
+    left: 0;
+    top: 20px;
+    text-transform: uppercase;
+    font-size: 13px;
+    font-weight: 700;
+    background: red;
+    color: #fff;
+    padding: 3px 10px;
+  }
+  
+  .product-tumb {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #ffffff;
+    position: relative;
+    border-radius: 10%;
+    margin: auto;
+  }
+  
+  .product-tumb img {
+    /* filter: brightness(1.1);
+    mix-blend-mode: multiply;
+   */
+    max-width: 200px;
+    max-height: 200px;
+    object-fit: contain;
+  }
+  
+  .product-details {
+    padding: 15px 30px;
+  }
+  
+  .product-catagory {
+    display: block;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #ccc;
+    margin-bottom: 18px;
+  }
+  
+  .product-details h4 a {
+    font-weight: 500;
+    display: block;
+    margin-bottom: 18px;
+    text-transform: uppercase;
+    color: #363636;
+    text-decoration: none;
+    transition: 0.3s;
+  }
+  
+  .product-details h4 a:hover {
+    color:#ff9d00;
+  }
+  
+  .product-details p {
+    font-size: 15px;
+    line-height: 22px;
+    margin-bottom: 18px;
+    color: #999;
+  }
+  
+  .product-bottom-details {
+    overflow: hidden;
+    border-top: 1px solid #eee;
+    padding-top: 20px;
+  }
+  
+  .product-bottom-details div {
+    padding-bottom: 10px;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .product-price {
+    align-items: center;
+    font-size: 22px;
+    color: #ff9d00;
+    font-weight: 600;
+  }
+  
+  .product-price small {
+    font-size: 80%;
+    font-weight: 400;
+    text-decoration: line-through;
+    display: inline-block;
+    margin-right: 5px;
+  }
+  
+  .product-links {
+    text-align: right;
+  }
+  
+  .product-links a {
+    display: inline-block;
+    margin-left: 5px;
+    color: #cccccc;
+    transition: 0.3s;
+    font-size: 17px;
+    margin: 0 30px;
+  }
+  
+  .product-links a:hover {
+    color: #1abdeb;
+  }
+  .mdl-grid {
+    max-width: 600px;
+  }
+  .mdl-card__media {
+    margin: 0;
+  }
+  .mdl-card__media > img {
+    max-width: 100%;
+  }
+  .mdl-card__actions {
+    display: flex;
+    box-sizing: border-box;
+    align-items: center;
+  }
+  .mdl-card__actions > .mdl-button--icon {
+    margin-right: 3px;
+    margin-left: 3px;
+  }
+
+  .search-container{
+    padding: 20px;
+    margin: auto;
+    max-width: 450px;
+    background-color: beige;
+    border-radius: 5px;
+  }

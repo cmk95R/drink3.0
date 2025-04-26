@@ -1,0 +1,235 @@
+[
+    {
+        "id": "1",
+        "nombre_producto": "Whisky Johnnie Walker Black Label",
+        "tipo": "alcohólicas",
+        "volumen": "750ml",
+        "valor": 12000,
+        "cantidad": 50,
+        "promocion": "10% off en compra de 2 o más",
+        "image": "https://jumboargentina.vtexassets.com/arquivos/ids/791032-800-600?v=638283369754270000&width=800&height=600&aspect=true",
+        "categoria": "whiskys"
+    },
+    {
+        "id": "2",
+        "nombre_producto": "Vino Malbec Catena Zapata",
+        "tipo": "alcohólicas",
+        "volumen": "750ml",
+        "valor": 6500,
+        "cantidad": 120,
+        "promocion": "15% off en segunda unidad",
+        "image": "https://www.vinosyspirits.com/media/catalog/product/6/5/65389.png?optimize=low&bg-color=255,255,255&fit=bounds&height=&width=&canvas=:",
+        "categoria": "vinos"
+    },
+    {
+        "id": "3",
+        "nombre_producto": "Cerveza Corona Extra",
+        "tipo": "alcohólicas",
+        "volumen": "355ml",
+        "valor": 350,
+        "cantidad": 300,
+        "promocion": "Compra 12 y paga 10",
+        "image": "https://www.alfonsadistribuidora.com.ar/database/articulo/fotos/75/CERVEZA%20CORONA%20355%20CC__1.jpg",
+        "categoria": "Cervezas"
+    },
+    {
+        "id": "4",
+        "nombre_producto": "Vodka Absolut",
+        "tipo": "alcohólicas",
+        "volumen": "1L",
+        "valor": 8000,
+        "cantidad": 75,
+        "promocion": "20% en segunda unidad",
+        "image": "https://acdn.mitiendanube.com/stores/001/211/660/products/absolut-ok1-ee7230193fefdcc9c316517724474691-480-0.webp",
+        "categoria": "Vodka"
+    },
+    {
+        "id": "5",
+        "nombre_producto": "Ron Havana Club 7 Años",
+        "tipo": "alcohólicas",
+        "volumen": "750ml",
+        "valor": 5500,
+        "cantidad": 60,
+        "promocion": "15% descuento en compra de 3 o más",
+        "image": "https://labebidadetusfiestas.com.ar/44974-large_default/ron-havana-club-anejo-7-anos-700cc.jpg",
+        "categoria": "Ron"
+    },
+    {
+        "id": "6",
+        "nombre_producto": "Fernet Branca",
+        "tipo": "alcohólicas",
+        "volumen": "1L",
+        "valor": 4500,
+        "cantidad": 80,
+        "promocion": "10% off en compra de 2 o más",
+        "image": "https://borrachines.com.ar/wp-content/uploads/2022/11/FERNET-BRANCA-750ML-MERCADO-LIBRE-2.png",
+        "categoria": "Aperitivos"
+    },
+    {
+        "id": "7",
+        "nombre_producto": "Whisky Jack Daniel's",
+        "tipo": "alcohólicas",
+        "volumen": "700ml",
+        "valor": 11000,
+        "cantidad": 40,
+        "promocion": "5% en compra de 2 o más",
+        "image": "https://acdn.mitiendanube.com/stores/001/211/660/products/jack-daniels-old-071-1e1cb312375b325f5716063985425824-640-0.jpg",
+        "categoria": "Whiskys"
+    },
+    {
+        "id": "8",
+        "nombre_producto": "Vino Cabernet Norton",
+        "tipo": "alcohólicas",
+        "volumen": "750ml",
+        "valor": 5000,
+        "cantidad": 150,
+        "promocion": "10% en segunda unidad",
+        "image": "https://www.espaciovino.com.ar/media/default/0001/56/thumb_55518_default_big.jpeg",
+        "categoria": "VInos"
+    },
+    {
+        "id": "9",
+        "nombre_producto": "Cerveza Heineken",
+        "tipo": "alcohólicas",
+        "volumen": "473ml",
+        "valor": 300,
+        "cantidad": 400,
+        "promocion": "Compra 6 y paga 5",
+        "image": "https://jumboargentina.vtexassets.com/arquivos/ids/790164-800-auto?v=638271489783770000&width=800&height=auto&aspect=true",
+        "categoria": "Cervezas"
+    },
+    {
+        "id": "10",
+        "nombre_producto": "Vodka Smirnoff",
+        "tipo": "alcohólicas",
+        "volumen": "1L",
+        "valor": 7000,
+        "cantidad": 90,
+        "promocion": "Compra 3 y paga 2",
+        "image": "https://www.craftmoments.com.ar/wp-content/uploads/2022/12/smf_21_685x1200.jpg",
+        "categoria": "Vodka"
+    },
+    {
+        "id": "11",
+        "nombre_producto": "Ron Bacardí Añejo",
+        "tipo": "alcohólicas",
+        "volumen": "750ml",
+        "valor": 6000,
+        "cantidad": 80,
+        "promocion": "10% en compra de 2 o más",
+        "image": "https://tiendaoficial.bacardi.com/cdn/shop/files/FY22_Mx_Bacardi_Anejo_Local_Productshot_3000x3000_aa17000b-611a-4067-8b36-64172883d339.png?v=1694657205",
+        "categoria": "Ron"
+    },
+    {
+        "id": "12",
+        "nombre_producto": "Gancia Americano",
+        "tipo": "alcohólicas",
+        "volumen": "950ml",
+        "valor": 2000,
+        "cantidad": 90,
+        "promocion": "10% en segunda unidad",
+        "image": "https://acdn.mitiendanube.com/stores/001/998/430/products/gancia-mayorista-en-tu-casa1-2c7f7fef83bf4087ce16667204744332-1024-1024.jpg",
+        "categoria": "Aperitivos"
+    },
+    {
+        "id": "13",
+        "nombre_producto": "Whisky Glenfiddich ",
+        "tipo": "alcohólicas",
+        "volumen": "700ml",
+        "valor": 13000,
+        "cantidad": 25,
+        "promocion": "5% en compra de 2 o más",
+        "image": "https://shop.norton.com.ar/cdn/shop/files/Glenfiddich_12YO-estuche_1000x1000_9a53b89b-5d21-4e1b-85ff-a67d795e3ed9_2048x2048_crop_center@2x.png?v=1692977483",
+        "categoria": "Whiskys"
+    },
+    {
+        "id": "14",
+        "nombre_producto": "Vino Syrah Trapiche",
+        "tipo": "alcohólicas",
+        "volumen": "750ml",
+        "valor": 4500,
+        "cantidad": 180,
+        "promocion": "10% en segunda unidad",
+        "image": "https://www.vinosyspirits.com/media/catalog/product/7/4/74147_-_fdc_syrah_1370_x_2400.jpg?optimize=low&bg-color=255,255,255&fit=bounds&height=&width=&canvas=:",
+        "categoria": "Vinos"
+    },
+    {
+        "id": "15",
+        "nombre_producto": "Cerveza Stella Artois",
+        "tipo": "alcohólicas",
+        "volumen": "1L",
+        "valor": 500,
+        "cantidad": 200,
+        "promocion": "Compra 4 y paga 3",
+        "image": "https://www.espaciovino.com.ar/media/default/0001/64/thumb_63958_default_big.jpeg",
+        "categoria": "Cervezas"
+    },
+    {
+        "id": "16",
+        "nombre_producto": "Vodka Grey Goose",
+        "tipo": "alcohólicas",
+        "volumen": "750ml",
+        "valor": 9000,
+        "cantidad": 65,
+        "promocion": "5% en compra de 3 o más",
+        "image": "https://http2.mlstatic.com/D_NQ_NP_2X_902755-MLA53192423609_012023-F.webp",
+        "categoria": "Vodka"
+    },
+    {
+        "id": "17",
+        "nombre_producto": "Ron Mount Gay",
+        "tipo": "alcohólicas",
+        "volumen": "700ml",
+        "valor": 8500,
+        "cantidad": 50,
+        "promocion": "10% en compra de 2 o más",
+        "image": "https://whiskypedia.com.ar/wp-content/uploads/2024/08/Mount-Gay_Eclipse_Rum-final.jpg.webp",
+        "categoria": "Ron"
+    },
+    {
+        "id": "18",
+        "nombre_producto": "Cynar",
+        "tipo": "alcohólicas",
+        "volumen": "750ml",
+        "valor": 2500,
+        "cantidad": 100,
+        "promocion": "10% en segunda unidad",
+        "image": "https://www.espaciovino.com.ar/media/default/0001/58/thumb_57783_default_big.jpeg",
+        "categoria": "Aperitivos"
+    },
+    {
+        "id": "19",
+        "nombre_producto": "Coca-Cola",
+        "tipo": "gaseosas",
+        "volumen": "2L",
+        "valor": 250,
+        "cantidad": 200,
+        "promocion": "Compra 4 y paga 3",
+        "image": "https://jumboargentina.vtexassets.com/arquivos/ids/782825/Gaseosa-Coca-cola-Sabor-Original-2-25-L-2-247191.jpg?v=638206689776800000",
+        "categoria": "Gaseosas"
+    },
+    {
+        "id": "20",
+        "nombre_producto": "Sprite",
+        "tipo": "gaseosas",
+        "volumen": "2L",
+        "valor": 230,
+        "cantidad": 150,
+        "promocion": "Compra 3 y paga 2",
+        "categoria": "Gaseosas",
+        "image": "https://carrefourar.vtexassets.com/arquivos/ids/368783/7790895001000_E02.jpg?v=638290817054030000"
+    },
+    {
+        "id": "21",
+        "nombre_producto": "Fanta Naranja",
+        "tipo": "gaseosas",
+        "volumen": "2L",
+        "valor": 220,
+        "cantidad": 180,
+        "promocion": "Compra 5 y paga 4",
+        "categoria": "Gaseosas",
+        "image": "https://modomarketar.vteximg.com.br/arquivos/ids/156440/Fanta-Zero-Naranja-X-2-25-Lt-1-2796.jpg?v=637813033177200000"
+    }
+]
+
+
