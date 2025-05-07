@@ -1,9 +1,12 @@
+
+import dotenv from 'dotenv';
+dotenv.config();
 import app from "./app.js";
 import { connectDB } from "./db.js";
 
-const port = 4000;
+const port = process.env.PORT || 3000;
 
 connectDB()
 app.listen(port);
 
-console.log ("Server Funcando en puerto 4000 " + "http://localhost:"+ port);
+console.log("Server Funcionando en puerto " + port + " http://localhost:" + port);

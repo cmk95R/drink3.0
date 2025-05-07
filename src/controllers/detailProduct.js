@@ -1,4 +1,5 @@
-import productsData from '../db-json/productos.json' assert { type: 'json' };
+import fs from 'fs';
+const productsData = JSON.parse(fs.readFileSync('./src/db-json/productos.json', 'utf-8'));
 
 const detailProduct = (req, res) => {
   // Convertir el ID a cadena de texto para asegurar coincidencia si los IDs en productos.json son strings

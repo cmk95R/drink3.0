@@ -6,6 +6,9 @@ import { fileURLToPath } from 'url';
 import session from 'express-session';  // Importar express-session
 import indexRouter from './routes/index.routes.js';
 import authRoutes from "./routes/auth.routes.js";
+import userRoutes from "./routes/user.routes.js";
+import orderRoutes from "./routes/order.routes.js";
+import productRoutes from "./routes/product.routes.js";
 
 // Configuración para __dirname en ES Modules
 const __filename = fileURLToPath(import.meta.url);
@@ -45,8 +48,16 @@ app.use(session({
   cookie: { secure: false }  // Asegúrate de cambiar a 'true' si usas HTTPS
 }));
 
+// Posible auth
+app.use(express.json()); // 👈 Necesario para leer JSON en req.body
+app.use('/auth',authRoutes);
+
+
 // Rutas de la API y enrutadores
-app.use("/api", authRoutes);
+//app.use("/api", authRoutes);
+app.use("/users",userRoutes);
+app.use("/orders",orderRoutes);
+app.use("/products",productRoutes);
 app.use('/', indexRouter);
 
 export default app;

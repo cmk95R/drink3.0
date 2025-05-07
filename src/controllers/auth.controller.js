@@ -1,17 +1,256 @@
-import User from '../models/user.model.js';  
-import bcrypt from "bcryptjs"
-import jwt from "jsonwebtoken"
-import { createAccessToken } from "../libs/jwt.js";
-import mConfirmacion from './mConfirmacion.js';
-import { mReestablecer } from './mReestablecer.js';
-import path from 'path';
-import { fileURLToPath } from 'url';
-import { validationResult } from "express-validator";
+import User from '../models/user.js';  
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+//import jwt from "jsonwebtoken"
+//mport { createAccessToken } from "../libs/jwt.js";
+// import mConfirmacion from './mConfirmacion.js'; // ❌ Si no vas a usar email de confirmación, comentar
+// import { mReestablecer } from './mReestablecer.js'; // ❌ Si no vas a enviar mails de recuperación, comentar
+// import path from 'path'; // ❌ Solo necesario para EJS u otras vistas
+// import { fileURLToPath } from 'url'; // ❌ Solo necesario para EJS
+//import { validationResult } from "express-validator";
+import { hashPassword,comparePasswords } from '../services/password.services.js';
+import { createAccessToken } from '../services/jwt.service.js';
+
+export const register = async (req,res)=>{
+ 
+    
+
+    try{
+        const{name,email,rol,password,edad} = req.body;
+        if(!name || !email || !rol || !password || !edad){
+            return res.status(400).json({message:'Todos los campos son obligatorios'});
+
+        }
+        const existingUser = await User.findOne({email});
+        if(existingUser){
+            return res.status(400).json({ message: 'El correo ya está registrado.' });
+        }
+
+        const hashedPassword = await hashPassword(password);
+        console.log(hashedPassword)
+        const newUser = new User(
+            {
+            name, 
+            email, 
+            rol, 
+            password: hashedPassword, 
+            edad
+        }
+    )
+    await newUser.save();
+    const { password: _, ...userData } = newUser.toObject(); // Excluir password
+    res.status(201).json(userData);
 
 
+        
+    }catch(error){
+        console.error(error);
+        res.status(500).json({ message: 'Error en el registro. Inténtalo más tarde.' });
+
+    }
+};
+
+
+export const login = async(req,res)=>{
+    try{
+        const { email, password } = req.body;
+        if (!email || !password) {
+            return res.status(400).json({ message: 'Email y contraseña son requeridos.' });
+        }
+
+        const user = await User.findOne({email});
+        if(!user){
+            return res.status(401).json({message:'Credenciales invalidas'});
+        }
+
+        const isMatch = await comparePasswords(password,user.password);
+        if(!isMatch){
+            return res.status(401).json({message:' Credenciales Invalidas.'});
+        }
+
+        const token = createAccessToken({id: user._id, rol: user.rol});
+        const {password: _, ...userData} = user.toObject();//Excluir Password
+        res.status(200).json({ user: userData, token });
+    }catch(error){
+        console.error(error);
+        res.status(500).json({ message: 'Error en el login. Inténtalo más tarde.' });
+    }
+   
+}
+
+
+
+export const profile = async (req, res) => {
+    try {
+        const userFound = await User.findById(req.user.id);
+        if (!userFound) {
+
+            return res.status(400).json({ message: "Usuario no encontrado" });
+        }
+        //res.render(renderiza una vista)
+        //donde se cargara una vista de proyecto del willy
+        // res.render/res/ ->
+        //scrpit/js cargar elementos del backend
+        return res.json({
+            user: {
+                id: userFound._id,
+                username: userFound.username,
+                email: userFound.email,
+                address: userFound.address,
+                phoneNumber: userFound.phoneNumber
+            }
+        });
+
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: "Error interno del servidor" });
+    }
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// const __filename = fileURLToPath(import.meta.url); // ❌ Solo necesario si usás vistas
+// const __dirname = path.dirname(__filename); // ❌ Solo necesario si usás vistas
+
+/* 
 const calculateAge = (birthDate) => {
     const today = new Date();
     const birthDateObj = new Date(birthDate);
@@ -22,41 +261,44 @@ const calculateAge = (birthDate) => {
     }
     return age;
 };
+*/
+
+
+
+
+
+/* 
 export const register = async (req, res) => {
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
-        return res.status(400).render('register', {
-            errors: errors.array(),
-            formData: req.body, // Mantener los datos del formulario
+        return res.status(400).json({
+            errors: errors.array()
         });
     }
 
-    const { username, email, password, phoneNumber, address, birthdate } = req.body;
+    const { name, email, password, rol, birthdate } = req.body;
 
-    // Verifica si birthdate está presente
     if (!birthdate) {
-        return res.status(400).render('register', {
-            errors: [{ msg: 'La fecha de nacimiento es obligatoria' }],
-            formData: req.body,
+        return res.status(400).json({
+            message: 'La fecha de nacimiento es obligatoria'
         });
     }
 
-    // Validar que la persona sea mayor de 18 años
     const age = calculateAge(birthdate);
     if (age < 18) {
-        return res.status(400).render('register', {
-            errors: [{ msg: 'Debes ser mayor de 18 años para registrarte' }],
-            formData: req.body,
+        return res.status(400).json({
+            message: 'Debes ser mayor de 18 años para registrarte'
         });
     }
 
     try {
-        // Crear un usuario de prueba si no existe
+        // ❌ El usuario de prueba puede comentarse si no lo necesitás
+        /*
         const testUser = await User.findOne({ username: 'test' });
 
         if (!testUser) {
-            const testPasswordHash = await bcrypt.hash('123123', 10);  // Contraseña para el usuario test
+            const testPasswordHash = await bcrypt.hash('123123', 10);
             const newTestUser = new User({
                 username: 'test',
                 email: 'test@test.com',
@@ -70,41 +312,44 @@ export const register = async (req, res) => {
                 }
             });
 
-            // Guardar el usuario de prueba en la base de datos
             await newTestUser.save();
             console.log('Usuario de prueba creado');
         }
-
-        // Crear el usuario normal (el que se recibe en la solicitud)
+        */
+/*
         const passwordHash = await bcrypt.hash(password, 10);
         const newUser = new User({
-            username,
+            name,
             email,
             password: passwordHash,
-            phoneNumber,
-            address,
-            birthdate,
+            rol,
+            edad: age
         });
 
         const userSaved = await newUser.save();
         const token = await createAccessToken({ id: userSaved._id });
         res.cookie("token", token);
 
-        await mConfirmacion({ body: { name: username, email } }, res);
-        res.redirect("/api/login");
+        // await mConfirmacion({ body: { name: username, email } }, res); // ❌ Si no usás confirmación por email
+        return res.status(201).json({ message: "Usuario registrado correctamente", token });
 
     } catch (error) {
         console.error(error);
-        res.status(500).send('Error al registrar el usuario');
+        res.status(500).json({ message: 'Error al registrar el usuario' });
     }
-};
+}; 
 
-// Controlador para mostrar el formulario de registro
+*/
+
+
+/*  
+// ❌ Solo necesario si vas a renderizar una vista de registro (no para API REST)
 export const showRegisterForm = (req, res) => {
-    const user = req.session.user || null;  
-    res.render("register", { errors: [], formData: {} },); // Mostrar el formulario vacío al inicio
+    // const user = req.session.user || null;  
+    // res.render("register", { errors: [], formData: {} });
 };
-
+*/
+/*
 export const changePassword = async (req,res) => {
     const {currentPassword,newPassword,confirmPassword} = req.body
 
@@ -123,46 +368,37 @@ export const changePassword = async (req,res) => {
         const passwordHash = await bcrypt.hash(newPassword, 10);
         userFound.password = passwordHash
         await userFound.save()
-        console.log("NuevaContraseña: "+ newPassword);
-        req.session.destroy();
-        res.clearCookie("token");  
-      
-        return res.json({ success: true, message: "Contraseña cambiada con éxito" });
 
+        res.clearCookie("token");  
+        return res.json({ success: true, message: "Contraseña cambiada con éxito" });
 
     } catch (error) {
         return res.status(500).json({message: error.message})
     }
-};
-export const resetPassword = async (req, res) => {
+}; 
+*/
 
-    const { email } = req.body; 
-    const { newPassword, confirmPassword } = req.body;
+/* 
+export const resetPassword = async (req, res) => {
+    const { email, newPassword, confirmPassword } = req.body;
 
     if (newPassword !== confirmPassword) {
         return res.status(400).json({ message: 'Las contraseñas no coinciden.' });
     }
 
     try {
-        // Buscar al usuario por el email
         const user = await User.findOne({ email });
 
         if (!user) {
             return res.status(404).json({ message: 'Usuario no encontrado.' });
         }
 
-        // Hashear la nueva contraseña
         const passwordHash = await bcrypt.hash(newPassword, 10);
         user.password = passwordHash;
         await user.save();
-
-        // Enviar el correo de confirmación usando mReestablecer
-        await mReestablecer({ body: { name: user.username, email } }, res);
-
-        // Redirigir a la página de confirmación de envío de correo
-        console.log("Se envio el mail correctamente");
-        
-        return res.redirect('/api/login');
+    
+        // await mReestablecer({ body: { name: user.username, email } }, res); // ❌ Si no vas a enviar email
+        return res.json({ message: 'Contraseña restablecida correctamente.' });
 
     } catch (error) {
         console.error('Error al restablecer la contraseña: ', error);
@@ -170,7 +406,10 @@ export const resetPassword = async (req, res) => {
     }
 };
 
+*/
 
+
+/* 
 export const login = async (req, res) => {
     const { email, password } = req.body;
 
@@ -178,61 +417,31 @@ export const login = async (req, res) => {
         const userFound = await User.findOne({ email });
 
         if (!userFound) {
-            // Si el usuario no se encuentra, mostramos un error en la vista
-            return res.render('login', {
-                errors: [{ msg: "Usuario no encontrado" }]
-            });
+            return res.status(404).json({ message: "Usuario no encontrado" });
         }
 
         const isMatch = await bcrypt.compare(password, userFound.password);
         if (!isMatch) {
-            // Si la contraseña no coincide, mostramos un error en la vista
-            return res.render('login', {
-                errors: [{ msg: "Contraseña incorrecta" }]
-            });
+            return res.status(400).json({ message: "Contraseña incorrecta" });
         }
 
-        // Si el login es correcto, creamos el token y redirigimos
         const token = await createAccessToken({ id: userFound._id });
-        req.session.user = {
-            id: userFound._id,
-            nombre: userFound.nombre,
-            email: userFound.email
-        };
-
+        // req.session.user = { id: userFound._id, nombre: userFound.nombre, email: userFound.email }; // ❌ Sesiones no necesarias en JWT puro
         res.cookie("token", token);
-        res.redirect("/");
+        return res.json({ message: "Inicio de sesión exitoso", token });
 
     } catch (error) {
         return res.status(500).json({ message: error.message });
     }
 };
 
-
-
-// controllers/authController.js
+*/
+/* 
 export const logout = (req, res) => {
-    req.session.destroy();
+    // req.session.destroy(); // ❌ No necesario si no usás sesiones
     res.clearCookie("token");  
-    return res.redirect("/");
+    return res.json({ message: "Sesión cerrada correctamente" });
 }
 
-
-
-export const profile = async (req, res) => {
-    try {
-        const userFound = await User.findById(req.user.id);
-        if (!userFound) {
-            return res.status(400).json({ message: "Usuario no encontrado" });
-        }
-
-        // Usamos 'res.render' para renderizar la vista y pasar los datos del usuario
-        return res.render('profile', {
-            user: userFound
-        });
-    } catch (error) {
-        console.error(error);
-        return res.status(500).json({ message: "Error interno del servidor" });
-    }
-};
+*/
 

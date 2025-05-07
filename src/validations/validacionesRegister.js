@@ -1,5 +1,5 @@
 import { body } from "express-validator";
-import User from "../models/user.model.js";
+import User from "../models/user.js";
 
 export const validacionesRegister = [
   // Validación del nombre de usuario

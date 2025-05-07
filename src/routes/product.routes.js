@@ -1,10 +1,18 @@
-// const express = require('express');
-// import controller from '../controllers/detailProduct.js';  // Asegúrate de importar correctamente
+import { Router } from "express";
+import{createProduct,
+    getProductById,
+    getAllProducts,
+    updateProduct,
+    deleteProduct,
+} from '../controllers/product.controller.js';
 
-// import detailProduct from '../controllers/detailProduct.js'
-// const router = express.Router();
 
-// // Ruta para mostrar el detalle de un producto
-// router.get('/detail/:id', detailProduct.detail);
+import { authenticate}  from "../middlewares/auth.middleware.js";
+const router = Router();
 
-// module.exports = router;
+router.post('/',authenticate,createProduct);
+router.get('/',authenticate,getAllProducts);
+router.get('/:id',authenticate,getProductById,);
+router.put('/:id',authenticate,updateProduct,);
+router.delete('/:id',authenticate,deleteProduct,);
+export default router;
