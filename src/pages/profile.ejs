@@ -38,7 +38,7 @@
         <li><button onclick="showSection('mediosPago')">Métodos de pago</button></li>
         <li><button onclick="showSection('notificaciones')">Notificaciones</button></li>
         <li><button onclick="showSection('seguridad')">Seguridad</button></li>
-        <li><button onclick="showSection()">Cerrar sesión</button></li>
+        <li><a href="/auth/logout"> Cerrar sesión</a></li>
       </nav>
       <label for="btn-menu">✖️</label>
     </div>
@@ -51,19 +51,14 @@
         <!-- Sección 1, datos de perfil de usuario -->
         <section id="datos" class="section active">
           <h2>Mis Datos</h2>
-          <p>Información de perfil, nombre, dirección, etc.</p>
+          <p>Información básica del perfil.</p>
           <div>
-            <h3>Nombre: <%= user.username %></h3>
+            <h3>Nombre: <%= user.name %></h3>
             <p><strong>Correo electrónico:</strong> <%= user.email %></p>
-    
-            <h4>Dirección:</h4>
-            <p><strong>Calle:</strong> <%= user.address.street %></p>
-            <p><strong>Ciudad:</strong> <%= user.address.city %></p>
-            <p><strong>Provincia:</strong> <%= user.address.province %></p>
-            <p><strong>Código Postal:</strong> <%= user.address.postalCode %></p>
-    
-            <p><strong>Teléfono:</strong> <%= user.phoneNumber %></p>
-        </div>
+            <p><strong>Rol:</strong> <%= user.rol %></p>
+            <p><strong>Edad:</strong> <%= user.edad %></p>
+            <p><strong>ID Usuario FTP:</strong> <%= user.ftpUserId %></p>
+          </div>
         </section>
         <!-- Sección 2, Historial de Pedidos -->
     <section id="historial-container" class="section">

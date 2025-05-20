@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+//import Product from '../models/product';
 
 // Para resolver __dirname en ES Modules
 const __filename = fileURLToPath(import.meta.url);
@@ -33,3 +34,6 @@ const controller = {
 };
 
 export default controller;
+
+
+

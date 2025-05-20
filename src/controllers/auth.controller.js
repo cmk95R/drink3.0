@@ -4,92 +4,163 @@ import User from '../models/user.js';
 //mport { createAccessToken } from "../libs/jwt.js";
 // import mConfirmacion from './mConfirmacion.js'; // ❌ Si no vas a usar email de confirmación, comentar
 // import { mReestablecer } from './mReestablecer.js'; // ❌ Si no vas a enviar mails de recuperación, comentar
-// import path from 'path'; // ❌ Solo necesario para EJS u otras vistas
-// import { fileURLToPath } from 'url'; // ❌ Solo necesario para EJS
+import path from 'path'; // ❌ Solo necesario para EJS u otras vistas
+import { fileURLToPath } from 'url'; // ❌ Solo necesario para EJS
 //import { validationResult } from "express-validator";
 import { hashPassword,comparePasswords } from '../services/password.services.js';
 import { createAccessToken } from '../services/jwt.service.js';
 
+///Investigar.
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+
+export const showRegisterForm = (req, res) => {
+    res.render('register', { formData: {}, errors: [] });
+};
+
+
+
 export const register = async (req,res)=>{
+     const { name, email, rol, password, edad } = req.body;
+     const formData = { name, email, rol, edad };
+     let errors = [];
+
+      if (!name || !email || !rol || !password || !edad) {
+        errors.push({ msg: 'Todos los campos son obligatorios.' });
+        return res.status(400).render('register', { formData, errors });
+  }
  
     
 
     try{
-        const{name,email,rol,password,edad} = req.body;
-        if(!name || !email || !rol || !password || !edad){
-            return res.status(400).json({message:'Todos los campos son obligatorios'});
-
-        }
+        
         const existingUser = await User.findOne({email});
-        if(existingUser){
-            return res.status(400).json({ message: 'El correo ya está registrado.' });
-        }
+        if (existingUser) {
+            errors.push({ msg: 'El correo ya está registrado.' });
+            return res.status(400).render('register', { formData, errors });
+          }
 
-        const hashedPassword = await hashPassword(password);
-        console.log(hashedPassword)
-        const newUser = new User(
-            {
-            name, 
-            email, 
-            rol, 
-            password: hashedPassword, 
+          const hashedPassword = await hashPassword(password);
+          const newUser = new User({
+            name,
+            email,
+            rol,
+            password: hashedPassword,
             edad
-        }
-    )
+          }
+        );
+    
     await newUser.save();
-    const { password: _, ...userData } = newUser.toObject(); // Excluir password
-    res.status(201).json(userData);
+    //const { password: _, ...userData } = newUser.toObject(); // Excluir password
+    res.redirect('/auth/login');
+
+    //res.status(201).json(userData);
 
 
         
     }catch(error){
         console.error(error);
-        res.status(500).json({ message: 'Error en el registro. Inténtalo más tarde.' });
+        errors.push({ msg: 'Error en el registro. Inténtalo más tarde.' });
+        return res.status(500).render('register', { formData, errors });
 
     }
 };
-
+///////////////////////////////////////////////////////////////////////////////
+export const showLoginForm = (req, res) => {
+    res.render('login', { error: null });
+  };
+///////////////////////////////////////////////////////////////////////////////  
 
 export const login = async(req,res)=>{
+    const { email, password } = req.body;
+   
+    
+    if (!email || !password) {
+        return res.status(400).json({ message: 'Email y contraseña son requeridos.' });
+    }
     try{
-        const { email, password } = req.body;
-        if (!email || !password) {
-            return res.status(400).json({ message: 'Email y contraseña son requeridos.' });
-        }
-
+        
         const user = await User.findOne({email});
         if(!user){
-            return res.status(401).json({message:'Credenciales invalidas'});
+            return res.status(401).render('login', { error: 'Credenciales inválidas.' });
         }
 
         const isMatch = await comparePasswords(password,user.password);
         if(!isMatch){
-            return res.status(401).json({message:' Credenciales Invalidas.'});
+            return res.status(401).render('login', { error: 'Credenciales inválidas.' });
         }
 
         const token = createAccessToken({id: user._id, rol: user.rol});
         const {password: _, ...userData} = user.toObject();//Excluir Password
-        res.status(200).json({ user: userData, token });
+        //res.status(200).json({ user: userData, token });
+        res.cookie('token', token, {
+            httpOnly: true,
+            secure: false, // Cambiar a true si usás HTTPS en producción
+            sameSite: 'strict',
+            maxAge: 24 * 60 * 60 * 1000, // 1 día en milisegundos
+          });
+       
+        req.session.user = {
+            id: user._id,
+           name: user.name,
+            rol: user.rol,
+            email: user.email
+        };
+        res.redirect('/');
+
+
     }catch(error){
         console.error(error);
-        res.status(500).json({ message: 'Error en el login. Inténtalo más tarde.' });
+        return res.status(500).render('login', { error: 'Error interno del servidor.' });
     }
    
 }
 
 
 
-export const profile = async (req, res) => {
-    try {
-        const userFound = await User.findById(req.user.id);
-        if (!userFound) {
 
-            return res.status(400).json({ message: "Usuario no encontrado" });
+    export const profile = async (req, res) => {
+        try {
+          const userFound = await User.findById(req.user.id);
+          if (!userFound) {
+            return res.redirect('/auth/login'); // Si no lo encuentra, redirige
+          }
+          res.render('profile', { user: userFound });
+        } catch (error) {
+          console.error(error);
+          res.status(500).send('Error interno del servidor');
         }
-        //res.render(renderiza una vista)
+      };
+
+
+
+
+
+
+export const logout = (req, res) => {
+    req.session.destroy();
+    res.clearCookie('token', { httpOnly: true, secure: false }); // ajustá secure si usás https
+    res.redirect('/');
+  };
+
+
+
+
+
+
+
+
+
+
+
+
+
+ //res.render(renderiza una vista)
         //donde se cargara una vista de proyecto del willy
         // res.render/res/ ->
         //scrpit/js cargar elementos del backend
+        /*
         return res.json({
             user: {
                 id: userFound._id,
@@ -99,33 +170,7 @@ export const profile = async (req, res) => {
                 phoneNumber: userFound.phoneNumber
             }
         });
-
-    } catch (error) {
-        console.error(error);
-        return res.status(500).json({ message: "Error interno del servidor" });
-    }
-};
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        */
 
 
 
@@ -342,13 +387,10 @@ export const register = async (req, res) => {
 */
 
 
-/*  
+ 
 // ❌ Solo necesario si vas a renderizar una vista de registro (no para API REST)
-export const showRegisterForm = (req, res) => {
-    // const user = req.session.user || null;  
-    // res.render("register", { errors: [], formData: {} });
-};
-*/
+
+
 /*
 export const changePassword = async (req,res) => {
     const {currentPassword,newPassword,confirmPassword} = req.body

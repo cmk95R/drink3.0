@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { login, register, profile } from "../controllers/auth.controller.js";
+import { login, register, profile, showRegisterForm, showLoginForm , logout } from "../controllers/auth.controller.js";
 
 import carrito from "../controllers/carrito.controller.js"
 import path from 'path';
@@ -9,6 +9,7 @@ import { validacionesRegister } from "../validations/validacionesRegister.js";
 import { validacionesLogin } from "../validations/validacionesLogin.js";
 
 import { authenticate } from "../middlewares/auth.middleware.js";
+
 
 //const __filename = fileURLToPath(import.meta.url);
 //const __dirname = path.dirname(__filename);
@@ -76,7 +77,26 @@ const router = Router();
 
 //router.get("/logout", logout)
 router.post('/register', register);
+router.get('/register',showRegisterForm)
 router.post('/login', login);
+router.get('/login',showLoginForm);
 router.get('/profile', authenticate, profile);
+router.get('/logout', logout);
+
+
+//router.get('/register', (req, res)=>{
+//    res.render('register', {
+//        formData: {}, // para evitar error en el ejs
+//        errors: []    // lo mismo para errores
+//      });
+//    });
+//router.get('/register', showRegisterForm);
+//router.get('/login', (req, res)=>{
+  //  res.render('login');
+//});
+//router.get('/login', showLoginForm);
+
+
+////
 
 export default router;

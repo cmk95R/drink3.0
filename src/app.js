@@ -58,6 +58,9 @@ app.use('/auth',authRoutes);
 app.use("/users",userRoutes);
 app.use("/orders",orderRoutes);
 app.use("/products",productRoutes);
+// Ruta principal (mainpage)
+
 app.use('/', indexRouter);
+
 
 export default app;

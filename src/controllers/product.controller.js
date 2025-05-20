@@ -103,3 +103,14 @@ export const deleteProduct = async (req,res)=>{
         res.status(500).json({error:'Hubo un errror, pruebe mas tarde'});
     }
 };
+
+
+export const renderProductMainPage = async (req, res) => {
+    try {
+        const products = await Product.find();
+        res.render('/', { products }); // 'main' es la vista EJS
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('Error al cargar productos');
+    }
+};
