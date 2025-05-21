@@ -9,7 +9,7 @@ function mostrarMetodosPago() {
         modalBody.innerHTML = `
             <p>No tienes ningún método de pago almacenado. </p>
             <li>
-                <button onclick="window.location.href = '/api/profile?section=mediosPago'" class="btn btn-primary">
+                <button onclick="window.location.href = '/auth/profile?section=mediosPago'" class="btn btn-primary">
                     Añadir método de pago
                 </button>
             </li>

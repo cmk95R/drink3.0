@@ -90,29 +90,28 @@
                 <div class="card-section">
                     <% products.forEach(producto => { %>
                         <div class="product-card">
-                            <!-- Imagen del Producto -->
-                            <div class="product-tumb">
-                                <img src="<%= producto.image %>" alt="<%= producto.nombre_producto %>" style="width: 100%; height: auto; object-fit: cover;">
-                            </div>
-                            <!-- Detalles del Producto -->
-                            <div class="product-details">
-                                <h4><a href="/products/detail/<%= producto.id %>"><%= producto.nombre_producto %></a></h4>
-                                <p><%= producto.categoria || 'Descripción no disponible' %></p>
-                                <!-- Precio y Enlaces -->
-                                <div class="product-bottom-details">
-                                    <div class="product-price">
-                                        <% if (producto.promocion) { %>
-                                            <small><%= producto.promocion %></small><br>
-                                        <% } %>
-                                        $<%= producto.valor %>
-                                    </div>
-                                    <div class="product-links">
-                                        <!--<a href="#"><i class="fa fa-heart" style="font-size: 25px;"></i></a>-->
-                                        <a href="#" class="añadir" data-id="<%= producto.id %>" data-nombre="<%= producto.nombre_producto %>" data-precio="<%= producto.valor %>"><i class="fa fa-shopping-cart" style="font-size: 25px;"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+  <div class="product-tumb">
+    <img src="<%= producto.image %>" alt="<%= producto.name %>" style="width: 100%; height: auto; object-fit: cover;">
+  </div>
+  <div class="product-details">
+    <h4><a href="/products/detail/<%= producto._id %>"><%= producto.name %></a></h4>
+    <p><%= producto.category || 'Descripción no disponible' %></p>
+    <div class="product-bottom-details">
+      <div class="product-price">
+        $<%= producto.price %>
+      </div>
+      <div class="product-links">
+        <a href="#" class="añadir"
+           data-id="<%= producto._id %>"
+           data-nombre="<%= producto.name %>"
+           data-precio="<%= producto.price %>">
+           <i class="fa fa-shopping-cart" style="font-size: 25px;"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
                     <% }); %>
                 </div>
             </div>
@@ -152,7 +151,7 @@
                           <span>Total Precio: $<span id="total-precio">0</span></span>
                       </div>
                         <div class="opciones-Carrito">
-                            <a href="/api/carrito">Ir al Carrito</a>
+                            <a href="/auth/carrito">Ir al Carrito</a>
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                         </div>
                   </div>

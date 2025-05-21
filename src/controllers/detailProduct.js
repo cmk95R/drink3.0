@@ -1,35 +1,44 @@
-import fs from 'fs';
-const productsData = JSON.parse(fs.readFileSync('./src/db-json/productos.json', 'utf-8'));
+import Product from '../models/product.js';
 
-const detailProduct = (req, res) => {
-  // Convertir el ID a cadena de texto para asegurar coincidencia si los IDs en productos.json son strings
-  const idParam = req.params.id; 
-
+export const detailProduct = async (req, res) => {
   try {
-    // Buscar el producto en el array de productos por su id (asegurando que coincida el tipo)
-    const prodFind = productsData.find(product => product.id.toString() === idParam);
-    const user = req.session.user || null;
-    console.log('Producto encontrado:', prodFind); // Esto muestra el producto en la consola del servidor
+    const idParam = req.params.id;
 
-    if (prodFind) {
-      const relatedProducts = productsData.filter(product => 
-        product.categoria && 
-        product.categoria === prodFind.categoria && 
-        product.id !== prodFind.id
-      ).slice(0, 3); // Limitar a 3 productos relacionados
+    // Validar que el ID sea válido para evitar errores en la consulta
+    if (!idParam || !idParam.match(/^[0-9a-fA-F]{24}$/)) {
+      return res.status(400).send('ID inválido');
+    }
 
-      return res.render('productDetail', { 
-        prodfind: prodFind, 
-        relatedProducts: relatedProducts,
-        user
-      });
-    } else {
+    // Buscar el producto por ID
+    const prodFind = await Product.findById(idParam).lean(); // lean para obtener objeto plano
+
+    if (!prodFind) {
       return res.status(404).send('Producto no encontrado');
     }
+
+    // Buscar productos relacionados (misma categoría, distinto ID)
+    const relatedProducts = await Product.find({
+      category: prodFind.category,
+      _id: { $ne: prodFind._id }
+    })
+      .limit(3)
+      .lean();
+
+    // Obtener usuario de sesión si existe
+    const user = req.session.user || null;
+
+    // Renderizar la vista y pasar datos
+    return res.render('productDetail', {
+      prodfind: prodFind,
+      relatedProducts,
+      user
+    });
+
   } catch (error) {
-    console.error('Error en el servidor: ', error);
+    console.error('Error en el servidor:', error);
     return res.status(500).send('Error en el servidor');
   }
 };
+
 
 export default detailProduct;

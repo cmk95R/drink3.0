@@ -17,14 +17,14 @@
                 <% if (user) { %> 
                     <li class="listas">
                         <span>Hola, <%= user.nombre %></span>
-                        <a href="/api/profile">Mi perfil</a>
+                        <a href="/auth/profile">Mi perfil</a>
                     </li>
                     <li class="listas">
-                        <a href="/api/logout">Cerrar sesión</a>
+                        <a href="/auth/logout">Cerrar sesión</a>
                     </li>
                 <% } else { %>
-                    <li class="listas" style="margin-bottom: 5px;"><a href="/api/register">REGISTRO DE USUARIOS</a></li>
-                    <li class="listas"><a href="/api/login">INICIO DE SESIÓN</a></li>
+                    <li class="listas" style="margin-bottom: 5px;"><a href="/auth/register">REGISTRO DE USUARIOS</a></li>
+                    <li class="listas"><a href="/auth/login">INICIO DE SESIÓN</a></li>
                 <% } %>
             </ul>
         </div>

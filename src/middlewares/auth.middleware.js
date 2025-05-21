@@ -1,28 +1,34 @@
 import { verifyToken } from '../services/jwt.service.js';
 
 export const authenticate = (req, res, next) => {
-  const authHeader = req.headers.authorization;
-  const tokenFromCookie = req.cookies.token;
+  // 1. Buscar el token en el header Authorization
   let token = null;
+  const authHeader = req.headers.authorization;
 
-  // Primero busca el token en el header, si no está, en la cookie
   if (authHeader && authHeader.startsWith('Bearer ')) {
     token = authHeader.split(' ')[1];
-  } else if (tokenFromCookie) {
-    token = tokenFromCookie;
   }
 
+  // 2. Si no está en el header, buscarlo en la cookie
+  if (!token && req.cookies.token) {
+    token = req.cookies.token;
+  }
+
+  // 3. Si no hay token, rechazar
   if (!token) {
-    return res.redirect('/auth/login'); // Redirige al login si no hay token
+    //return res.status(401).json({ message: 'Token no proporcionado' });
+    return res.redirect('/auth/login');
   }
 
+  // 4. Verificar el token
   try {
     const decoded = verifyToken(token);
-    req.user = decoded; // Decodificado disponible para rutas siguientes
+    req.user = decoded;
     next();
   } catch (error) {
-    return res.redirect('/auth/login'); // Redirige si el token es inválido
+    return res.status(401).json({ message: 'Token inválido' });
   }
 };
+
 
 

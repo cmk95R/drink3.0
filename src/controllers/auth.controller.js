@@ -28,7 +28,7 @@ export const register = async (req,res)=>{
 
       if (!name || !email || !rol || !password || !edad) {
         errors.push({ msg: 'Todos los campos son obligatorios.' });
-        return res.status(400).render('register', { formData, errors });
+        return handleResponse(req, res, 400, { errors, formData }, 'register');
   }
  
     
@@ -38,31 +38,26 @@ export const register = async (req,res)=>{
         const existingUser = await User.findOne({email});
         if (existingUser) {
             errors.push({ msg: 'El correo ya está registrado.' });
-            return res.status(400).render('register', { formData, errors });
+            return handleResponse(req, res, 400, { errors, formData }, 'register');
           }
 
           const hashedPassword = await hashPassword(password);
-          const newUser = new User({
-            name,
-            email,
-            rol,
-            password: hashedPassword,
-            edad
-          }
-        );
+          const newUser = new User({ name, email, rol, password: hashedPassword, edad });
+        
     
     await newUser.save();
     //const { password: _, ...userData } = newUser.toObject(); // Excluir password
-    res.redirect('/auth/login');
-
-    //res.status(201).json(userData);
-
-
+    if (req.accepts('html')) {
+      return res.redirect('/auth/login');
+    } else {
+      const { password: _, ...userData } = newUser.toObject();
+      return res.status(201).json(userData);
+    }
         
     }catch(error){
         console.error(error);
         errors.push({ msg: 'Error en el registro. Inténtalo más tarde.' });
-        return res.status(500).render('register', { formData, errors });
+        return handleResponse(req, res, 500, { errors, formData }, 'register');
 
     }
 };
@@ -72,66 +67,69 @@ export const showLoginForm = (req, res) => {
   };
 ///////////////////////////////////////////////////////////////////////////////  
 
-export const login = async(req,res)=>{
+export const login = async (req, res) => {
     const { email, password } = req.body;
-   
-    
+
     if (!email || !password) {
-        return res.status(400).json({ message: 'Email y contraseña son requeridos.' });
+        return handleResponse(req, res, 400, { error: 'Email y contraseña son requeridos.' }, 'login');
     }
-    try{
+
+    try {
+        const user = await User.findOne({ email });
+        if (!user || !(await comparePasswords(password, user.password))) {
+      return handleResponse(req, res, 401, { error: 'Credenciales inválidas.' }, 'login');
+    }
+
         
-        const user = await User.findOne({email});
-        if(!user){
-            return res.status(401).render('login', { error: 'Credenciales inválidas.' });
-        }
+        // Ortorga el token a los usuarios
+        const token = createAccessToken({ id: user._id, rol: user.rol });
 
-        const isMatch = await comparePasswords(password,user.password);
-        if(!isMatch){
-            return res.status(401).render('login', { error: 'Credenciales inválidas.' });
-        }
-
-        const token = createAccessToken({id: user._id, rol: user.rol});
-        const {password: _, ...userData} = user.toObject();//Excluir Password
-        //res.status(200).json({ user: userData, token });
-        res.cookie('token', token, {
-            httpOnly: true,
-            secure: false, // Cambiar a true si usás HTTPS en producción
-            sameSite: 'strict',
-            maxAge: 24 * 60 * 60 * 1000, // 1 día en milisegundos
-          });
-       
+        // Guardar sesión y cookie solo si usás vistas
         req.session.user = {
             id: user._id,
-           name: user.name,
+            name: user.name,
             rol: user.rol,
             email: user.email
         };
-        res.redirect('/');
+        res.cookie('token', token, {
+            httpOnly: true,
+            secure: false,
+            sameSite: 'strict',
+            maxAge: 24 * 60 * 60 * 1000
+        });
 
+        const { password: _, ...userData } = user.toObject();
 
-    }catch(error){
-        console.error(error);
-        return res.status(500).render('login', { error: 'Error interno del servidor.' });
+        // Detectar si la petición espera JSON (API) o HTML (navegador)
+    
+
+    if (req.accepts('html')) {
+      return res.redirect('/');
+    } else {
+      return res.status(200).json({ token, user: userData });
     }
-   
-}
+
+
+    } catch (error) {
+        console.error(error);
+        return handleResponse(req, res, 500, { error: 'Error interno del servidor.' }, 'login');
+    }
+};
+
 
 
 
 
     export const profile = async (req, res) => {
         try {
-          const userFound = await User.findById(req.user.id);
-          if (!userFound) {
-            return res.redirect('/auth/login'); // Si no lo encuentra, redirige
-          }
-          res.render('profile', { user: userFound });
-        } catch (error) {
-          console.error(error);
-          res.status(500).send('Error interno del servidor');
-        }
-      };
+    const userFound = await User.findById(req.user.id);
+    if (!userFound) return res.redirect('/auth/login');
+    res.render('profile', { user: userFound });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error interno del servidor');
+  }
+};
 
 
 
@@ -139,11 +137,22 @@ export const login = async(req,res)=>{
 
 
 export const logout = (req, res) => {
-    req.session.destroy();
-    res.clearCookie('token', { httpOnly: true, secure: false }); // ajustá secure si usás https
+  req.session.destroy();
+  res.clearCookie('token', { httpOnly: true, secure: false });
+  if (req.accepts('html')) {
     res.redirect('/');
-  };
+  } else {
+    res.status(200).json({ message: 'Sesion cerrada correctamente.' });
+  }
+};
 
+function handleResponse(req, res, statusCode, data, view) {
+  if (req.accepts('html')) {
+    return res.status(statusCode).render(view, data);
+  } else {
+    return res.status(statusCode).json(data);
+  }
+}
 
 
 

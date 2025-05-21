@@ -1,6 +1,6 @@
 import express from 'express';
 import controller from '../controllers/indexController.js';  // Asegúrate de importar correctamente
-import detailProduct from '../controllers/detailProduct.js';
+import { detailProduct } from '../controllers/detailProduct.js';
 //import Product from '../models/product.js';
 const router = express.Router();
 

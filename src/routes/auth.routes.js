@@ -30,14 +30,14 @@ const router = Router();
 //});
 
 //Ruta para mostrar la pagina de carrito
-//router.get('/carrito', authRequired, carrito.carrito,(req, res) => {
-//    res.render('carrito');
-//});
+router.get('/carrito', authenticate, carrito.carrito,(req, res) => {
+  res.render('carrito');
+});
 
 
-//router.get('/medios-pago', (req, res) => {
-//   res.sendFile(path.join(__dirname, '../pages/medios-pago.html'));
-//});
+router.get('/medios-pago', (req, res) => {
+   res.sendFile(path.join(__dirname, '../pages/medios-pago.html'));
+});
 
 
 // Ruta para mostrar la pagina de confirmacion de Registro

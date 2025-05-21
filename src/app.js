@@ -27,12 +27,7 @@ app.use('/resources/css', express.static(path.join(__dirname, 'resources/css')))
 app.use('/resources/imagenes', express.static(path.join(__dirname, 'resources/imagenes')));
 app.use(express.static(path.join(__dirname, 'src/pages')));
 
-app.use((req, res, next) => {
-    if (req.session && req.session.user) {
-        res.locals.user = req.session.user;  // Pasamos el usuario a las vistas
-    }
-    next();
-});
+
 
 // Middleware
 app.use(morgan('dev'));
@@ -48,8 +43,14 @@ app.use(session({
   cookie: { secure: false }  // Asegúrate de cambiar a 'true' si usas HTTPS
 }));
 
+app.use((req, res, next) => {
+    if (req.session && req.session.user) {
+        res.locals.user = req.session.user;  // Pasamos el usuario a las vistas
+    }
+    next();
+});
 // Posible auth
-app.use(express.json()); // 👈 Necesario para leer JSON en req.body
+
 app.use('/auth',authRoutes);
 
 
