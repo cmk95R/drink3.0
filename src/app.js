@@ -52,6 +52,7 @@ app.use((req, res, next) => {
 // Posible auth
 
 app.use('/auth',authRoutes);
+//app,us('/profile');
 
 
 // Rutas de la API y enrutadores
@@ -59,6 +60,7 @@ app.use('/auth',authRoutes);
 app.use("/users",userRoutes);
 app.use("/orders",orderRoutes);
 app.use("/products",productRoutes);
+
 // Ruta principal (mainpage)
 
 app.use('/', indexRouter);

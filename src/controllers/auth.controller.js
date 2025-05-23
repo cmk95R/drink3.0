@@ -132,6 +132,43 @@ export const login = async (req, res) => {
 };
 
 
+export const changePassword = async (req, res) => {
+  console.log("REQ.BODY:", req.body);  // <--- Registro para debug
+
+  const userId = req.user.id; // obtenido del middleware `authenticate`
+  const { currentPassword, newPassword, confirmNewPassword } = req.body;
+
+  // Validar que todos los campos estén presentes
+  if (!currentPassword || !newPassword || !confirmNewPassword) {
+    return res.status(400).json({ message: 'Todos los campos son obligatorios.' });
+  }
+
+  // Validar que la nueva contraseña y la confirmación coincidan
+  if (newPassword !== confirmNewPassword) {
+    return res.status(400).json({ message: 'Las nuevas contraseñas no coinciden.' });
+  }
+
+  try {
+    const user = await User.findById(userId);
+    if (!user) return res.status(404).json({ message: 'Usuario no encontrado.' });
+
+    // Verificar que la contraseña actual sea correcta
+    const passwordMatch = await comparePasswords(currentPassword, user.password);
+    if (!passwordMatch) {
+      return res.status(401).json({ message: 'La contraseña actual es incorrecta.' });
+    }
+
+    // Hashear y guardar la nueva contraseña
+    user.password = await hashPassword(newPassword);
+    await user.save();
+
+    res.status(200).json({ message: 'Contraseña actualizada correctamente.' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error al cambiar la contraseña. Intenta más tarde.' });
+  }
+};
+
 
 
 
@@ -153,6 +190,60 @@ function handleResponse(req, res, statusCode, data, view) {
     return res.status(statusCode).json(data);
   }
 }
+/*
+export const changePassword = async (req, res) => {
+  const { currentPassword, newPassword, confirmPassword } = req.body;
+
+  if (newPassword !== confirmPassword) {
+    return res.status(400).json({ message: 'Las contraseñas no coinciden' });
+  }
+
+  try {
+    const userFound = await User.findById(req.user.id);
+    if (!userFound) {
+      return res.status(404).json({ message: 'Usuario no encontrado' });
+    }
+
+    const isMatch = await bcrypt.compare(currentPassword, userFound.password);
+    if (!isMatch) {
+      return res.status(400).json({ message: 'La contraseña actual es incorrecta' });
+    }
+
+    const passwordHash = await bcrypt.hash(newPassword, 10);
+    userFound.password = passwordHash;
+    await userFound.save();
+
+    res.clearCookie('token');
+    return res.json({ success: true, message: 'Contraseña cambiada con éxito' });
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+};
+*/
+export const resetPassword = async (req, res) => {
+  const { email, newPassword, confirmPassword } = req.body;
+
+  if (newPassword !== confirmPassword) {
+    return res.status(400).json({ message: 'Las contraseñas no coinciden.' });
+  }
+
+  try {
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return res.status(404).json({ message: 'Usuario no encontrado.' });
+    }
+
+    const passwordHash = await bcrypt.hash(newPassword, 10);
+    user.password = passwordHash;
+    await user.save();
+
+    return res.json({ message: 'Contraseña restablecida correctamente.' });
+  } catch (error) {
+    console.error('Error al restablecer la contraseña: ', error);
+    return res.status(500).json({ message: 'Error al restablecer la contraseña.' });
+  }
+};
 
 
 

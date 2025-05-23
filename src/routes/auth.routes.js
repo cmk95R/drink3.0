@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { login, register, profile, showRegisterForm, showLoginForm , logout } from "../controllers/auth.controller.js";
+import { login, register, profile, showRegisterForm, showLoginForm , logout, resetPassword,changePassword} from "../controllers/auth.controller.js";
 
 import carrito from "../controllers/carrito.controller.js"
 import path from 'path';
@@ -62,7 +62,7 @@ router.get('/medios-pago', (req, res) => {
 
 
 //Ruta para cambiar la pass del usuario 
-//router.post('/change-password', authRequired, changePassword)
+
 
 
 
@@ -81,6 +81,7 @@ router.get('/register',showRegisterForm)
 router.post('/login', login);
 router.get('/login',showLoginForm);
 router.get('/profile', authenticate, profile);
+router.post('/change-password', authenticate, changePassword);
 router.get('/logout', logout);
 
 

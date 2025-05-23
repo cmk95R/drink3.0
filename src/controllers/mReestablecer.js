@@ -2,7 +2,7 @@ import nodemailer from "nodemailer";
 
 export const mReestablecer = async (req, res) => {
     const { name, email } = req.body;
-    const resetLink = `http://localhost:4000/api/change-password`;
+    const resetLink = `http://localhost:4000/auth/change-password`;
     // Contenido a enviar del mail
     const contentHTMl = `
     <head>
@@ -51,7 +51,7 @@ export const mReestablecer = async (req, res) => {
         console.log('Message sent', info.messageId);
 
         // Respuesta al cliente después de enviar el correo
-        return res.redirect ("/api/login")
+        return res.redirect ("/auth/login")
         
     } catch (error) {
         console.error('Error al enviar el correo:', error);
