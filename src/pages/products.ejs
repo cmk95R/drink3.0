@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Gestión de Productos</title>
+  <style>
+    body { display: flex; font-family: Arial, sans-serif; }
+    nav { width: 200px; background: #333; color: white; height: 100vh; padding: 1rem; }
+    nav a { color: white; display: block; margin: 1rem 0; text-decoration: none; }
+    nav a:hover { text-decoration: underline; }
+    main { flex-grow: 1; padding: 1rem; }
+    table { border-collapse: collapse; width: 100%; }
+    th, td { padding: 0.5rem; border: 1px solid #ccc; vertical-align: middle; }
+    .actions button { margin-right: 0.5rem; }
+    img.product-image {
+      max-width: 80px;
+      max-height: 80px;
+      object-fit: cover;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <h2>Productos</h2>
+    <a href="/products">Lista de Productos</a>
+    <a href="/products/add">Agregar Producto</a>
+  </nav>
+  <main>
+    <h1>Lista de Productos</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>Imagen</th>
+          <th>Nombre</th>
+          <th>Precio</th>
+          <th>Stock</th>
+          <th>Categoría</th>
+          <th>Disponible</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% products.forEach(product => { %>
+          <tr>
+            <td>
+              <% if (product.image) { %>
+                <img class="product-image" src="/uploads/<%= product.image %>" alt="Imagen de <%= product.name %>">
+              <% } else { %>
+                Sin imagen
+              <% } %>
+            </td>
+            <td><%= product.name %></td>
+            <td>$<%= product.price.toFixed(2) %></td>
+            <td><%= product.stock %></td>
+            <td><%= product.category %></td>
+            <td><%= product.isAvailable ? 'Sí' : 'No' %></td>
+            <td class="actions">
+              <a href="/products/edit/<%= product._id %>">Editar</a>
+              <form style="display:inline" method="POST" action="/products/<%= product._id %>?_method=DELETE">
+                <button type="submit" onclick="return confirm('¿Eliminar este producto?')">Eliminar</button>
+              </form>
+            </td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </main>
+</body>
+</html>
+
+

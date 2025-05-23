@@ -50,6 +50,8 @@ app.use((req, res, next) => {
     next();
 });
 // Posible auth
+import methodOverride from 'method-override';
+app.use(methodOverride('_method'));
 
 app.use('/auth',authRoutes);
 //app,us('/profile');
@@ -60,6 +62,8 @@ app.use('/auth',authRoutes);
 app.use("/users",userRoutes);
 app.use("/orders",orderRoutes);
 app.use("/products",productRoutes);
+
+app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')));
 
 // Ruta principal (mainpage)
 
