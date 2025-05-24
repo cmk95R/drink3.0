@@ -27,8 +27,7 @@ export const createProduct = async (req,res)=>{
             isAvailable 
         });
         await newProduct.save();
-        //res.render(201).json(newProduct);
-        res.render('addProduct', { newProduct }); // ✅ Sin extensión ni barra
+        return res.status(201).json({ message: 'Producto creado correctamente' });
     }catch(error){
         console.log(error);
         res.status(500).json({error:'Hubo un error, pruebe mas tarde.'});
@@ -115,7 +114,8 @@ export const updateProduct = async (req, res) => {
     // Si usas render con EJS para volver a la lista o detalle:
     // res.redirect('/products');
 
-    res.status(200).json(update); // o lo que corresponda
+    res.redirect('/products?edit=success');
+ // o lo que corresponda
 
   } catch (error) {
     console.error(error);
@@ -135,7 +135,7 @@ export const deleteProduct = async (req,res)=>{
         if(!deleted){
             return res.status(404).json({message:'Producto no encontrado'})
         }
-        res.status(204).send();
+        res.redirect('/products'); 
     }catch(error){
         console.log(error);
         res.status(500).json({error:'Hubo un errror, pruebe mas tarde'});
@@ -150,27 +150,5 @@ export const renderProductMainPage = async (req, res) => {
     } catch (error) {
         console.log(error);
         res.status(500).send('Error al cargar productos');
-    }
-};
-// Renderiza formulario para crear producto
-export const renderAddProductPage = (req, res) => {
-      res.render('addProduct', { newProduct: null });
-};
-
-// Renderiza formulario para editar producto (recibe id)
-export const renderEditProductPage = async (req, res) => {
-    try {
-        const { id } = req.params;
-        if (!validateObjectIdProd(id)) {
-            return res.status(400).send('ID inválido');
-        }
-        const product = await Product.findById(id);
-        if (!product) {
-            return res.status(404).send('Producto no encontrado');
-        }
-        res.render('editProduct', { product }); // editProduct.ejs con datos
-    } catch (error) {
-        console.log(error);
-        res.status(500).send('Error al cargar producto');
     }
 };
