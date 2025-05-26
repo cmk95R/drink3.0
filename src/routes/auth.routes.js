@@ -9,6 +9,7 @@ import { validacionesRegister } from "../validations/validacionesRegister.js";
 import { validacionesLogin } from "../validations/validacionesLogin.js";
 
 import { authenticate } from "../middlewares/auth.middleware.js";
+import mConfirmacion from "../controllers/mConfirmacion.js";
 
 
 //const __filename = fileURLToPath(import.meta.url);
@@ -76,8 +77,8 @@ router.get('/medios-pago', (req, res) => {
 
 
 //router.get("/logout", logout)
-router.post('/register', register);
-router.get('/register',showRegisterForm)
+router.post('/register', register, mConfirmacion);
+router.get('/register',showRegisterForm);
 router.post('/login', login);
 router.get('/login',showLoginForm);
 router.get('/profile', authenticate, profile);

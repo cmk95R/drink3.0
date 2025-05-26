@@ -38,7 +38,6 @@ export const mConfirmacion = async (req, res) => { // No necesitas Router aquí
             pass: 'bnkp luas bqwx ifra' // Usa una contraseña de aplicación
         }
     });
-
     try {
         const info = await transporter.sendMail({
             from: "'Drinks in the house' <drinksinthehouse57@gmail.com>",
@@ -48,6 +47,14 @@ export const mConfirmacion = async (req, res) => { // No necesitas Router aquí
         });
 
         console.log('Message sent', info.messageId);
+        
+    if (req.accepts('html')) {
+      return res.redirect('/auth/login');
+    } else {
+      const { password, ...userData } = user.toObject();
+      return res.status(201).json({ message: 'Usuario registrado y correo enviado', user: userData });
+    }
+
     } catch (error) {
         console.error('Error sending email', error);
         return res.status(500).send('Error al enviar el correo electrónico');

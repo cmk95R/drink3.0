@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+/*import mongoose from 'mongoose';
 import User from '../models/user.js';
 import bcrypt from 'bcryptjs';
 
@@ -129,4 +129,4 @@ export const deleteUser = async(req,res)=>{
         console.log(error);
         res.status(500).json({error:'Hubo un  error, pruebe mas tarde'});
     }
-}
+}*/

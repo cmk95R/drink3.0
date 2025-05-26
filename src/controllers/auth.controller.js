@@ -9,6 +9,7 @@ import { fileURLToPath } from 'url'; // ❌ Solo necesario para EJS
 //import { validationResult } from "express-validator";
 import { hashPassword,comparePasswords } from '../services/password.services.js';
 import { createAccessToken } from '../services/jwt.service.js';
+import { nextTick } from 'process';
 
 ///Investigar.
 const __filename = fileURLToPath(import.meta.url);
@@ -21,7 +22,7 @@ export const showRegisterForm = (req, res) => {
 
 
 
-export const register = async (req,res)=>{
+export const register = async (req,res,next)=>{
      const { name, email, rol, password, edad } = req.body;
      const formData = { name, email, rol, edad };
      let errors = [];
@@ -47,12 +48,8 @@ export const register = async (req,res)=>{
     
     await newUser.save();
     //const { password: _, ...userData } = newUser.toObject(); // Excluir password
-    if (req.accepts('html')) {
-      return res.redirect('/auth/login');
-    } else {
-      const { password: _, ...userData } = newUser.toObject();
-      return res.status(201).json(userData);
-    }
+
+    next();
         
     }catch(error){
         console.error(error);
