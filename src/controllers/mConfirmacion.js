@@ -47,7 +47,8 @@ export const mConfirmacion = async (req, res) => { // No necesitas Router aquí
         });
 
         console.log('Message sent', info.messageId);
-        
+
+        //Termina función
     if (req.accepts('html')) {
       return res.redirect('/auth/login');
     } else {
