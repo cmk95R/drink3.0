@@ -9,7 +9,7 @@
   font-family: "Montserrat Alternates", sans-serif;
 }
 header {
-    background-color: #000000;
+    /* background-color: #000000; */
     text-align: left;
     padding: 20px;
     top: 0;
@@ -58,8 +58,7 @@ a:hover:not(#cart), button:hover{
 /*-----------------------------------------------------------------------------*/
 /*------------------------------------BODY-------------------------------------*/
 /*-----------------------------------------------------------------------------*/
-body {
-  background-image:url(../imagenes/foodiesfeed.com_glass-of-ice-tea.jpg) ;
+body {  
   background-attachment: fixed;
   background-size: cover; 
   background-position: center; 

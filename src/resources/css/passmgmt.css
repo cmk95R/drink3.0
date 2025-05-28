@@ -4,11 +4,11 @@
     padding: 0;
     box-sizing: border-box;
 }
+
 body {
-    background-image: url("../imagenes/foodiesfeed.com_glass-of-ice-tea.jpg");
     background-attachment: fixed;
-    background-size: cover; 
-    background-position: center; 
+    background-size: cover;
+    background-position: center;
     background-repeat: no-repeat;
     line-height: 1.6;
     display: flex;
@@ -17,22 +17,23 @@ body {
 }
 
 /* Estilo para el header */
-header {
-    background-color: #000000;
+header {    
     color: white;
     text-align: left;
     padding: 20px;
     top: 0;
     width: 100%;
 }
-.container-header{
+
+.container-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding-right: 30px;
     padding-left: 10px;
 }
-.title{
+
+.title {
     font-family: "Bebas Neue", sans-serif;
     font-weight: 400;
     font-style: normal;
@@ -49,20 +50,23 @@ header {
 main {
     display: flex;
     flex-direction: column;
-    align-items: center; /* Centra horizontalmente */
+    align-items: center;
+    /* Centra horizontalmente */
     padding: 20px;
-    
+
     margin: auto;
 }
 
-.Registro{
+.Registro {
     margin-bottom: 10px;
     margin-top: 5px;
     font-family: Arial, sans-serif;
     font-size: 24px;
     color: #333;
-    text-align: center; /* Centra el título */
+    text-align: center;
+    /* Centra el título */
 }
+
 form {
     background-color: #888;
     padding: 30px;
@@ -72,14 +76,16 @@ form {
     width: 450px;
     display: flex;
     flex-direction: column;
-    align-items: center;  /* Centra los elementos horizontalmente */
-    justify-content: center; /* Centra los elementos verticalmente */
+    align-items: center;
+    /* Centra los elementos horizontalmente */
+    justify-content: center;
+    /* Centra los elementos verticalmente */
     padding-top: 20px;
-    
+
 }
 
 form input {
-   /* margin-bottom: 15px;*/
+    /* margin-bottom: 15px;*/
     margin-bottom: 15px;
     width: 90%;
     padding: 10px;
@@ -88,7 +94,7 @@ form input {
     box-sizing: border-box;
     border-color: #000000;
     border: 1px solid black;
-    
+
 }
 
 
@@ -147,5 +153,3 @@ button:hover {
 }
 
 /* Media queries se mantienen igual */
-
-

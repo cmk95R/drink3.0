@@ -19,8 +19,6 @@ export const showRegisterForm = (req, res) => {
     res.render('register', { formData: {}, errors: [] });
 };
 
-
-
 export const register = async (req,res)=>{
      const { name, email, rol, password, edad } = req.body;
      const formData = { name, email, rol, edad };
@@ -30,11 +28,7 @@ export const register = async (req,res)=>{
         errors.push({ msg: 'Todos los campos son obligatorios.' });
         return handleResponse(req, res, 400, { errors, formData }, 'register');
   }
- 
-    
-
-    try{
-        
+    try{        
         const existingUser = await User.findOne({email});
         if (existingUser) {
             errors.push({ msg: 'El correo ya está registrado.' });
@@ -42,8 +36,7 @@ export const register = async (req,res)=>{
           }
 
           const hashedPassword = await hashPassword(password);
-          const newUser = new User({ name, email, rol, password: hashedPassword, edad });
-        
+          const newUser = new User({ name, email, rol, password: hashedPassword, edad });        
     
     await newUser.save();
     //const { password: _, ...userData } = newUser.toObject(); // Excluir password
