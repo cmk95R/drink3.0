@@ -1,0 +1,25 @@
+<h1>Bienvenido <%= user.name %> al Dashboard</h1>
+
+<h2>Productos</h2>
+<ul>
+  <% productos.forEach(producto => { %>
+    <li><%= producto.name %> - Stock: <%= producto.stock %></li>
+  <% }) %>
+</ul>
+
+<h2>Órdenes</h2>
+<ul>
+  <% ordenes.forEach(orden => { %>
+    <li>
+      Cliente: <%= orden.clienteId ? orden.clienteId.name : 'Cliente eliminado' %><br>
+      Estado: <%= orden.estado %><br>
+      Fecha: <%= orden.fecha.toLocaleDateString() %><br>
+      Productos:
+      <ul>
+        <% orden.products.forEach(item => { %>
+          <li><%= item.productId.name %> - Cantidad: <%= item.cantidad %></li>
+        <% }) %>
+      </ul>
+    </li>
+  <% }) %>
+</ul>

@@ -44,9 +44,6 @@
                     <%= prodfind.description || 'Sin descripción' %>
                   </p>
                 </div>
-                <div class="product-detail__main-card-precio">
-                  $ <%= prodfind.price.toLocaleString('es-ES') %>
-                </div>
               </div>
             </article>
 
@@ -81,9 +78,6 @@
               <p class="card-name">
                 <%= relatedProduct.name %>
               </p>
-              <p class="price">
-                <b>$<%= relatedProduct.price.toLocaleString('es-ES') %></b>
-              </p>
               <p class="card-descripcion">
                 <%= relatedProduct.description || 'Sin descripción' %>
               </p>
@@ -101,4 +95,5 @@
     ></script>
   </body>
 </html>
+
 

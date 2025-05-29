@@ -1,5 +1,7 @@
 import mongoose from 'mongoose';
+import User from '../models/user.js';
 import Order from '../models/order.js';
+import Product from '../models/product.js';
 
 const validateObjectIdOrd = (id) => mongoose.Types.ObjectId.isValid(id);
 
@@ -95,5 +97,22 @@ export const cancelOrder = async (req, res) => {
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: 'Hubo un error, prueba más tarde.' });
+  }
+};
+
+export const renderOrdersPage = async (req, res) => {
+  try {
+    const orders = await Order.find()
+      .populate('clienteId')
+      .populate('products.productId');
+
+    const clientes = await User.find();
+    const productos = await Product.find();
+
+    res.render('orders', { orders, clients: clientes, products: productos, user: req.user   });
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error al cargar la página de órdenes');
   }
 };

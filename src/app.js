@@ -9,6 +9,7 @@ import authRoutes from "./routes/auth.routes.js";
 import userRoutes from "./routes/user.routes.js";
 import orderRoutes from "./routes/order.routes.js";
 import productRoutes from "./routes/product.routes.js";
+import dashboardRouter from "./routes/dashboard.routes.js";
 
 // Configuración para __dirname en ES Modules
 const __filename = fileURLToPath(import.meta.url);
@@ -62,8 +63,9 @@ app.use('/auth',authRoutes);
 app.use("/users",userRoutes);
 app.use("/orders",orderRoutes);
 app.use("/products",productRoutes);
-
+app.use('/dashboard', dashboardRouter);
 app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')));
+
 
 // Ruta principal (mainpage)
 

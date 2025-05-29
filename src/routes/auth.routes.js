@@ -79,7 +79,12 @@ router.get('/medios-pago', (req, res) => {
 router.post('/register', register);
 router.get('/register',showRegisterForm)
 router.post('/login', login);
-router.get('/login',showLoginForm);
+router.get('/login', (req, res, next) => {
+  if (req.session && req.session.user) {
+    return res.redirect('/dashboard');
+  }
+  next();
+}, showLoginForm);
 router.get('/profile', authenticate, profile);
 router.post('/change-password', authenticate, changePassword);
 router.get('/logout', logout);

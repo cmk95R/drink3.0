@@ -1,12 +1,9 @@
 import User from '../models/user.js';  
 
-//import jwt from "jsonwebtoken"
-//mport { createAccessToken } from "../libs/jwt.js";
-// import mConfirmacion from './mConfirmacion.js'; // ❌ Si no vas a usar email de confirmación, comentar
-// import { mReestablecer } from './mReestablecer.js'; // ❌ Si no vas a enviar mails de recuperación, comentar
+
 import path from 'path'; // ❌ Solo necesario para EJS u otras vistas
 import { fileURLToPath } from 'url'; // ❌ Solo necesario para EJS
-//import { validationResult } from "express-validator";
+
 import { hashPassword,comparePasswords } from '../services/password.services.js';
 import { createAccessToken } from '../services/jwt.service.js';
 
@@ -56,7 +53,7 @@ export const register = async (req,res)=>{
 };
 ///////////////////////////////////////////////////////////////////////////////
 export const showLoginForm = (req, res) => {
-    res.render('login', { error: null });
+    res.render('index', { error: null });
   };
 ///////////////////////////////////////////////////////////////////////////////  
 
@@ -64,13 +61,13 @@ export const login = async (req, res) => {
     const { email, password } = req.body;
 
     if (!email || !password) {
-        return handleResponse(req, res, 400, { error: 'Email y contraseña son requeridos.' }, 'login');
+        return handleResponse(req, res, 400, { error: 'Email y contraseña son requeridos.' }, 'index');
     }
 
     try {
         const user = await User.findOne({ email });
         if (!user || !(await comparePasswords(password, user.password))) {
-      return handleResponse(req, res, 401, { error: 'Credenciales inválidas.' }, 'login');
+      return handleResponse(req, res, 401, { error: 'Credenciales inválidas.' }, 'index');
     }
 
         
@@ -97,7 +94,7 @@ export const login = async (req, res) => {
     
 
     if (req.accepts('html')) {
-      return res.redirect('/');
+      return res.redirect('/dashboard');
     } else {
       return res.status(200).json({ token, user: userData });
     }
