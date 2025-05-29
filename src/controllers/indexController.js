@@ -1,23 +1,14 @@
-import fs from 'fs';
-import path from 'path';
-import { fileURLToPath } from 'url';
+//Importaciones
 import Product from '../models/product.js';
 
-// Para resolver __dirname en ES Modules
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-//const productsFilePath = path.join(__dirname, '../db-json/productos.json');
-//const products = JSON.parse(fs.readFileSync(productsFilePath, 'utf-8'));
-
-//const toThousand = n => n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-
+// Función para renderizar vista index (exportada al final)
 const controller = {
     index: async (req, res) => {
         try {
+            //parametro de consulta
             const { keywords } = req.query;
             let products;
-
+            //Filtro de búsqueda (usado en index.ejs)
             if (keywords) {
                 // Buscar productos cuyo nombre contenga las keywords (insensible a mayúsculas)
                 products = await Product.find({ 
@@ -31,7 +22,7 @@ const controller = {
             const user = req.session.user || null;
 
             const toThousand = n => n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-
+            //Retorna la renderización
             return res.render('index.ejs', {
                 products,
                 toThousand,
@@ -47,6 +38,3 @@ const controller = {
 };
 
 export default controller;
-
-
-

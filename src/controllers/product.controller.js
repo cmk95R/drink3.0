@@ -1,13 +1,14 @@
 import mongoose from 'mongoose';
 import Product from '../models/product.js';
 
-
 const validateObjectIdProd = (id) => mongoose.Types.ObjectId.isValid(id);//Encerramos el id del producto
 
-
+//Función crear producto
 export const createProduct = async (req,res)=>{
     try{
+        //necesita de las siguientes variables para crearse:
         const{name,price,stock,category,description} = req.body;
+        //imagen opcional
         let image = req.file ? req.file.filename : null;
 
         let isAvailable = req.body.isAvailable === 'on';
@@ -34,7 +35,7 @@ export const createProduct = async (req,res)=>{
     }
 };
 
-//Obtener los productos por un id
+//Obtener los productos por un id //////////////////////////usado por "product.routes" no c si funciona el routes
 export const getProductById = async (req,res)=>{
     try{
         const{id} = req.params;
@@ -53,17 +54,7 @@ export const getProductById = async (req,res)=>{
     }
 };
 
-export const getAllProducts = async (req,res)=>{
-    try{
-        const products = await Product.find();
-        res.status(200).json(products);
-    }catch(error){
-        console.log(error);
-        res.status(500).json({error:'Hubo un error pruebe mas tarde'});
-    }
-};
-
-
+//Funcion actualizar producto
 export const updateProduct = async (req, res) => {
   try {
     const { id } = req.params;
@@ -74,17 +65,15 @@ export const updateProduct = async (req, res) => {
 
     const { name, price, stock, category, description } = req.body;
     let isAvailable = req.body.isAvailable === 'on';
-
+    //Obligar a poner todos los campos
     if (!name || price == null || stock == null || !category) {
       return res.status(400).json({ message: 'Todos los campos son obligatorios' });
     }
-
     // Manejo de la imagen
     let image;
     if (req.file) {
       image = req.file.filename; // nueva imagen subida
     }
-
     // Objeto para update (solo actualizamos image si hay nueva)
     const updateData = {
       name,
@@ -108,14 +97,7 @@ export const updateProduct = async (req, res) => {
       return res.status(404).json({ message: 'Producto no encontrado' });
     }
 
-    // Si usas API JSON
-    // res.status(200).json(update);
-
-    // Si usas render con EJS para volver a la lista o detalle:
-    // res.redirect('/products');
-
     res.redirect('/products?edit=success');
- // o lo que corresponda
 
   } catch (error) {
     console.error(error);
@@ -123,9 +105,8 @@ export const updateProduct = async (req, res) => {
   }
 };
 
-
+//Funcion borrar producto
 export const deleteProduct = async (req,res)=>{
-    
     try{
         const{id}=req.params;
         if(!validateObjectIdProd(id)) {
@@ -142,7 +123,7 @@ export const deleteProduct = async (req,res)=>{
     }
 };
 
-
+//Funcion para renderizar en la página principal 
 export const renderProductMainPage = async (req, res) => {
     try {
         const products = await Product.find();

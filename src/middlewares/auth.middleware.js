@@ -1,3 +1,4 @@
+//Importaciones
 import { verifyToken } from '../services/jwt.service.js';
 
 export const authenticate = (req, res, next) => {
@@ -14,9 +15,8 @@ export const authenticate = (req, res, next) => {
     token = req.cookies.token;
   }
 
-  // 3. Si no hay token, rechazar
+  // 3. Si no hay token redireccionar a login
   if (!token) {
-    //return res.status(401).json({ message: 'Token no proporcionado' });
     return res.redirect('/auth/login');
   }
 

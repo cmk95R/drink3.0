@@ -1,9 +1,9 @@
-import { Router } from "express";
+//Importaciones
 import nodemailer from "nodemailer";
 
-const router = Router(); // Enrutador
-
-export const mConfirmacion = async (req, res) => { // No necesitas Router aquí
+//Exportar función de mensajería
+export const mConfirmacion = async (req, res) => {
+    //variables a utilizar en el mensaje
     const { name, email, message } = req.body;
 
     // Contenido a enviar del mail
@@ -48,7 +48,7 @@ export const mConfirmacion = async (req, res) => { // No necesitas Router aquí
 
         console.log('Message sent', info.messageId);
 
-        //Termina función
+        //Termina el middleware subsecuente de "authcontroller" donde se usa la función "register" a la par en "auth.routes"
     if (req.accepts('html')) {
       return res.redirect('/auth/login');
     } else {

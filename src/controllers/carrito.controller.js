@@ -1,3 +1,4 @@
+//Importaciones
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -11,18 +12,15 @@ const products = JSON.parse(fs.readFileSync(productsFilePath, 'utf-8'));
 
 const toThousand = n => n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 
-
+/*------funcion renderizar página carrito------*/
 const carritoController = {
     carrito: (req, res) => {
 
-        // Filtrar los productos si hay una palabra clave
-        
-
         // Obtener el usuario de la sesión
-        const user = req.session.user || null;  // Ajusta esto según cómo guardes el usuario en la sesión
-
+        const user = req.session.user || null;
+        // Devuelve la renderizacion de la página
         return res.render('carrito.ejs', {
-            products,  // Pasamos los productos filtrados
+            products,  // Pasamos los productos filtrados ============= ????????????????????? que productos
             toThousand,
             user // Pasamos el objeto 'user' para usarlo en la vista
         });

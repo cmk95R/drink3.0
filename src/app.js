@@ -1,12 +1,14 @@
+//Importaciones liberias
 import express from "express";
 import morgan from "morgan";
 import cookieParser from "cookie-parser";
 import path from 'path';
 import { fileURLToPath } from 'url';
 import session from 'express-session';  // Importar express-session
+
+//Importaciones routes
 import indexRouter from './routes/index.routes.js';
 import authRoutes from "./routes/auth.routes.js";
-import userRoutes from "./routes/user.routes.js";
 import orderRoutes from "./routes/order.routes.js";
 import productRoutes from "./routes/product.routes.js";
 
@@ -26,7 +28,6 @@ app.use('/resources/js', express.static(path.join(__dirname, 'resources/js')));
 app.use('/resources/css', express.static(path.join(__dirname, 'resources/css')));
 app.use('/resources/imagenes', express.static(path.join(__dirname, 'resources/imagenes')));
 app.use(express.static(path.join(__dirname, 'src/pages')));
-
 
 
 // Middleware
@@ -54,19 +55,13 @@ import methodOverride from 'method-override';
 app.use(methodOverride('_method'));
 
 app.use('/auth',authRoutes);
-//app,us('/profile');
-
 
 // Rutas de la API y enrutadores
-//app.use("/api", authRoutes);
-app.use("/users",userRoutes);
 app.use("/orders",orderRoutes);
 app.use("/products",productRoutes);
-
 app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')));
 
 // Ruta principal (mainpage)
-
 app.use('/', indexRouter);
 
 

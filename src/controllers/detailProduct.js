@@ -1,9 +1,10 @@
+//Importaciones
 import Product from '../models/product.js';
 
+// Exportacion de 
 export const detailProduct = async (req, res) => {
   try {
     const idParam = req.params.id;
-
     // Validar que el ID sea válido para evitar errores en la consulta
     if (!idParam || !idParam.match(/^[0-9a-fA-F]{24}$/)) {
       return res.status(400).send('ID inválido');
@@ -11,12 +12,12 @@ export const detailProduct = async (req, res) => {
 
     // Buscar el producto por ID
     const prodFind = await Product.findById(idParam).lean(); // lean para obtener objeto plano
-
+    //Si no encuentra el producto, tirar error
     if (!prodFind) {
       return res.status(404).send('Producto no encontrado');
     }
 
-    // Buscar productos relacionados (misma categoría, distinto ID)
+    // Buscar productos relacionados (misma categoría, distinto ID, 3 como máximo)
     const relatedProducts = await Product.find({
       category: prodFind.category,
       _id: { $ne: prodFind._id }
@@ -39,6 +40,3 @@ export const detailProduct = async (req, res) => {
     return res.status(500).send('Error en el servidor');
   }
 };
-
-
-export default detailProduct;

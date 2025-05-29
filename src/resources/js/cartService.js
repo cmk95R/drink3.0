@@ -10,17 +10,8 @@ function reiniciarCarrito() {
 /** Finaliza la compra y guarda el historial */
 /** Evento de clic en el botón de finalizar compra */
 document.getElementById("boton-pagar").addEventListener("click", () => {
-  if (validarMetodoPagoSeleccionado()) {
     finalizarCompra();
-  } else {
-    alert("Por favor, selecciona un método de pago antes de continuar.");
-  }
 });
-
-function validarMetodoPagoSeleccionado() {
-  const checkboxes = document.querySelectorAll('#payment-methods-form input[type="checkbox"]');
-  return Array.from(checkboxes).some(checkbox => checkbox.checked); // Retorna true si al menos un checkbox está marcado
-}
 
 function finalizarCompra() {
   const carritoActual = JSON.parse(localStorage.getItem("bebidas")) || [];
