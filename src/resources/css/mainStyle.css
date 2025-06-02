@@ -1,3 +1,30 @@
+/* PLAYGROUND */
+
+    .sidebar {
+      min-height: 100vh;
+      background-color: #343a40;
+    }
+
+    .sidebar a {
+      color: #fff;
+      text-decoration: none;
+      display: block;
+      padding: 0.75rem 1rem;
+    }
+
+    .sidebar a:hover {
+      background-color: #495057;
+    }
+
+    .product-image {
+      max-width: 80px;
+      max-height: 80px;
+      object-fit: cover;
+      border-radius: 5px;
+    }
+
+
+
 /*-----------------------------------------------------------------------------*/
 /*-----------------------------ASPECTOS GENERALES------------------------------*/
 /*-----------------------------------------------------------------------------*/
