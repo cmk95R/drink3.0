@@ -1,4 +1,3 @@
-// Accedemos a los datos inyectados en window
 const orders = window.orders;
 const clients = window.clients;
 const products = window.products;
@@ -9,13 +8,12 @@ const btnNewOrder = document.getElementById('btn-new-order');
 const productsList = document.getElementById('productsList');
 const btnAddProduct = document.getElementById('btnAddProduct');
 
-// Función para crear un bloque de producto + cantidad
 function createProductRow(productId = '', quantity = 1) {
   const div = document.createElement('div');
   div.classList.add('d-flex', 'mb-2', 'gap-2', 'align-items-center');
 
   const select = document.createElement('select');
-  select.name = 'products[][productId]';
+  select.name = 'productId'; // 🔥 Cambiamos el name para recolectar datos
   select.classList.add('form-select');
   select.required = true;
   products.forEach(p => {
@@ -28,7 +26,7 @@ function createProductRow(productId = '', quantity = 1) {
 
   const inputQty = document.createElement('input');
   inputQty.type = 'number';
-  inputQty.name = 'products[][quantity]';
+  inputQty.name = 'quantity'; // 🔥 Cambiamos el name para recolectar datos
   inputQty.classList.add('form-control');
   inputQty.min = 1;
   inputQty.value = quantity;
@@ -57,7 +55,6 @@ btnNewOrder.addEventListener('click', () => {
   orderModal.show();
 });
 
-// Editar orden - cargar datos en modal
 document.querySelectorAll('.btn-edit').forEach(btn => {
   btn.addEventListener('click', (e) => {
     const id = e.target.dataset.id;
@@ -78,7 +75,6 @@ document.querySelectorAll('.btn-edit').forEach(btn => {
   });
 });
 
-// Cancelar orden (solo confirm y luego enviar petición)
 document.querySelectorAll('.btn-cancel').forEach(btn => {
   btn.addEventListener('click', async (e) => {
     const id = e.target.dataset.id;
@@ -100,30 +96,27 @@ document.querySelectorAll('.btn-cancel').forEach(btn => {
   });
 });
 
-// Enviar formulario crear/editar
 orderForm.addEventListener('submit', async (e) => {
   e.preventDefault();
 
-  const formData = new FormData(orderForm);
-  // Construir payload compatible
-  const clienteId = formData.get('clienteId');
-  const estado = formData.get('estado');
+  const clienteId = orderForm.querySelector('#clienteId').value;
+  const estado = orderForm.querySelector('#estado').value;
 
   const productsPayload = [];
-  const productIds = formData.getAll('products[][productId]');
-  const quantities = formData.getAll('products[][quantity]');
-  for (let i = 0; i < productIds.length; i++) {
-    if (productIds[i] && quantities[i]) {
+  productsList.querySelectorAll('div').forEach(div => {
+    const productId = div.querySelector('select[name="productId"]').value;
+    const quantity = div.querySelector('input[name="quantity"]').value;
+    if (productId && quantity) {
       productsPayload.push({
-        productId: productIds[i],
-        quantity: Number(quantities[i])
+        productId,
+        quantity: Number(quantity)
       });
     }
-  }
+  });
 
   const payload = { clienteId, estado, products: productsPayload };
 
-  const id = formData.get('orderId');
+  const id = orderForm.querySelector('#orderId').value;
   const url = id ? `/orders/${id}` : '/orders';
   const method = id ? 'PUT' : 'POST';
 
