@@ -55,6 +55,61 @@ btnNewOrder.addEventListener('click', () => {
   orderModal.show();
 });
 
+
+
+//Función Cancelar orden
+
+document.querySelectorAll('.btn-cancel').forEach(btn => {
+  btn.addEventListener('click', async (e) => {
+    const id = e.target.dataset.id;
+
+    const result = await Swal.fire({
+      title: '¿Estás seguro?',
+      text: "¿Deseas cancelar esta orden?",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sí, cancelar',
+      cancelButtonText: 'No, mantener',
+      reverseButtons: true
+    });
+
+    if (!result.isConfirmed) return;
+
+    try {
+      const res = await fetch(`/orders/${id}`, {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' }
+      });
+
+      if (res.ok) {
+        await Swal.fire({
+          title: 'Cancelado',
+          text: 'La orden ha sido cancelada',
+          icon: 'success',
+          confirmButtonText: 'OK'
+        });
+        location.reload();
+      } else {
+        await Swal.fire({
+          title: 'Error',
+          text: 'Error al cancelar la orden',
+          icon: 'error',
+          confirmButtonText: 'OK'
+        });
+      }
+    } catch (error) {
+      await Swal.fire({
+        title: 'Error',
+        text: 'Hubo un problema al procesar la solicitud',
+        icon: 'error',
+        confirmButtonText: 'OK'
+      });
+    }
+  });
+});
+
+//Función modificar orden
+
 document.querySelectorAll('.btn-edit').forEach(btn => {
   btn.addEventListener('click', (e) => {
     const id = e.target.dataset.id;
@@ -72,27 +127,6 @@ document.querySelectorAll('.btn-edit').forEach(btn => {
     });
 
     orderModal.show();
-  });
-});
-
-document.querySelectorAll('.btn-cancel').forEach(btn => {
-  btn.addEventListener('click', async (e) => {
-    const id = e.target.dataset.id;
-    if (!confirm('¿Seguro que desea cancelar esta orden?')) return;
-    try {
-      const res = await fetch(`/orders/${id}`, {
-        method: 'DELETE',
-        headers: { 'Content-Type': 'application/json' }
-      });
-      if (res.ok) {
-        alert('Orden cancelada');
-        location.reload();
-      } else {
-        alert('Error al cancelar la orden');
-      }
-    } catch (error) {
-      alert('Error al cancelar la orden');
-    }
   });
 });
 
@@ -121,6 +155,17 @@ orderForm.addEventListener('submit', async (e) => {
   const method = id ? 'PUT' : 'POST';
 
   try {
+    const result = await Swal.fire({
+      title: '¿Guardar orden?',
+      text: '¿Deseas continuar con el guardado?',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Sí, guardar',
+      cancelButtonText: 'Cancelar'
+    });
+
+    if (!result.isConfirmed) return;
+
     const res = await fetch(url, {
       method,
       headers: { 'Content-Type': 'application/json' },
@@ -128,12 +173,27 @@ orderForm.addEventListener('submit', async (e) => {
     });
 
     if (res.ok) {
-      alert('Orden guardada con éxito');
+      await Swal.fire({
+        title: '¡Éxito!',
+        text: 'Orden guardada con éxito',
+        icon: 'success',
+        confirmButtonText: 'OK'
+      });
       location.reload();
     } else {
-      alert('Error al guardar la orden');
+      await Swal.fire({
+        title: 'Error',
+        text: 'Error al guardar la orden',
+        icon: 'error',
+        confirmButtonText: 'OK'
+      });
     }
   } catch (error) {
-    alert('Error al guardar la orden');
+    await Swal.fire({
+      title: 'Error',
+      text: 'Hubo un problema al guardar la orden',
+      icon: 'error',
+      confirmButtonText: 'OK'
+    });
   }
 });
