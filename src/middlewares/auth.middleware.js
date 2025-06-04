@@ -13,13 +13,10 @@ export const authenticate = (req, res, next) => {
   if (!token && req.cookies.token) {
     token = req.cookies.token;
   }
-
   // 3. Si no hay token, rechazar
   if (!token) {
-    //return res.status(401).json({ message: 'Token no proporcionado' });
     return res.redirect('/auth/login');
   }
-
   // 4. Verificar el token
   try {
     const decoded = verifyToken(token);

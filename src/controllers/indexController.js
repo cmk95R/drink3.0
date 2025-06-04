@@ -1,16 +1,6 @@
-import fs from 'fs';
-import path from 'path';
-import { fileURLToPath } from 'url';
+
 import Product from '../models/product.js';
 
-// Para resolver __dirname en ES Modules
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-//const productsFilePath = path.join(__dirname, '../db-json/productos.json');
-//const products = JSON.parse(fs.readFileSync(productsFilePath, 'utf-8'));
-
-//const toThousand = n => n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 
 const controller = {
     index: async (req, res) => {

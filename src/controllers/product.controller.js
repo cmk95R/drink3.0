@@ -52,18 +52,6 @@ export const getProductById = async (req, res) => {
         res.status(500).json({ error: 'Hubo un error, pruebe más tarde' });
     }
 };
-
-// Obtener todos los productos
-export const getAllProducts = async (req, res) => {
-    try {
-        const products = await Product.find();
-        res.status(200).json(products);
-    } catch (error) {
-        console.log(error);
-        res.status(500).json({ error: 'Hubo un error, pruebe más tarde' });
-    }
-};
-
 // Actualizar un producto
 export const updateProduct = async (req, res) => {
     try {
