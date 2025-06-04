@@ -1,0 +1,92 @@
+
+
+.background-pattern {
+    background-color: #F8F8FF;
+    color: #333; /* texto oscuro para buen contraste */
+}
+
+.nav-link span {
+    width: 24px;
+    height: 24px;
+    display: inline-block;
+    background-size: cover;
+    margin-right: 8px;
+    vertical-align: middle;
+}
+
+.nav-link {
+  color: #333 !important;
+  text-decoration: none;
+}
+
+.nav-link:hover {
+  color: #000 !important;
+}
+
+
+/* ICON: Dashboard */
+.icon-dashboard {
+    background-image: url('https://img.icons8.com/?size=100&id=3AvsrruafqJF&format=png&color=000000');
+}
+
+.icon-dashboard:hover {
+    background-image: url('https://img.icons8.com/?size=100&id=3AvsrruafqJF&format=gif&color=000000');
+}
+
+/* ICON: Stock */
+.icon-stock {
+    background-image: url('https://img.icons8.com/?size=100&id=p7gKtdvdmPoo&format=png&color=000000');
+}
+
+.icon-stock:hover {
+    background-image: url('https://img.icons8.com/?size=100&id=p7gKtdvdmPoo&format=gif&color=000000');
+}
+
+/* ICON: Orders */
+.icon-orders {
+    background-image: url('https://img.icons8.com/?size=100&id=NKRM4VSa2hw2&format=png&color=000000');
+}
+
+.icon-orders:hover {
+    background-image: url('https://img.icons8.com/?size=100&id=NKRM4VSa2hw2&format=gif&color=000000');
+}
+
+/* ICON: Horarios */
+.icon-schedule {
+    background-image: url('https://img.icons8.com/?size=100&id=AOY94AyMQPT2&format=png&color=000000');
+}
+
+.icon-schedule:hover {
+    background-image: url('https://img.icons8.com/?size=100&id=AOY94AyMQPT2&format=gif&color=000000');
+}
+
+/* ICON: Billing */
+.icon-billing {
+    background-image: url('https://img.icons8.com/?size=100&id=07GtFpB4vZzD&format=png&color=000000');
+}
+
+.icon-billing:hover {
+    background-image: url('https://img.icons8.com/?size=100&id=07GtFpB4vZzD&format=gif&color=000000');
+}
+
+/* ICON: Settings */
+.icon-settings {
+    background-image: url('https://img.icons8.com/?size=100&id=rk8gMHQsBQHb&format=png&color=000000');
+}
+
+.icon-settings:hover {
+    background-image: url('https://img.icons8.com/?size=100&id=rk8gMHQsBQHb&format=gif&color=000000');
+}
+
+/* ICON: Logout */
+.icon-logout {
+    background-image: url('https://img.icons8.com/?size=100&id=arrojWw9F5j5&format=png&color=000000');
+}
+
+.icon-logout:hover {
+    background-image: url('https://img.icons8.com/?size=100&id=arrojWw9F5j5&format=gif&color=000000');
+}
+
+.logo {
+    padding-left: 30px
+}

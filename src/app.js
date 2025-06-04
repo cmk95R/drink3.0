@@ -10,7 +10,7 @@ import userRoutes from "./routes/user.routes.js";
 import orderRoutes from "./routes/order.routes.js";
 import productRoutes from "./routes/product.routes.js";
 import dashboardRouter from "./routes/dashboard.routes.js";
-
+import horarioRoutes from "./routes/horario.routes.js";
 // Configuración para __dirname en ES Modules
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -61,6 +61,7 @@ app.use('/auth',authRoutes);
 // Rutas de la API y enrutadores
 //app.use("/api", authRoutes);
 app.use("/users",userRoutes);
+app.use("/horario",horarioRoutes);
 app.use("/orders",orderRoutes);
 app.use("/products",productRoutes);
 app.use('/dashboard', dashboardRouter);
