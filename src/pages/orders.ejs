@@ -78,7 +78,10 @@
               Editar
             </button>
             <form method="POST" action="/orders/<%= order._id %>?_method=DELETE" class="d-inline">
-              <button type="submit" class="btn btn-danger btn-sm btn-cancel">
+              <button 
+                type="button" 
+                class="btn btn-danger btn-sm btn-cancel" 
+                data-id="<%= order._id %>">
                 Cancelar
               </button>
             </form>
