@@ -101,192 +101,108 @@
       </div>
     </div>
 
-    <!-- MODAL: Agregar Producto -->
-    <div
-      class="modal fade"
-      id="modalAgregarProducto"
-      tabindex="-1"
-      aria-labelledby="modalAgregarProductoLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog modal-lg">
-        <form
-          action="/products/add"
-          method="POST"
-          enctype="multipart/form-data"
-          class="modal-content"
-        >
+  <!-- Modal Agregar Producto -->
+  <div class="modal fade" id="modalAgregarProducto" tabindex="-1" aria-labelledby="modalAgregarProductoLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <form id="formAgregarProducto" action="/products/add" method="POST" enctype="multipart/form-data">
           <div class="modal-header">
-            <h5 class="modal-title" id="modalAgregarProductoLabel">
-              Agregar Producto
-            </h5>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Cerrar"
-            ></button>
+            <h5 class="modal-title" id="modalAgregarProductoLabel">Agregar Producto</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
           </div>
           <div class="modal-body">
-            <div class="row g-3">
-              <div class="col-md-6">
-                <label class="form-label">Nombre</label>
-                <input type="text" name="name" class="form-control" required />
-              </div>
-              <div class="col-md-6">
-                <label class="form-label">Stock</label>
-                <input
-                  type="number"
-                  name="stock"
-                  class="form-control"
-                  required
-                />
-              </div>
-              <div class="col-md-6">
-                <label class="form-label">Categoría</label>
-                <select name="category" class="form-select" required>
-                  <option value="vino">Vino</option>
-                  <option value="cerveza">Cerveza</option>
-                  <option value="whisky">Whisky</option>
-                  <option value="vodka">Vodka</option>
-                </select>
-              </div>
-              <div class="col-md-6">
-                <label class="form-label">¿Disponible?</label>
-                <select name="isAvailable" class="form-select">
-                  <option value="true">Sí</option>
-                  <option value="false">No</option>
-                </select>
-              </div>
-              <div class="col-12">
-                <label class="form-label">Imagen</label>
-                <input type="file" name="image" class="form-control" />
-              </div>
+            <div class="mb-3">
+              <label for="name" class="form-label">Nombre</label>
+              <input type="text" name="name" class="form-control" required />
+            </div>
+            <div class="mb-3">
+              <label for="stock" class="form-label">Stock</label>
+              <input type="number" name="stock" class="form-control" required />
+            </div>
+            <div class="mb-3">
+              <label for="category" class="form-label">Categoría</label>
+              <select name="category" class="form-select" required>
+                <option value="vino">Vino</option>
+                <option value="cerveza">Cerveza</option>
+                <option value="whisky">Whisky</option>
+                <option value="vodka">Vodka</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="isAvailable" class="form-label">¿Disponible?</label>
+              <select name="isAvailable" class="form-select">
+                <option value="true">Sí</option>
+                <option value="false">No</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="image" class="form-label">Imagen</label>
+              <input type="file" name="image" class="form-control" />
             </div>
           </div>
           <div class="modal-footer">
-            <button class="btn btn-secondary" data-bs-dismiss="modal">
-              Cancelar
-            </button>
-            <button class="btn btn-success" type="submit">
-              Guardar Producto
-            </button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            <button type="submit" class="btn btn-success">Guardar Producto</button>
           </div>
         </form>
       </div>
     </div>
+  </div>
 
-    <!-- Modal Editar Producto -->
-    <div
-      class="modal fade"
-      id="editProductModal"
-      tabindex="-1"
-      aria-labelledby="editProductModalLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog">
-        <form id="editProductForm" method="POST" enctype="multipart/form-data">
-          <input type="hidden" name="_method" value="PUT" />
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="editProductModalLabel">
-                Editar Producto
-              </h5>
-              <button
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Cerrar"
-              ></button>
+  <!-- Modal Editar Producto -->
+  <div class="modal fade" id="editProductModal" tabindex="-1" aria-labelledby="editProductModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+      <form id="editProductForm" method="POST" enctype="multipart/form-data">
+        <input type="hidden" name="_method" value="PUT" />
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="editProductModalLabel">Editar Producto</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+          </div>
+          <div class="modal-body">
+            <div class="mb-3">
+              <label for="editName" class="form-label">Nombre:</label>
+              <input type="text" class="form-control" id="editName" name="name" required />
             </div>
-            <div class="modal-body">
-              <div class="mb-3">
-                <label for="editName" class="form-label">Nombre:</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="editName"
-                  name="name"
-                  required
-                />
-              </div>
-              <div class="mb-3">
-                <label for="editStock" class="form-label">Stock:</label>
-                <input
-                  type="number"
-                  class="form-control"
-                  id="editStock"
-                  name="stock"
-                  required
-                />
-              </div>
-              <div class="mb-3">
-                <label for="editCategory" class="form-label">Categoría:</label>
-                <select
-                  class="form-select"
-                  id="editCategory"
-                  name="category"
-                  required
-                >
-                  <option value="vino">Vino</option>
-                  <option value="cerveza">Cerveza</option>
-                  <option value="whisky">Whisky</option>
-                  <option value="vodka">Vodka</option>
-                  <option value="otros">Otros</option>
-                </select>
-              </div>
-              <div class="mb-3">
-                <label for="editDescription" class="form-label"
-                  >Descripción:</label
-                >
-                <textarea
-                  class="form-control"
-                  id="editDescription"
-                  name="description"
-                ></textarea>
-              </div>
-              <div class="mb-3">
-                <label>Imagen actual:</label>
-                <div id="currentImageContainer" class="mb-2"></div>
-                <label for="editImage" class="form-label"
-                  >Cambiar Imagen:</label
-                >
-                <input
-                  type="file"
-                  class="form-control"
-                  id="editImage"
-                  name="image"
-                  accept="image/*"
-                />
-              </div>
-              <div class="form-check mb-3">
-                <input
-                  type="checkbox"
-                  class="form-check-input"
-                  id="editIsAvailable"
-                  name="isAvailable"
-                />
-                <label class="form-check-label" for="editIsAvailable"
-                  >Disponible</label
-                >
-              </div>
+            <div class="mb-3">
+              <label for="editStock" class="form-label">Stock:</label>
+              <input type="number" class="form-control" id="editStock" name="stock" required />
             </div>
-            <div class="modal-footer">
-              <button type="submit" class="btn btn-primary">
-                Guardar Cambios
-              </button>
-              <button
-                type="button"
-                class="btn btn-secondary"
-                data-bs-dismiss="modal"
-              >
-                Cancelar
-              </button>
+            <div class="mb-3">
+              <label for="editCategory" class="form-label">Categoría:</label>
+              <select class="form-select" id="editCategory" name="category" required>
+                <option value="vino">Vino</option>
+                <option value="cerveza">Cerveza</option>
+                <option value="whisky">Whisky</option>
+                <option value="vodka">Vodka</option>
+                <option value="otros">Otros</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="editDescription" class="form-label">Descripción:</label>
+              <textarea class="form-control" id="editDescription" name="description"></textarea>
+            </div>
+            <div class="mb-3">
+              <label>Imagen actual:</label>
+              <div id="currentImageContainer" class="mb-2"></div>
+              <label for="editImage" class="form-label">Cambiar Imagen:</label>
+              <input type="file" class="form-control" id="editImage" name="image" accept="image/*" />
+            </div>
+            <div class="form-check mb-3">
+              <input type="checkbox" class="form-check-input" id="editIsAvailable" name="isAvailable" />
+              <label class="form-check-label" for="editIsAvailable">Disponible</label>
             </div>
           </div>
-        </form>
-      </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          </div>
+        </div>
+      </form>
     </div>
+  </div>
     <script
       src="/docs/5.0/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"

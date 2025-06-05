@@ -1,100 +1,68 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" data-bs-theme="auto">
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Iniciar sesión</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="../resources/css/mainStyle.css">
 </head>
 
-<body>
-  <header>
-<!--anashe-->
-  </header>
-  <!-- Main -->
-  <main>
+<body class="d-flex align-items-center justify-content-center vh-100 bg-body-tertiary">
+
+  <main class="form-signin text-center">
     <form id="loginForm" action="/auth/login" method="POST">
-      <h2 class="Registro">Iniciar sesión</h2>
-      <div id="errorMessages" style="color: red"></div>
-      <input type="email" placeholder="Email" id="email" name="email" required />
-      <input type="password" placeholder="Contraseña" id="contrasena" name="password" required />
+      <img class="mb-4" src="../resources/imagenes/stock2b_logo_466x429.png" alt="Logo" width="50%" height="50%">
+      <h1 class="h3 mb-3 fw-normal">Iniciar sesión</h1>
 
-      <!-- Botón que abre el modal -->
-      <a href="#" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#resetPasswordModal">¿Olvidaste tu
-        contraseña?</a>
-      <button type="submit" class="btn btn-primary">Enviar</button>
-      <a href="javascript:history.back()" class="btn btn-secondary">VOLVER</a>
-    </form>
+      <div id="errorMessages" style="color: red;"></div>
 
-    <!-- Modal de Bootstrap para restablecer la contraseña -->
-    <div class="modal" tabindex="-1" role="dialog" id="resetPasswordModal">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <!-- Encabezado del modal -->
-          <div class="modal-header">
-            <h5 class="modal-title">Restablecer Contraseña</h5>
-            <!-- Botón de cierre del modal -->
-            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Cerrar">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-
-          <!-- Cuerpo del modal -->
-          <div class="modal-body">
-            <p>Por favor ingresa tu correo electrónico para recibir un enlace para restablecer tu contraseña.</p>
-            <form action="/api/reset-password" method="POST">
-              <input type="email" name="email" class="form-control" placeholder="Ingresa tu correo electrónico"
-                required>
-            </form>
-          </div>
-
-          <!-- Pie del modal -->
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-            <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Enviar enlace</button>
-          </div>
-        </div>
+      <div class="form-floating mb-2">
+        <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com" required>
+        <label for="email">Correo electrónico</label>
       </div>
-    </div>
 
-    <!-- Botón para abrir el modal -->
+      <div class="form-floating mb-2">
+        <input type="password" class="form-control" id="contrasena" name="password" placeholder="Contraseña" required>
+        <label for="contrasena">Contraseña</label>
+      </div>
 
+      <div class="mb-3">
+        <a href="#" class="btn btn-link p-0" data-bs-toggle="modal" data-bs-target="#resetPasswordModal">¿Olvidaste tu contraseña?</a>
+      </div>
 
+      <button class="btn btn-primary w-100 mb-2" type="submit">Enviar</button>
+      <a href="javascript:history.back()" class="btn btn-secondary w-100">Volver</a>
 
+      <p class="mt-5 mb-3 text-muted">&copy; 2025</p>
+    </form>
   </main>
 
-  <!-- Footer -->
-  <footer class="main-footer">
-    <div class="footer-container">
-      <div class="footer-section">
-        <h4>Medios de Envío</h4>
-        <ul>
-          <li>DHL</li>
-          <li>UPS</li>
-          <li>FedEx</li>
-          <li>Envíos locales</li>
-        </ul>
-      </div>
-      <div class="footer-section">
-        <h4>Info de Sucursales</h4>
-        <ul>
-          <li>Buenos Aires</li>
-          <li>Montevideo</li>
-          <li>Asunción</li>
-          <li>Santiago</li>
-        </ul>
-      </div>
+  <!-- Modal Restablecer Contraseña -->
+  <div class="modal fade" id="resetPasswordModal" tabindex="-1" aria-labelledby="resetPasswordLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <form action="/api/reset-password" method="POST" class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="resetPasswordLabel">Restablecer Contraseña</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body">
+          <p>Por favor ingresa tu correo electrónico para recibir un enlace para restablecer tu contraseña.</p>
+          <input type="email" name="email" class="form-control" placeholder="Ingresa tu correo electrónico" required>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+          <button type="submit" class="btn btn-primary">Enviar enlace</button>
+        </div>
+      </form>
     </div>
-  </footer>
-  <!-- Scripts -->
-  <div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-      crossorigin="anonymous"></script>
-    <script src="../resources/js/carrito.js"></script>
-    <script src="../resources/js/notify.js"></script>
   </div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../resources/js/carrito.js"></script>
+  <script src="../resources/js/notify.js"></script>
 </body>
 
 </html>
