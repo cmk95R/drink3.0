@@ -2,499 +2,483 @@
 <html lang="es">
 
 <head>
-    <title>Gestión de Horarios - Sistema de Bebidas</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <%- include('partials/head') %>
-    <style>
-        .background-pattern {
-            background-color: #f8f9fa;
-            background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%239C92AC' fill-opacity='0.05' fill-rule='evenodd'%3E%3Cpath d='M0 40L40 0H20L0 20M40 40V20L20 40'/%3E%3C/g%3E%3C/svg%3E");
-        }
-        .card {
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-        .table-responsive {
-            border-radius: 8px;
-            overflow: hidden;
-        }
-        .badge {
-            font-size: 0.85em;
-            padding: 0.5em 0.75em;
-        }
-    </style>
+  <title>Gestión de Horarios</title>
+  <%- include('partials/head') %>
 </head>
 
 <body class="bg-light background-pattern">
 
   <!-- HEADER -->
   <%- include('partials/header') %>
-  <!------------>
+    <!------------>
 
 
-  <!-- Contenido Principal -->
-  <div class="container-fluid">
-    <div class="row">
+    <!-- Contenido Principal -->
+    <div class="container-fluid">
+      <div class="row">
 
-      <!-- Sidebar (simplificado) -->
-      <!-- SIDEBAR -->
+        <!-- Sidebar (simplificado) -->
+        <!-- SIDEBAR -->
         <%- include('partials/aside') %>
-      <!------------>
+          <!------------>
 
-      <!-- Main Content -->
-      <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 py-4">
-        <div class="d-flex justify-content-between align-items-center mb-3">
-          <h2 class="mb-0">
-            <i class="fas fa-clock me-2 text-primary"></i>Horarios
-          </h2>
-          <button id="btn-new-schedule" class="btn btn-primary mb-3">
-            <i class="fas fa-plus me-1"></i>Agregar Horario Especial
-          </button>
-        </div>
-
-        <!-- Horarios Regulares -->
-        <div class="card mb-4">
-          <div class="card-header bg-dark text-white">
-            <h5 class="mb-0">
-              <i class="fas fa-calendar-week me-2"></i>Horarios Regulares
-            </h5>
-          </div>
-          <div class="card-body">
-            <div class="table-responsive">
-              <table class="table table-hover align-middle text-center table-bordered table-sm" id="regularSchedulesTable">
-                <thead class="table-light">
-                  <tr>
-                    <th>Día</th>
-                    <th>Apertura</th>
-                    <th>Cierre</th>
-                    <th>Acciones</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <!-- Lunes -->
-                  <tr data-id="reg_1">
-                    <td>Lunes</td>
-                    <td>
-                      <input type="time" class="form-control form-control-sm open-time" value="09:00">
-                    </td>
-                    <td>
-                      <input type="time" class="form-control form-control-sm close-time" value="18:00">
-                    </td>
-                    <td>
-                      <button class="btn btn-sm btn-outline-secondary" disabled>
-                        <i class="fas fa-save"></i> Guardar
-                      </button>
-                    </td>
-                  </tr>
-                  <!-- Martes -->
-                  <tr data-id="reg_2">
-                    <td>Martes</td>
-                    <td>
-                      <input type="time" class="form-control form-control-sm open-time" value="09:00">
-                    </td>
-                    <td>
-                      <input type="time" class="form-control form-control-sm close-time" value="18:00">
-                    </td>
-                    <td>
-                      <button class="btn btn-sm btn-outline-secondary" disabled>
-                        <i class="fas fa-save"></i> Guardar
-                      </button>
-                    </td>
-                  </tr>
-                  <!-- Miércoles -->
-                  <tr data-id="reg_3">
-                    <td>Miércoles</td>
-                    <td>
-                      <input type="time" class="form-control form-control-sm open-time" value="09:00">
-                    </td>
-                    <td>
-                      <input type="time" class="form-control form-control-sm close-time" value="18:00">
-                    </td>
-                    <td>
-                      <button class="btn btn-sm btn-outline-secondary" disabled>
-                        <i class="fas fa-save"></i> Guardar
-                      </button>
-                    </td>
-                  </tr>
-                  <!-- Jueves -->
-                  <tr data-id="reg_4">
-                    <td>Jueves</td>
-                    <td>
-                      <input type="time" class="form-control form-control-sm open-time" value="09:00">
-                    </td>
-                    <td>
-                      <input type="time" class="form-control form-control-sm close-time" value="18:00">
-                    </td>
-                    <td>
-                      <button class="btn btn-sm btn-outline-secondary" disabled>
-                        <i class="fas fa-save"></i> Guardar
-                      </button>
-                    </td>
-                  </tr>
-                  <!-- Viernes -->
-                  <tr data-id="reg_5">
-                    <td>Viernes</td>
-                    <td>
-                      <input type="time" class="form-control form-control-sm open-time" value="09:00">
-                    </td>
-                    <td>
-                      <input type="time" class="form-control form-control-sm close-time" value="18:00">
-                    </td>
-                    <td>
-                      <button class="btn btn-sm btn-outline-secondary" disabled>
-                        <i class="fas fa-save"></i> Guardar
-                      </button>
-                    </td>
-                  </tr>
-                  <!-- Sábado -->
-                  <tr data-id="reg_6">
-                    <td>Sábado</td>
-                    <td>
-                      <input type="time" class="form-control form-control-sm open-time" value="10:00">
-                    </td>
-                    <td>
-                      <input type="time" class="form-control form-control-sm close-time" value="14:00">
-                    </td>
-                    <td>
-                      <button class="btn btn-sm btn-outline-secondary" disabled>
-                        <i class="fas fa-save"></i> Guardar
-                      </button>
-                    </td>
-                  </tr>
-                  <!-- Domingo -->
-                  <tr data-id="reg_7">
-                    <td>Domingo</td>
-                    <td>
-                      <input type="text" class="form-control form-control-sm open-time" value="Cerrado" readonly>
-                    </td>
-                    <td>
-                      <input type="text" class="form-control form-control-sm close-time" value="Cerrado" readonly>
-                    </td>
-                    <td>
-                      <button class="btn btn-sm btn-outline-secondary" disabled>
-                        <i class="fas fa-save"></i> Guardar
-                      </button>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <div class="text-end mt-3">
-              <button id="btn-save-regular" class="btn btn-primary">
-                <i class="fas fa-save me-1"></i>Guardar Todos los Horarios
+          <!-- Main Content -->
+          <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 py-4">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <h2 class="mb-0">
+                <i class="fas fa-clock me-2 text-primary"></i>Horarios
+              </h2>
+              <button id="btn-new-schedule" class="btn btn-primary mb-3">
+                <i class="fas fa-plus me-1"></i>Agregar Horario Especial
               </button>
             </div>
-          </div>
-        </div>
 
-        <!-- Horarios Especiales -->
-        <div class="card mb-4">
-          <div class="card-header bg-dark text-white">
-            <h5 class="mb-0">
-              <i class="fas fa-calendar-day me-2"></i>Horarios Especiales
-            </h5>
-          </div>
-          <div class="card-body">
-            <div class="table-responsive">
-              <table class="table table-hover align-middle text-center table-bordered table-sm">
-                <thead class="table-light">
-                  <tr>
-                    <th>Fecha</th>
-                    <th>Descripción</th>
-                    <th>Apertura</th>
-                    <th>Cierre</th>
-                    <th>Acciones</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <!-- Ejemplo de horario especial 1 -->
-                  <tr data-id="esp_1">
-                    <td>20/06/2025</td>
-                    <td>Día de la Bandera</td>
-                    <td>Cerrado</td>
-                    <td>Cerrado</td>
-                    <td>
-                      <div class="d-flex justify-content-center gap-2">
-                        <button class="btn btn-warning btn-sm btn-edit-special">
-                          <i class="fas fa-edit"></i> Editar
-                        </button>
-                        <button class="btn btn-danger btn-sm btn-delete-special">
-                          <i class="fas fa-trash-alt"></i> Eliminar
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                  <!-- Ejemplo de horario especial 2 -->
-                  <tr data-id="esp_2">
-                    <td>09/07/2025</td>
-                    <td>Día de la Independencia</td>
-                    <td>Cerrado</td>
-                    <td>Cerrado</td>
-                    <td>
-                      <div class="d-flex justify-content-center gap-2">
-                        <button class="btn btn-warning btn-sm btn-edit-special">
-                          <i class="fas fa-edit"></i> Editar
-                        </button>
-                        <button class="btn btn-danger btn-sm btn-delete-special">
-                          <i class="fas fa-trash-alt"></i> Eliminar
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                  <!-- Ejemplo de horario especial 3 -->
-                  <tr data-id="esp_3">
-                    <td>24/12/2025</td>
-                    <td>Nochebuena</td>
-                    <td>09:00</td>
-                    <td>13:00</td>
-                    <td>
-                      <div class="d-flex justify-content-center gap-2">
-                        <button class="btn btn-warning btn-sm btn-edit-special">
-                          <i class="fas fa-edit"></i> Editar
-                        </button>
-                        <button class="btn btn-danger btn-sm btn-delete-special">
-                          <i class="fas fa-trash-alt"></i> Eliminar
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-
-        <!-- Configuración -->
-        <div class="card">
-          <div class="card-header bg-dark text-white">
-            <h5 class="mb-0">
-              <i class="fas fa-cogs me-2"></i>Configuración
-            </h5>
-          </div>
-          <div class="card-body">
-            <form id="settingsForm">
-              <div class="row">
-                <div class="col-md-6 mb-3">
-                  <label class="form-label">Hora límite para pedidos del día:</label>
-                  <input type="time" class="form-control" name="orderCutoff" value="15:00">
-                  <small class="text-muted">Los pedidos después de esta hora se procesarán al día siguiente</small>
+            <!-- Horarios Regulares -->
+            <div class="card mb-4">
+              <div class="card-header bg-dark text-white">
+                <h5 class="mb-0">
+                  <i class="fas fa-calendar-week me-2"></i>Horarios Regulares
+                </h5>
+              </div>
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table class="table table-hover align-middle text-center table-bordered table-sm"
+                    id="regularSchedulesTable">
+                    <thead class="table-light">
+                      <tr>
+                        <th>Día</th>
+                        <th>Apertura</th>
+                        <th>Cierre</th>
+                        <th>Acciones</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <!-- Lunes -->
+                      <tr data-id="reg_1">
+                        <td>Lunes</td>
+                        <td>
+                          <input type="time" class="form-control form-control-sm open-time" value="09:00">
+                        </td>
+                        <td>
+                          <input type="time" class="form-control form-control-sm close-time" value="18:00">
+                        </td>
+                        <td>
+                          <button class="btn btn-sm btn-outline-secondary" disabled>
+                            <i class="fas fa-save"></i> Guardar
+                          </button>
+                        </td>
+                      </tr>
+                      <!-- Martes -->
+                      <tr data-id="reg_2">
+                        <td>Martes</td>
+                        <td>
+                          <input type="time" class="form-control form-control-sm open-time" value="09:00">
+                        </td>
+                        <td>
+                          <input type="time" class="form-control form-control-sm close-time" value="18:00">
+                        </td>
+                        <td>
+                          <button class="btn btn-sm btn-outline-secondary" disabled>
+                            <i class="fas fa-save"></i> Guardar
+                          </button>
+                        </td>
+                      </tr>
+                      <!-- Miércoles -->
+                      <tr data-id="reg_3">
+                        <td>Miércoles</td>
+                        <td>
+                          <input type="time" class="form-control form-control-sm open-time" value="09:00">
+                        </td>
+                        <td>
+                          <input type="time" class="form-control form-control-sm close-time" value="18:00">
+                        </td>
+                        <td>
+                          <button class="btn btn-sm btn-outline-secondary" disabled>
+                            <i class="fas fa-save"></i> Guardar
+                          </button>
+                        </td>
+                      </tr>
+                      <!-- Jueves -->
+                      <tr data-id="reg_4">
+                        <td>Jueves</td>
+                        <td>
+                          <input type="time" class="form-control form-control-sm open-time" value="09:00">
+                        </td>
+                        <td>
+                          <input type="time" class="form-control form-control-sm close-time" value="18:00">
+                        </td>
+                        <td>
+                          <button class="btn btn-sm btn-outline-secondary" disabled>
+                            <i class="fas fa-save"></i> Guardar
+                          </button>
+                        </td>
+                      </tr>
+                      <!-- Viernes -->
+                      <tr data-id="reg_5">
+                        <td>Viernes</td>
+                        <td>
+                          <input type="time" class="form-control form-control-sm open-time" value="09:00">
+                        </td>
+                        <td>
+                          <input type="time" class="form-control form-control-sm close-time" value="18:00">
+                        </td>
+                        <td>
+                          <button class="btn btn-sm btn-outline-secondary" disabled>
+                            <i class="fas fa-save"></i> Guardar
+                          </button>
+                        </td>
+                      </tr>
+                      <!-- Sábado -->
+                      <tr data-id="reg_6">
+                        <td>Sábado</td>
+                        <td>
+                          <input type="time" class="form-control form-control-sm open-time" value="10:00">
+                        </td>
+                        <td>
+                          <input type="time" class="form-control form-control-sm close-time" value="14:00">
+                        </td>
+                        <td>
+                          <button class="btn btn-sm btn-outline-secondary" disabled>
+                            <i class="fas fa-save"></i> Guardar
+                          </button>
+                        </td>
+                      </tr>
+                      <!-- Domingo -->
+                      <tr data-id="reg_7">
+                        <td>Domingo</td>
+                        <td>
+                          <input type="text" class="form-control form-control-sm open-time" value="Cerrado" readonly>
+                        </td>
+                        <td>
+                          <input type="text" class="form-control form-control-sm close-time" value="Cerrado" readonly>
+                        </td>
+                        <td>
+                          <button class="btn btn-sm btn-outline-secondary" disabled>
+                            <i class="fas fa-save"></i> Guardar
+                          </button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </div>
-                
-                <div class="col-md-6 mb-3">
-                  <label class="form-label">Días de entrega:</label>
-                  <div class="d-flex flex-wrap gap-3">
-                    <div class="form-check">
-                      <input class="form-check-input" type="checkbox" id="lunes" name="deliveryDays" value="Lunes" checked>
-                      <label class="form-check-label" for="lunes">Lunes</label>
+                <div class="text-end mt-3">
+                  <button id="btn-save-regular" class="btn btn-primary">
+                    <i class="fas fa-save me-1"></i>Guardar Todos los Horarios
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Horarios Especiales -->
+            <div class="card mb-4">
+              <div class="card-header bg-dark text-white">
+                <h5 class="mb-0">
+                  <i class="fas fa-calendar-day me-2"></i>Horarios Especiales
+                </h5>
+              </div>
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table class="table table-hover align-middle text-center table-bordered table-sm">
+                    <thead class="table-light">
+                      <tr>
+                        <th>Fecha</th>
+                        <th>Descripción</th>
+                        <th>Apertura</th>
+                        <th>Cierre</th>
+                        <th>Acciones</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <!-- Ejemplo de horario especial 1 -->
+                      <tr data-id="esp_1">
+                        <td>20/06/2025</td>
+                        <td>Día de la Bandera</td>
+                        <td>Cerrado</td>
+                        <td>Cerrado</td>
+                        <td>
+                          <div class="d-flex justify-content-center gap-2">
+                            <button class="btn btn-warning btn-sm btn-edit-special">
+                              <i class="fas fa-edit"></i> Editar
+                            </button>
+                            <button class="btn btn-danger btn-sm btn-delete-special">
+                              <i class="fas fa-trash-alt"></i> Eliminar
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                      <!-- Ejemplo de horario especial 2 -->
+                      <tr data-id="esp_2">
+                        <td>09/07/2025</td>
+                        <td>Día de la Independencia</td>
+                        <td>Cerrado</td>
+                        <td>Cerrado</td>
+                        <td>
+                          <div class="d-flex justify-content-center gap-2">
+                            <button class="btn btn-warning btn-sm btn-edit-special">
+                              <i class="fas fa-edit"></i> Editar
+                            </button>
+                            <button class="btn btn-danger btn-sm btn-delete-special">
+                              <i class="fas fa-trash-alt"></i> Eliminar
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                      <!-- Ejemplo de horario especial 3 -->
+                      <tr data-id="esp_3">
+                        <td>24/12/2025</td>
+                        <td>Nochebuena</td>
+                        <td>09:00</td>
+                        <td>13:00</td>
+                        <td>
+                          <div class="d-flex justify-content-center gap-2">
+                            <button class="btn btn-warning btn-sm btn-edit-special">
+                              <i class="fas fa-edit"></i> Editar
+                            </button>
+                            <button class="btn btn-danger btn-sm btn-delete-special">
+                              <i class="fas fa-trash-alt"></i> Eliminar
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <!-- Configuración -->
+            <div class="card">
+              <div class="card-header bg-dark text-white">
+                <h5 class="mb-0">
+                  <i class="fas fa-cogs me-2"></i>Configuración
+                </h5>
+              </div>
+              <div class="card-body">
+                <form id="settingsForm">
+                  <div class="row">
+                    <div class="col-md-6 mb-3">
+                      <label class="form-label">Hora límite para pedidos del día:</label>
+                      <input type="time" class="form-control" name="orderCutoff" value="15:00">
+                      <small class="text-muted">Los pedidos después de esta hora se procesarán al día siguiente</small>
                     </div>
-                    <div class="form-check">
-                      <input class="form-check-input" type="checkbox" id="martes" name="deliveryDays" value="Martes" checked>
-                      <label class="form-check-label" for="martes">Martes</label>
-                    </div>
-                    <div class="form-check">
-                      <input class="form-check-input" type="checkbox" id="miercoles" name="deliveryDays" value="Miércoles" checked>
-                      <label class="form-check-label" for="miercoles">Miércoles</label>
-                    </div>
-                    <div class="form-check">
-                      <input class="form-check-input" type="checkbox" id="jueves" name="deliveryDays" value="Jueves" checked>
-                      <label class="form-check-label" for="jueves">Jueves</label>
-                    </div>
-                    <div class="form-check">
-                      <input class="form-check-input" type="checkbox" id="viernes" name="deliveryDays" value="Viernes" checked>
-                      <label class="form-check-label" for="viernes">Viernes</label>
-                    </div>
-                    <div class="form-check">
-                      <input class="form-check-input" type="checkbox" id="sabado" name="deliveryDays" value="Sábado">
-                      <label class="form-check-label" for="sabado">Sábado</label>
-                    </div>
-                    <div class="form-check">
-                      <input class="form-check-input" type="checkbox" id="domingo" name="deliveryDays" value="Domingo">
-                      <label class="form-check-label" for="domingo">Domingo</label>
+
+                    <div class="col-md-6 mb-3">
+                      <label class="form-label">Días de entrega:</label>
+                      <div class="d-flex flex-wrap gap-3">
+                        <div class="form-check">
+                          <input class="form-check-input" type="checkbox" id="lunes" name="deliveryDays" value="Lunes"
+                            checked>
+                          <label class="form-check-label" for="lunes">Lunes</label>
+                        </div>
+                        <div class="form-check">
+                          <input class="form-check-input" type="checkbox" id="martes" name="deliveryDays" value="Martes"
+                            checked>
+                          <label class="form-check-label" for="martes">Martes</label>
+                        </div>
+                        <div class="form-check">
+                          <input class="form-check-input" type="checkbox" id="miercoles" name="deliveryDays"
+                            value="Miércoles" checked>
+                          <label class="form-check-label" for="miercoles">Miércoles</label>
+                        </div>
+                        <div class="form-check">
+                          <input class="form-check-input" type="checkbox" id="jueves" name="deliveryDays" value="Jueves"
+                            checked>
+                          <label class="form-check-label" for="jueves">Jueves</label>
+                        </div>
+                        <div class="form-check">
+                          <input class="form-check-input" type="checkbox" id="viernes" name="deliveryDays"
+                            value="Viernes" checked>
+                          <label class="form-check-label" for="viernes">Viernes</label>
+                        </div>
+                        <div class="form-check">
+                          <input class="form-check-input" type="checkbox" id="sabado" name="deliveryDays"
+                            value="Sábado">
+                          <label class="form-check-label" for="sabado">Sábado</label>
+                        </div>
+                        <div class="form-check">
+                          <input class="form-check-input" type="checkbox" id="domingo" name="deliveryDays"
+                            value="Domingo">
+                          <label class="form-check-label" for="domingo">Domingo</label>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </div>
-              
-              <div class="text-end">
-                <button type="submit" class="btn btn-primary">
-                  <i class="fas fa-save me-1"></i>Guardar Configuración
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </main>
-    </div>
-  </div>
 
-  <!-- Modal para Horarios Especiales -->
-  <div class="modal fade" id="scheduleModal" tabindex="-1" aria-labelledby="scheduleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header bg-primary text-white">
-          <h5 class="modal-title" id="scheduleModalLabel">Agregar Horario Especial</h5>
-          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <form id="scheduleForm">
-          <div class="modal-body">
-            <input type="hidden" id="scheduleId" name="scheduleId">
-            
-            <div class="mb-3">
-              <label for="scheduleDate" class="form-label">Fecha</label>
-              <input type="date" class="form-control" id="scheduleDate" name="date" required>
-            </div>
-            
-            <div class="mb-3">
-              <label for="scheduleDescription" class="form-label">Descripción</label>
-              <input type="text" class="form-control" id="scheduleDescription" name="description" 
-                     placeholder="Ej: Feriado Nacional, Mantenimiento, etc." required>
-            </div>
-            
-            <div class="row">
-              <div class="col-md-6 mb-3">
-                <label for="scheduleOpen" class="form-label">Hora Apertura</label>
-                <input type="time" class="form-control" id="scheduleOpen" name="open" value="09:00" required>
-              </div>
-              <div class="col-md-6 mb-3">
-                <label for="scheduleClose" class="form-label">Hora Cierre</label>
-                <input type="time" class="form-control" id="scheduleClose" name="close" value="18:00" required>
+                  <div class="text-end">
+                    <button type="submit" class="btn btn-primary">
+                      <i class="fas fa-save me-1"></i>Guardar Configuración
+                    </button>
+                  </div>
+                </form>
               </div>
             </div>
-            
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" id="closedAllDay">
-              <label class="form-check-label" for="closedAllDay">Cerrado todo el día</label>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-              <i class="fas fa-times me-1"></i>Cancelar
-            </button>
-            <button type="submit" class="btn btn-primary">
-              <i class="fas fa-save me-1"></i>Guardar
-            </button>
-          </div>
-        </form>
+          </main>
       </div>
     </div>
-  </div>
 
-  <!-- Bootstrap JS Bundle with Popper -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
-  
-  <!-- Script para manejo de horarios -->
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      // Obtener elementos del DOM
-      const btnNewSchedule = document.getElementById('btn-new-schedule');
-      const scheduleModal = new bootstrap.Modal(document.getElementById('scheduleModal'));
-      const scheduleForm = document.getElementById('scheduleForm');
-      const closedAllDayCheckbox = document.getElementById('closedAllDay');
-      
-      // Configurar fecha mínima en el modal (hoy)
-      const today = new Date().toISOString().split('T')[0];
-      document.getElementById('scheduleDate').min = today;
-      
-      // Manejar botón "Cerrado todo el día"
-      closedAllDayCheckbox.addEventListener('change', function() {
-        const openInput = document.getElementById('scheduleOpen');
-        const closeInput = document.getElementById('scheduleClose');
-        
-        if (this.checked) {
-          openInput.value = 'Cerrado';
-          closeInput.value = 'Cerrado';
-          openInput.readOnly = true;
-          closeInput.readOnly = true;
-        } else {
-          openInput.value = '09:00';
-          closeInput.value = '18:00';
-          openInput.readOnly = false;
-          closeInput.readOnly = false;
-        }
-      });
-      
-      // Abrir modal para nuevo horario
-      btnNewSchedule.addEventListener('click', function() {
-        // Resetear formulario
-        scheduleForm.reset();
-        document.getElementById('scheduleModalLabel').textContent = 'Agregar Horario Especial';
-        document.getElementById('scheduleDate').value = today;
-        closedAllDayCheckbox.checked = false;
-        scheduleModal.show();
-      });
-      
-      // Manejar edición de horarios especiales
-      document.querySelectorAll('.btn-edit-special').forEach(btn => {
-        btn.addEventListener('click', function() {
-          const row = this.closest('tr');
-          const dateParts = row.cells[0].textContent.split('/');
-          const formattedDate = `${dateParts[2]}-${dateParts[1].padStart(2, '0')}-${dateParts[0].padStart(2, '0')}`;
-          
-          document.getElementById('scheduleModalLabel').textContent = 'Editar Horario Especial';
-          document.getElementById('scheduleId').value = row.getAttribute('data-id');
-          document.getElementById('scheduleDate').value = formattedDate;
-          document.getElementById('scheduleDescription').value = row.cells[1].textContent;
-          
-          if (row.cells[2].textContent === 'Cerrado') {
-            closedAllDayCheckbox.checked = true;
-            document.getElementById('scheduleOpen').value = 'Cerrado';
-            document.getElementById('scheduleClose').value = 'Cerrado';
+    <!-- Modal para Horarios Especiales -->
+    <div class="modal fade" id="scheduleModal" tabindex="-1" aria-labelledby="scheduleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header bg-primary text-white">
+            <h5 class="modal-title" id="scheduleModalLabel">Agregar Horario Especial</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <form id="scheduleForm">
+            <div class="modal-body">
+              <input type="hidden" id="scheduleId" name="scheduleId">
+
+              <div class="mb-3">
+                <label for="scheduleDate" class="form-label">Fecha</label>
+                <input type="date" class="form-control" id="scheduleDate" name="date" required>
+              </div>
+
+              <div class="mb-3">
+                <label for="scheduleDescription" class="form-label">Descripción</label>
+                <input type="text" class="form-control" id="scheduleDescription" name="description"
+                  placeholder="Ej: Feriado Nacional, Mantenimiento, etc." required>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="scheduleOpen" class="form-label">Hora Apertura</label>
+                  <input type="time" class="form-control" id="scheduleOpen" name="open" value="09:00" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="scheduleClose" class="form-label">Hora Cierre</label>
+                  <input type="time" class="form-control" id="scheduleClose" name="close" value="18:00" required>
+                </div>
+              </div>
+
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="closedAllDay">
+                <label class="form-check-label" for="closedAllDay">Cerrado todo el día</label>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                <i class="fas fa-times me-1"></i>Cancelar
+              </button>
+              <button type="submit" class="btn btn-primary">
+                <i class="fas fa-save me-1"></i>Guardar
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Script para manejo de horarios -->
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        // Obtener elementos del DOM
+        const btnNewSchedule = document.getElementById('btn-new-schedule');
+        const scheduleModal = new bootstrap.Modal(document.getElementById('scheduleModal'));
+        const scheduleForm = document.getElementById('scheduleForm');
+        const closedAllDayCheckbox = document.getElementById('closedAllDay');
+
+        // Configurar fecha mínima en el modal (hoy)
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('scheduleDate').min = today;
+
+        // Manejar botón "Cerrado todo el día"
+        closedAllDayCheckbox.addEventListener('change', function () {
+          const openInput = document.getElementById('scheduleOpen');
+          const closeInput = document.getElementById('scheduleClose');
+
+          if (this.checked) {
+            openInput.value = 'Cerrado';
+            closeInput.value = 'Cerrado';
+            openInput.readOnly = true;
+            closeInput.readOnly = true;
           } else {
-            closedAllDayCheckbox.checked = false;
-            document.getElementById('scheduleOpen').value = row.cells[2].textContent;
-            document.getElementById('scheduleClose').value = row.cells[3].textContent;
+            openInput.value = '09:00';
+            closeInput.value = '18:00';
+            openInput.readOnly = false;
+            closeInput.readOnly = false;
           }
-          
+        });
+
+        // Abrir modal para nuevo horario
+        btnNewSchedule.addEventListener('click', function () {
+          // Resetear formulario
+          scheduleForm.reset();
+          document.getElementById('scheduleModalLabel').textContent = 'Agregar Horario Especial';
+          document.getElementById('scheduleDate').value = today;
+          closedAllDayCheckbox.checked = false;
           scheduleModal.show();
         });
-      });
-      
-      // Manejar eliminación de horarios especiales
-      document.querySelectorAll('.btn-delete-special').forEach(btn => {
-        btn.addEventListener('click', function() {
-          if (confirm('¿Estás seguro de eliminar este horario especial?')) {
-            // Simular eliminación (en producción sería una llamada AJAX)
-            this.closest('tr').remove();
-            alert('Horario especial eliminado correctamente');
+
+        // Manejar edición de horarios especiales
+        document.querySelectorAll('.btn-edit-special').forEach(btn => {
+          btn.addEventListener('click', function () {
+            const row = this.closest('tr');
+            const dateParts = row.cells[0].textContent.split('/');
+            const formattedDate = `${dateParts[2]}-${dateParts[1].padStart(2, '0')}-${dateParts[0].padStart(2, '0')}`;
+
+            document.getElementById('scheduleModalLabel').textContent = 'Editar Horario Especial';
+            document.getElementById('scheduleId').value = row.getAttribute('data-id');
+            document.getElementById('scheduleDate').value = formattedDate;
+            document.getElementById('scheduleDescription').value = row.cells[1].textContent;
+
+            if (row.cells[2].textContent === 'Cerrado') {
+              closedAllDayCheckbox.checked = true;
+              document.getElementById('scheduleOpen').value = 'Cerrado';
+              document.getElementById('scheduleClose').value = 'Cerrado';
+            } else {
+              closedAllDayCheckbox.checked = false;
+              document.getElementById('scheduleOpen').value = row.cells[2].textContent;
+              document.getElementById('scheduleClose').value = row.cells[3].textContent;
+            }
+
+            scheduleModal.show();
+          });
+        });
+
+        // Manejar eliminación de horarios especiales
+        document.querySelectorAll('.btn-delete-special').forEach(btn => {
+          btn.addEventListener('click', function () {
+            if (confirm('¿Estás seguro de eliminar este horario especial?')) {
+              // Simular eliminación (en producción sería una llamada AJAX)
+              this.closest('tr').remove();
+              alert('Horario especial eliminado correctamente');
+            }
+          });
+        });
+
+        // Guardar horarios regulares
+        document.getElementById('btn-save-regular').addEventListener('click', function () {
+          // Simular guardado (en producción sería una llamada AJAX)
+          alert('Horarios regulares guardados correctamente');
+        });
+
+        // Guardar configuración
+        document.getElementById('settingsForm').addEventListener('submit', function (e) {
+          e.preventDefault();
+          // Simular guardado (en producción sería una llamada AJAX)
+          alert('Configuración guardada correctamente');
+        });
+
+        // Guardar horario especial
+        scheduleForm.addEventListener('submit', function (e) {
+          e.preventDefault();
+
+          // Simular guardado (en producción sería una llamada AJAX)
+          const isEdit = document.getElementById('scheduleId').value !== '';
+
+          if (isEdit) {
+            alert('Horario especial actualizado correctamente');
+          } else {
+            alert('Horario especial creado correctamente');
           }
+
+          scheduleModal.hide();
         });
       });
-      
-      // Guardar horarios regulares
-      document.getElementById('btn-save-regular').addEventListener('click', function() {
-        // Simular guardado (en producción sería una llamada AJAX)
-        alert('Horarios regulares guardados correctamente');
-      });
-      
-      // Guardar configuración
-      document.getElementById('settingsForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-        // Simular guardado (en producción sería una llamada AJAX)
-        alert('Configuración guardada correctamente');
-      });
-      
-      // Guardar horario especial
-      scheduleForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        // Simular guardado (en producción sería una llamada AJAX)
-        const isEdit = document.getElementById('scheduleId').value !== '';
-        
-        if (isEdit) {
-          alert('Horario especial actualizado correctamente');
-        } else {
-          alert('Horario especial creado correctamente');
-        }
-        
-        scheduleModal.hide();
-      });
-    });
-  </script>
+    </script>
 </body>
 
 </html>

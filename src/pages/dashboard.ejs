@@ -1,46 +1,21 @@
 <!DOCTYPE html>
 <html lang="es">
 
-<head>
-  
-  <title>Dashboard  </title>
-   <%- include('partials/head') %>
+<head>  
+  <title>Dashboard</title>
+  <%- include('partials/head') %>    
 </head>
 
-<body>
+<body class="bg-light background-pattern">  
   <!-- HEADER -->
-  <!-- HEADER -->
-    <header class="bg-white shadow-sm py-3">
-      <a
-        href="/"
-        class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none"
-      >
-        <img class="logo"
-          src="../resources/imagenes/stock2b_logo_233x214.png"
-          alt="Logo"
-          height="85"
-          class="me-3"
-        />
-     
-      </a>
+  <%- include('partials/header') %>
 
-    </header>
-  <!-- SIDEBAR -->
-        <%- include('partials/aside') %>
+  <!-- ASIDE -->
+  <%- include('partials/aside') %>
 
   <!-- MAIN-->
   <main>
-  </main>
-
-  <!-- FOOTER-->
-  <footer>
-  </footer>
-
-  <!-- SCRIPTS -->
-  <div>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
-  </div>
+  </main>    
 </body>
 
 </html>
