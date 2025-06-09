@@ -8,14 +8,11 @@ export const detailProduct = async (req, res) => {
     if (!idParam || !idParam.match(/^[0-9a-fA-F]{24}$/)) {
       return res.status(400).send('ID inválido');
     }
-
     // Buscar el producto por ID
     const prodFind = await Product.findById(idParam).lean(); // lean para obtener objeto plano
-
     if (!prodFind) {
       return res.status(404).send('Producto no encontrado');
     }
-
     // Buscar productos relacionados (misma categoría, distinto ID)
     const relatedProducts = await Product.find({
       category: prodFind.category,
@@ -39,6 +36,4 @@ export const detailProduct = async (req, res) => {
     return res.status(500).send('Error en el servidor');
   }
 };
-
-
 export default detailProduct;

@@ -1,7 +1,5 @@
 
 import Product from '../models/product.js';
-
-
 const controller = {
     index: async (req, res) => {
         try {
@@ -35,8 +33,4 @@ const controller = {
         }
     }
 };
-
 export default controller;
-
-
-

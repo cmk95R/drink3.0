@@ -145,10 +145,6 @@ export const changePassword = async (req, res) => {
   }
 };
 
-
-
-
-
 export const logout = (req, res) => {
   req.session.destroy();
   res.clearCookie('token', { httpOnly: true, secure: false });

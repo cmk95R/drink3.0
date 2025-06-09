@@ -4,7 +4,7 @@ import bcrypt from 'bcryptjs';
 
 
 ////////////////////////////////Crear Usuario/////////////////////////////////////////////////////////
-
+//Fijarse si se queda o no.
 const validateObjectId = (id) => mongoose.Types.ObjectId.isValid(id);
 
 export const createUser = async(req,res)=>{
