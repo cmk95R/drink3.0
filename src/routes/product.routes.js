@@ -4,7 +4,7 @@ import {
     getProductById,
     updateProduct,
     deleteProduct,
-    renderProductMainPage,
+    renderProductsPage,
 
 } from '../controllers/product.controller.js';
 import upload from "../middlewares/upload.middleware.js";
@@ -13,7 +13,7 @@ import { authenticate } from "../middlewares/auth.middleware.js";
 const router = Router();
 
 // Páginas renderizadas (vistas)
-router.get('/', authenticate, renderProductMainPage);          // Listar productos
+router.get('/', authenticate, renderProductsPage);          // Listar productos
 
 
 // Acciones CRUD

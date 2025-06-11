@@ -27,33 +27,39 @@
 
             <!-- RENDERIZADO DE CARDS DE STOCK -->
             <div class="row row-cols-1 row-cols-md-3 g-4">
-  <% products.forEach(product => { %>
-    <div class="col">
-      <a href="/products/<%= product._id %>" class="text-decoration-none text-dark">
-        <div class="card h-100 hover-shadow">
-          <% if (product.image) { %>
-            <img src="/uploads/<%= product.image %>" class="card-img-top" alt="Imagen de <%= product.name %>">
-          <% } else { %>
-            <div class="card-img-top d-flex align-items-center justify-content-center bg-light" style="height: 200px;">
-              <span class="text-muted">Sin imagen</span>
-            </div>
-          <% } %>
+              <% products.forEach(product=> { %>
+                <div class="col">
+                  <a data-bs-toggle="modal" data-bs-target="#detalleProducto-<%= product._id %>" class="text-decoration-none text-dark">
+                    <div class="card h-100 hover-shadow">
+                      <% if (product.image) { %>
+                        <img src="/uploads/<%= product.image %>" class="card-img-top"
+                          alt="Imagen de <%= product.name %>">
+                        <% } else { %>
+                          <div class="card-img-top d-flex align-items-center justify-content-center bg-light"
+                            style="height: 200px;">
+                            <span class="text-muted">Sin imagen</span>
+                          </div>
+                          <% } %>
 
-          <div class="card-body">
-            <h5 class="card-title"><%= product.name %></h5>
-            <p class="card-text mb-2">
-              <strong>Stock:</strong> <%= product.stock %><br>
-              <strong>Categoría:</strong> <%= product.category %><br>
-            </p>
-            <span class="badge <%= product.isAvailable ? 'bg-success' : 'bg-secondary' %>">
-              <%= product.isAvailable ? 'Disponible' : 'No disponible' %>
-            </span>
-          </div>
-        </div>
-      </a>
-    </div>
-  <% }) %>
-</div>
+                            <div class="card-body">
+                              <h5 class="card-title">
+                                <%= product.name %>
+                              </h5>
+                              <p class="card-text mb-2">
+                                <strong>Stock:</strong>
+                                <%= product.stock %><br>
+                                  <strong>Categoría:</strong>
+                                  <%= product.category %><br>
+                              </p>
+                              <span class="badge <%= product.isAvailable ? 'bg-success' : 'bg-secondary' %>">
+                                <%= product.isAvailable ? 'Disponible' : 'No disponible' %>
+                              </span>
+                            </div>
+                    </div>
+                  </a>
+                </div>
+                <% }) %>
+            </div>
 
 
           </main>
@@ -108,6 +114,31 @@
         </div>
       </div>
     </div>
+
+<!-- Modal individual del producto -->
+ <% products.forEach(product => { %>
+  <div class="modal fade" id="detalleProducto-<%= product._id %>" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title"><%= product.name %></h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <% if (product.image) { %>
+            <img src="/uploads/<%= product.image %>" alt="Imagen de <%= product.name %>" class="img-fluid mb-3" />
+          <% } %>
+          <p><strong>Stock:</strong> <%= product.stock %></p>
+          <p><strong>Categoría:</strong> <%= product.category %></p>
+          <p><strong>Disponible:</strong> <%= product.isAvailable ? 'Sí' : 'No' %></p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+<% }) %>
 
     <!-- Modal Editar Producto -->
     <div class="modal fade" id="editProductModal" tabindex="-1" aria-labelledby="editProductModalLabel"

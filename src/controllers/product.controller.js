@@ -123,7 +123,7 @@ export const deleteProduct = async (req, res) => {
 };
 
 // Renderizar la vista de productos
-export const renderProductMainPage = async (req, res) => {
+export const renderProductsPage = async (req, res) => {
     try {
         const products = await Product.find();
         res.render('products', { products });
@@ -131,5 +131,16 @@ export const renderProductMainPage = async (req, res) => {
         console.log(error);
         res.status(500).send('Error al cargar productos');
     }
+};
+
+// Obtener todos los productos
+export const renderStockPage = async (req, res) => {
+  try {
+    const products = await Product.find();
+    res.render('stock', { products }); // renderización de página :v
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Hubo un error al obtener los productos');
+  }
 };
 

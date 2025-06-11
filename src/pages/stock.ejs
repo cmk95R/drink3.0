@@ -15,21 +15,19 @@
             <div class="row">
                 <!-- SIDEBAR -->
                 <%- include('partials/aside') %>
+
                     <!-- MAIN CONTENT -->
                     <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 py-4">
                         <div class="d-flex justify-content-between align-items-center mb-3">
                             <h2 class="mb-0"><i class="fa-solid fa-list-check text-primary"></i>Lista de Productos</h2>
-                            <button class="btn btn-primary" data-bs-toggle="modal"
-                                data-bs-target="#modalAgregarProducto">
-                                <i class="fas fa-plus me-1"></i> Agregar Producto
-                            </button>
                         </div>
 
                         <!-- RENDERIZADO DE CARDS DE STOCK -->
                         <div class="row row-cols-1 row-cols-md-3 g-4">
                             <% products.forEach(product=> { %>
                                 <div class="col">
-                                    <a href="/products/<%= product._id %>" class="text-decoration-none text-dark">
+                                    <!-- Acá se abren los modales individuales -->
+                                    <a data-bs-toggle="modal" data-bs-target="#detalleProducto-<%= product._id %>" class="text-decoration-none text-dark">
                                         <div class="card h-100 hover-shadow">
                                             <% if (product.image) { %>
                                                 <img src="/uploads/<%= product.image %>" class="card-img-top"
@@ -68,111 +66,30 @@
             </div>
         </div>
 
-        <!-- Modal Agregar Producto -->
-        <div class="modal fade" id="modalAgregarProducto" tabindex="-1" aria-labelledby="modalAgregarProductoLabel"
-            aria-hidden="true">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <form id="formAgregarProducto" action="/products/add" method="POST" enctype="multipart/form-data">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="modalAgregarProductoLabel">Agregar Producto</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                aria-label="Cerrar"></button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="mb-3">
-                                <label for="name" class="form-label">Nombre</label>
-                                <input type="text" name="name" class="form-control" required />
-                            </div>
-                            <div class="mb-3">
-                                <label for="stock" class="form-label">Stock</label>
-                                <input type="number" name="stock" class="form-control" required />
-                            </div>
-                            <div class="mb-3">
-                                <label for="category" class="form-label">Categoría</label>
-                                <select name="category" class="form-select" required>
-                                    <option value="vino">Vino</option>
-                                    <option value="cerveza">Cerveza</option>
-                                    <option value="whisky">Whisky</option>
-                                    <option value="vodka">Vodka</option>
-                                </select>
-                            </div>
-                            <div class="mb-3">
-                                <label for="isAvailable" class="form-label">¿Disponible?</label>
-                                <select name="isAvailable" class="form-select">
-                                    <option value="true">Sí</option>
-                                    <option value="false">No</option>
-                                </select>
-                            </div>
-                            <div class="mb-3">
-                                <label for="image" class="form-label">Imagen</label>
-                                <input type="file" name="image" class="form-control" />
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                            <button type="submit" class="btn btn-success">Guardar Producto</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
+<!-- Modal individual del producto -->
+ <% products.forEach(product => { %>
+  <div class="modal fade" id="detalleProducto-<%= product._id %>" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title"><%= product.name %></h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
-
-        <!-- Modal Editar Producto -->
-        <div class="modal fade" id="editProductModal" tabindex="-1" aria-labelledby="editProductModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog">
-                <form id="editProductForm" method="POST" enctype="multipart/form-data">
-                    <input type="hidden" name="_method" value="PUT" />
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="editProductModalLabel">Editar Producto</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                aria-label="Cerrar"></button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="mb-3">
-                                <label for="editName" class="form-label">Nombre:</label>
-                                <input type="text" class="form-control" id="editName" name="name" required />
-                            </div>
-                            <div class="mb-3">
-                                <label for="editStock" class="form-label">Stock:</label>
-                                <input type="number" class="form-control" id="editStock" name="stock" required />
-                            </div>
-                            <div class="mb-3">
-                                <label for="editCategory" class="form-label">Categoría:</label>
-                                <select class="form-select" id="editCategory" name="category" required>
-                                    <option value="vino">Vino</option>
-                                    <option value="cerveza">Cerveza</option>
-                                    <option value="whisky">Whisky</option>
-                                    <option value="vodka">Vodka</option>
-                                    <option value="otros">Otros</option>
-                                </select>
-                            </div>
-                            <div class="mb-3">
-                                <label for="editDescription" class="form-label">Descripción:</label>
-                                <textarea class="form-control" id="editDescription" name="description"></textarea>
-                            </div>
-                            <div class="mb-3">
-                                <label>Imagen actual:</label>
-                                <div id="currentImageContainer" class="mb-2"></div>
-                                <label for="editImage" class="form-label">Cambiar Imagen:</label>
-                                <input type="file" class="form-control" id="editImage" name="image" accept="image/*" />
-                            </div>
-                            <div class="form-check mb-3">
-                                <input type="checkbox" class="form-check-input" id="editIsAvailable"
-                                    name="isAvailable" />
-                                <label class="form-check-label" for="editIsAvailable">Disponible</label>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary">Guardar Cambios</button>
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
+        <div class="modal-body">
+          <% if (product.image) { %>
+            <img src="/uploads/<%= product.image %>" alt="Imagen de <%= product.name %>" class="img-fluid mb-3" />
+          <% } %>
+          <p><strong>Stock:</strong> <%= product.stock %></p>
+          <p><strong>Categoría:</strong> <%= product.category %></p>
+          <p><strong>Disponible:</strong> <%= product.isAvailable ? 'Sí' : 'No' %></p>
         </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+<% }) %>
 
         <script src="/docs/5.0/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
