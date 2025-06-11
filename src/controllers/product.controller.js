@@ -93,7 +93,7 @@ export const updateProduct = async (req, res) => {
             return res.status(404).json({ message: 'Producto no encontrado' });
         }
 
-        res.redirect('/products?edit=success');
+        res.redirect('/stock?edit=success');
 
     } catch (error) {
         console.error(error);
@@ -114,7 +114,7 @@ export const deleteProduct = async (req, res) => {
             return res.status(404).json({ message: 'Producto no encontrado' });
         }
 
-        res.redirect('/products');
+        res.redirect('/stock');
 
     } catch (error) {
         console.log(error);

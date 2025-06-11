@@ -11,7 +11,7 @@ document
     const formData = new FormData(form);
 
     try {
-        const res = await fetch("/products/add", {
+        const res = await fetch("/stock/add", {
             method: "POST",
             body: formData,
         });
@@ -25,7 +25,7 @@ document
                 text: data.message,
                 confirmButtonText: "Aceptar",
             }).then(() => {
-                window.location.href = "/products";
+                window.location.href = "/stock";
             });
         } else {
             Swal.fire({
@@ -63,7 +63,7 @@ document
     const isAvailable = button.getAttribute('data-isavailable') === 'true';
 
     // Setear el action del form para que vaya a /products/edit/:id
-    editProductForm.action = `/products/edit/${id}?_method=PUT`;
+    editProductForm.action = `/stock/edit/${id}?_method=PUT`;
 
     // Cargar los valores en los campos
     document.getElementById('editName').value = name;

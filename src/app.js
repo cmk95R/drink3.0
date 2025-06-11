@@ -8,8 +8,8 @@ import indexRouter from './routes/index.routes.js';
 import authRoutes from "./routes/auth.routes.js";
 import userRoutes from "./routes/user.routes.js";//va o no va.
 import orderRoutes from "./routes/order.routes.js";
-import productRoutes from "./routes/product.routes.js";
 import stockRoutes from "./routes/stock.routes.js";
+import productRoutes from "./routes/product.routes.js";
 import dashboardRouter from "./routes/dashboard.routes.js";
 import horarioRoutes from "./routes/horario.routes.js";
 import methodOverride from 'method-override';
