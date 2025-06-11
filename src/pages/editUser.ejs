@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <title>Editar Usuario</title>
+  <%- include('partials/head') %>
+</head>
+<body>
+  <%- include('partials/header') %>
+
+  <div class="container mt-5">
+    <h2><i class="fa-solid fa-user-pen text-warning"></i> Editar Usuario</h2>
+    <form action="/users/<%= user._id %>?_method=PUT" method="POST">
+      <div class="mb-3">
+        <label>Nombre</label>
+        <input type="text" name="name" class="form-control" value="<%= user.name %>" required>
+      </div>
+      <div class="mb-3">
+        <label>Email</label>
+        <input type="email" name="email" class="form-control" value="<%= user.email %>" required>
+      </div>
+      <div class="mb-3">
+        <label>Rol</label>
+        <select name="rol" class="form-select">
+          <option value="admin" <%= user.rol === 'admin' ? 'selected' : '' %>>Admin</option>
+          <option value="vendedor" <%= user.rol === 'vendedor' ? 'selected' : '' %>>Vendedor</option>
+        </select>
+      </div>
+      <div class="mb-3">
+        <label>Edad</label>
+        <input type="number" name="edad" class="form-control" value="<%= user.edad %>">
+      </div>
+      <div class="mb-3">
+        <label>Nueva Contraseña (opcional)</label>
+        <input type="password" name="password" class="form-control">
+      </div>
+      <button type="submit" class="btn btn-success">Guardar Cambios</button>
+      <a href="/auth/profile" class="btn btn-secondary">Cancelar</a>
+    </form>
+  </div>
+</body>
+</html>

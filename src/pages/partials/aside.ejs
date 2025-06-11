@@ -3,9 +3,15 @@
   <div class="px-3">
     <h5 class="mb-3">Productos</h5>
     <ul class="nav flex-column">
+      <% if (user && (user.rol === 'admin' || user.rol === 'vendedor')) { %> <% // Show Dashboard to both roles %>
       <li class="nav-item">
         <a class="nav-link" href="/dashboard"><span class="icon-dashboard"></span>Dashboard</a>
       </li>
+      <% } %>
+
+
+
+      <% if (user && user.rol === 'vendedor') { %> <% // Show only to vendedores %>
       <li class="nav-item">
         <a class="nav-link" href="/products"><span class="icon-stock"></span>Productos</a>
       </li>
@@ -21,12 +27,20 @@
       <li class="nav-item">
         <a class="nav-link" href="/"><span class="icon-billing"></span>Facturación</a>
       </li>
+      <% } %>
+
+      <% if (user && (user.rol === 'admin' || user.rol === 'vendedor')) { %> 
       <li class="nav-item">
-        <a class="nav-link" href="/profile"><span class="icon-settings"></span>Configuración</a>
+        <a class="nav-link" href="/auth/profile"><span class="icon-settings"></span>Perfil</a> 
       </li>
+      <% } %>
+
+      <% // The Logout link should always be visible for logged-in users %>
+      <% if (user) { %>
       <li class="nav-item">
-        <a class="nav-link" href="/"><span class="icon-logout"></span>Logout</a>
+        <a class="nav-link" href="/auth/logout"><span class="icon-logout"></span>Logout</a> <% // Ensure the logout route is correct %>
       </li>
+      <% } %>
     </ul>
   </div>
 </nav>

@@ -96,14 +96,31 @@ export const login = async (req, res) => {
         return handleResponse(req, res, 500, { error: 'Error interno del servidor.' }, 'login');
     }
 };
-    export const profile = async (req, res) => {
-        try {
+export const profile = async (req, res) => {
+  try {
     const userFound = await User.findById(req.user.id);
-    if (!userFound) return res.redirect('/auth/login');
-    res.render('profile', { user: userFound });
+    if (!userFound) {
+      // Si el usuario no se encuentra (ej. fue eliminado), destruir sesión y redirigir al login
+      req.session.destroy();
+      res.clearCookie('token', { httpOnly: true, secure: false });
+      return res.redirect('/auth/login');
+    }
+
+    let dataToRender = { user: userFound }; // Siempre pasamos el usuario logueado
+
+    // Si el usuario es admin, obtener la lista de todos los usuarios
+    if (userFound.rol === 'admin') {
+      const allUsers = await User.find({}, { password: 0 }); // Obtener todos los usuarios sin contraseña
+      dataToRender.users = allUsers; // Añadir la lista de usuarios al objeto de datos
+    }
+
+    // Renderizar la vista profile.ejs, pasando el objeto de datos
+    res.render('profile', dataToRender);
+
   } catch (error) {
     console.error(error);
-    res.status(500).send('Error interno del servidor');
+    // Considerar un manejo de error más amigable para el usuario
+    res.status(500).send('Error interno del servidor al cargar el perfil.');
   }
 };
 

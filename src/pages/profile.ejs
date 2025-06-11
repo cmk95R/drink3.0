@@ -1,283 +1,106 @@
-<!doctype html>
-<html lang="es">
+<!DOCTYPE html>
+<html lang="en">
 
-<head>  
-  <title>Perfil</title>
+<head>
+  <title>Perfil de Usuario</title>
   <%- include('partials/head') %>
 </head>
 
-<body>
-  <!-- HEADER -->
-  <header>
-    <div class="container-header">
-      <img src="../resources/imagenes/stock2b_logo_233x214.png" alt="logo_233x214" height="140">
-    </div>
-    <div class="container-fluid">
-      <div class="row">
-        <nav class="col-md-3 col-lg-2 sidebar d-flex flex-column p-3 text-white">
-          <h2 class="fs-4 mb-4">Productos</h2>
-          <a href="/dashboard" class="btn btn-primary mt-2">Inicio</a>
-          <a href="/products" class="btn btn-primary mt-2">Stock</a>
-          <a href="/orders" class="btn btn-primary mt-2">Ordenes</a>
-          <a href="/" class="btn btn-primary mt-2">Horarios</a>
-          <a href="/" class="btn btn-primary mt-2">Facturación</a>
-          <a href="/profile" class="btn btn-primary mt-2">Configuración</a>
-          <a href="/" class="btn btn-primary mt-2">Logout</a>
-        </nav>
-      </div>
-    </div>
-  </header>
+<body class="bg-light background-pattern">
 
-  <input type="checkbox" id="btn-menu" />
-  <div class="container-menu">
-    <div class="cont-menu">
-      <nav>
-        <li><button onclick="showSection('datos')">Mis Datos</button></li>
-        <li><button onclick="showSection('historial-container')">Historial de pedidos</button></li>
-        <li><button onclick="showSection('mediosPago')">Métodos de pago</button></li>
-        <li><button onclick="showSection('notificaciones')">Notificaciones</button></li>
-        <li><button onclick="showSection('seguridad')">Seguridad</button></li>
-        <li><a href="/auth/logout"> Cerrar sesión</a></li>
-      </nav>
-      <label for="btn-menu">✖️</label>
-    </div>
-  </div>
-  <!-- Main -->
-  <main>
-    <div class="container">
-      <!-- Contenedor principal -->
-      <div class="main-content">
-        <!-- Sección 1, datos de perfil de usuario -->
-        <section id="datos" class="section active">
-          <h2>Mis Datos</h2>
-          <p>Información básica del perfil.</p>
-          <div>
-            <h3>Nombre: <%= user.name %>
-            </h3>
-            <p><strong>Correo electrónico:</strong>
-              <%= user.email %>
-            </p>
-            <p><strong>Rol:</strong>
-              <%= user.rol %>
-            </p>
-            <p><strong>Edad:</strong>
-              <%= user.edad %>
-            </p>
-            <p><strong>ID Usuario FTP:</strong>
-              <%= user.ftpUserId %>
-            </p>
-          </div>
-        </section>
-        <!-- Sección 2, Historial de Pedidos -->
-        <section id="historial-container" class="section">
-          <!-- El historial de compras se cargará aquí -->
-        </section>
-        <!------------------ Modal Continuar al Pago------------------>
-        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">¿Esta seguro de cancelar el pedido?</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button id="" class="btn btn-cancelar btn-danger">Cancelar Pedido</button>
-              </div>
+  <!-- HEADER -->
+  <%- include('partials/header') %>
+
+  <div class="container-fluid">
+    <div class="row">
+
+      <!-- SIDEBAR -->
+      <%- include('partials/aside') %>
+
+      <!-- MAIN CONTENT -->
+      <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 py-4">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h2 class="mb-0">
+            <i class="fa-solid fa-user text-primary"></i> Perfil de Usuario
+          </h2>
+        </div>
+
+        <div class="card p-4 mb-4">
+          <h5 class="card-title">Información Personal</h5>
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Nombre</label>
+              <input type="text" class="form-control" value="<%= user.name %>" readonly>
             </div>
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Correo</label>
+              <input type="email" class="form-control" value="<%= user.email %>" readonly>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Rol</label>
+              <% // Corregido: usar user.rol en lugar de user.role %>
+              <input type="text" class="form-control" value="<%= user.rol %>" readonly>
+            </div>
+            <% // Añadidos campos Edad y FTP User ID %>
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Edad</label>
+              <input type="number" class="form-control" value="<%= user.edad %>" readonly>
+            </div>
+            <% if (user.ftpUserId) { %> <% // Mostrar FTP User ID solo si existe %>
+            <div class="col-md-6 mb-3">
+              <label class="form-label">ID Usuario FTP</label>
+              <input type="text" class="form-control" value="<%= user.ftpUserId %>" readonly>
+            </div>
+            <% } %>
           </div>
         </div>
 
-        <!-- Sección 3, medios de pago -->
-        <section id="mediosPago" class="section">
-
-
-          <div id="payment-section">
-            <h3>Métodos de Pago</h3>
-            <a>En este apartado puede guardar las tarjetas que quiere usar para comprar en nuestra pagina.</a>
-            <div id="payment-methods">
-
-            </div>
-
-            <buttom id="add-payment-method">Añadir Método de Pago</buttom>
-
-            <div id="payment-form" style="display:none;">
-              <h4>Añadir/Editar Método de Pago</h4>
-              <label>Número de Tarjeta:</label><br>
-              <input type="text" id="card-number" placeholder="1234 5678 9012 3456"><br>
-
-              <label for="card-expiry">Fecha de Expiracion</label><br>
-              <input type="text" id="card-expery" place holder="MM/YY"><br>
-
-              <label for="card-cvv">CW:</label><br>
-              <input type="yext" id="card-cvv" placeholder="123"><br>
-
-              <buttom id="save-payment-method">Guardar</buttom>
-              <buttom id="cancel-payment">Cancelar</buttom>
-
-            </div>
-          </div>
-        </section>
-        <!-- Sección 4, notificaciones -->
-        <section id="notificaciones" class="section">
-          <h2>Configuración</h2>
-          <p>Preferencias, privacidad, etc.</p>
-
-          <div id="Notification-system">
-            <h2>Sistema de Notificaciones</h2>
-            <p>Buenas, esperemos su estadía en Drink_in_The_House este siendo increíble y a su gusto.</p>
-            <p>Aca abajo encontrará la lista de notificaciones de los servicios que el sistema le envía cada vez que
-              interactúa con la página.</p>
-            <p>Sientese con libertad en elegir cual notificación quiera recibir y cual no.</p>
-            <ul>
-              <li>
-                <div class="notification-item">
-                  <span>Confirmación de Pedido entregado</span>
-                  <div class="button-group">
-                    <button class="activar">Activar</button>
-                    <button class="desactivar">Desactivar</button>
-                  </div>
-                </div>
-              </li>
-              <li>
-                <div class="notification-item">
-                  <span>Confirmación de pedido cancelado</span>
-                  <div class="button-group">
-                    <button class="activar">Activar</button>
-                    <button class="desactivar">Desactivar</button>
-                  </div>
-                </div>
-              </li>
-              <li>
-                <div class="notification-item">
-                  <span>Confirmación de pedido en camino</span>
-                  <div class="button-group">
-                    <button class="activar">Activar</button>
-                    <button class="desactivar">Desactivar</button>
-                  </div>
-                </div>
-              </li>
-              <li>
-                <div class="notification-item">
-                  <span>Seguimiento del envío en tiempo real</span>
-                  <div class="button-group">
-                    <button class="activar">Activar</button>
-                    <button class="desactivar">Desactivar</button>
-                  </div>
-                </div>
-              </li>
-              <li>
-                <div class="notification-item">
-                  <span>Confirmación de envío cercano</span>
-                  <div class="button-group">
-                    <button class="activar">Activar</button>
-                    <button class="desactivar">Desactivar</button>
-                  </div>
-                </div>
-              </li>
-              <li>
-                <div class="notification-item">
-                  <span>Confirmación de pedido realizado</span>
-                  <div class="button-group">
-                    <button class="activar">Activar</button>
-                    <button class="desactivar">Desactivar</button>
-                  </div>
-                </div>
-              </li>
-              <li>
-                <div class="notification-item">
-                  <span>Notificación de ofertas</span>
-                  <div class="button-group">
-                    <button class="activar">Activar</button>
-                    <button class="desactivar">Desactivar</button>
-                  </div>
-                </div>
-              </li>
-            </ul>
-          </div>
-        </section>
-        <!-- Sección 5, Seguridad -> reseteo de contraseña -->
-        <section id="seguridad" class="section">
-          <h2>Configuración</h2>
-          <p>Preferencias, privacidad, etc.</p>
-
-          <form id="changePasswordForm">
-            <h2 class="Registro">Cambiar contraseña</h2>
-            <input type="password" placeholder="Contraseña Actual" id="currentPassword" name="currentPassword" required>
-            <input type="password" placeholder="Nueva Contraseña" id="newPassword" name="newPassword" required>
-            <input type="password" placeholder="Repite la Nueva Contraseña" id="confirmPassword" name="confirmPassword"
-              required>
-            <button type="submit">Enviar</button>
-          </form>
-
-          <!-- Modal -->
-          <div id="successModal" class="modal" style="display: none;">
-            <div class="modal-content">
-              <h1>¡Cambio de Contraseña Exitoso!</h1>
-              <p>Tu contraseña se cambió con éxito. Ahora puedes iniciar sesión con tus nuevas credenciales.</p>
-              <button onclick="closeModal()">Cerrar</button>
-            </div>
+        <% if (user.rol === 'admin') { %>
+        <div class="card p-4">
+          <h5 class="card-title">Gestión de Usuarios</h5>
+          <div class="mb-3 text-end">
+            <a href="/auth/register" class="btn btn-primary">
+              <i class="fas fa-user-plus me-1"></i> Registrar Usuario
+            </a>
           </div>
 
-          <div id="errorBox" class="error" style="display: none;"></div>
-        </section>
-      </div>
-    </div>
+          <div class="table-responsive">
+            <table class="table table-hover align-middle text-center table-bordered table-sm">
+              <thead class="table-dark">
+                <tr>
+                  <th>Nombre</th>
+                  <th>Correo</th>
+                  <th>Rol</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% users.forEach(u => { %>
+                  <tr>
+                    <td><%= u.name %></td>
+                    <td><%= u.email %></td>
+                    <td><%= u.rol %></td>
+                    <td>
+                      <div class="d-flex justify-content-center gap-2">
+                        <a href="/users/<%= u._id %>/edit" class="btn btn-warning btn-sm">Editar</a>
+                        <form action="/users/<%= u._id %>?_method=DELETE" method="POST">
+                          <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                        </form>
+                      </div>
+                    </td>
+                  </tr>
+                <% }) %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <% } %>
 
-    <div class="capa"></div>
-  </main>
-
-  <!-- Footer -->
-  <footer class="main-footer">
-    <div class="footer-container">
-      <div class="footer-section">
-        <h4>Navegación</h4>
-        <ul>
-          <li>Inicio</li>
-          <li>Catálogo</li>
-          <li>Ofertas</li>
-          <li>Contacto</li>
-        </ul>
-      </div>
-      <div class="footer-section">
-        <h4>Medios de Pago</h4>
-        <ul>
-          <li>Visa</li>
-          <li>Mastercard</li>
-          <li>Paypal</li>
-          <li>Transferencia</li>
-        </ul>
-      </div>
-      <div class="footer-section">
-        <h4>Medios de Envío</h4>
-        <ul>
-          <li>DHL</li>
-          <li>UPS</li>
-          <li>FedEx</li>
-          <li>Envíos locales</li>
-        </ul>
-      </div>
-      <div class="footer-section">
-        <h4>Info de Sucursales</h4>
-        <ul>
-          <li>Buenos Aires</li>
-          <li>Montevideo</li>
-          <li>Asunción</li>
-          <li>Santiago</li>
-        </ul>
-      </div>
+      </main>
     </div>
-    <div class="footer-copyright">
-      &copy; 2024 Drink-in-The-House. Todos los derechos reservados.
-    </div>
-  </footer>
-  <!-- Scripts -->
-  <script src="../resources/js/profilemodal.js"></script>
-  <script src="../resources/js/profile.js"></script>
-  <script src="../resources/js/historial.js"></script>
-  <script src="../resources/js/medios-pago.js"></script>
-
+  </div>
 
 </body>
 
 </html>
+

@@ -11,6 +11,7 @@ import orderRoutes from "./routes/order.routes.js";
 import productRoutes from "./routes/product.routes.js";
 import dashboardRouter from "./routes/dashboard.routes.js";
 import horarioRoutes from "./routes/horario.routes.js";
+import methodOverride from 'method-override';
 // Configuración para __dirname en ES Modules
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -51,7 +52,7 @@ app.use((req, res, next) => {
     next();
 });
 // Posible auth
-import methodOverride from 'method-override';
+
 app.use(methodOverride('_method'));
 
 app.use('/auth',authRoutes);
