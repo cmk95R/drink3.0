@@ -134,6 +134,21 @@
           <p><strong>Stock:</strong> <%= product.stock %></p>
           <p><strong>Categoría:</strong> <%= product.category %></p>
           <p><strong>Disponible:</strong> <%= product.isAvailable ? 'Sí' : 'No' %></p>
+          <button
+            type="button"
+            class="btn btn-warning btn-sm"
+            data-bs-toggle="modal"
+            data-bs-target="#editProductModal"
+            data-id="<%= product._id %>"
+            data-name="<%= product.name %>"
+            data-stock="<%= product.stock %>"
+            data-category="<%= product.category %>"
+            data-description="<%= product.description %>"
+            data-image="<%= product.image %>"
+            data-isavailable="<%= product.isAvailable %>"
+          >
+            Editar
+          </button>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
