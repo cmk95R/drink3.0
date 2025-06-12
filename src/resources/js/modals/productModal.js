@@ -130,3 +130,56 @@ document
                 });
             });
   });
+
+  // Carga CSV
+document.getElementById("csvUploadForm").addEventListener("submit", async function (e) {
+    e.preventDefault();
+
+    const fileInput = document.getElementById("csvFileInput");
+    const file = fileInput.files[0];
+
+    if (!file) {
+        Swal.fire({
+            icon: "warning",
+            title: "Archivo requerido",
+            text: "Por favor selecciona un archivo CSV antes de enviar.",
+        });
+        return;
+    }
+
+    const formData = new FormData();
+    formData.append("csvFile", file);
+
+    try {
+        const res = await fetch("/stock/upload-csv", {
+            method: "POST",
+            body: formData,
+        });
+
+        const data = await res.json();
+
+        if (res.ok) {
+            Swal.fire({
+                icon: "success",
+                title: "CSV cargado",
+                text: data.message || "Productos cargados correctamente",
+                confirmButtonText: "Aceptar",
+            }).then(() => {
+                window.location.href = "/stock";
+            });
+        } else {
+            Swal.fire({
+                icon: "error",
+                title: "Error",
+                text: data.message || "Error al cargar el archivo CSV",
+            });
+        }
+    } catch (error) {
+        console.error("Error al subir CSV:", error);
+        Swal.fire({
+            icon: "error",
+            title: "Error de red",
+            text: "No se pudo conectar con el servidor",
+        });
+    }
+});

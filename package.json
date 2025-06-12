@@ -13,6 +13,7 @@
     "bcryptjs": "^2.4.3",
     "bootstrap": "^5.3.6",
     "cookie-parser": "^1.4.6",
+    "csv-parser": "^3.2.0",
     "dotenv": "^16.5.0",
     "ejs": "^3.1.10",
     "express": "^4.21.0",

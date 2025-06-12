@@ -2,9 +2,12 @@ import multer from 'multer';
 import path from 'path';
 import fs from 'fs';
 
-const dir = './uploads'; // carpeta en raíz del proyecto
+const dir = './uploads'; // Carpeta donde se guardan los archivos
+
+// Crear la carpeta si no existe
 if (!fs.existsSync(dir)) fs.mkdirSync(dir);
 
+// Configuración del almacenamiento
 const storage = multer.diskStorage({
   destination: (req, file, cb) => cb(null, dir),
   filename: (req, file, cb) => {
@@ -13,13 +16,25 @@ const storage = multer.diskStorage({
   }
 });
 
+// Filtro para validar tipos de archivos permitidos
 const fileFilter = (req, file, cb) => {
-  const allowed = /jpeg|jpg|png|gif/;
-  const mimeOK = allowed.test(file.mimetype);
-  const extOK = allowed.test(path.extname(file.originalname).toLowerCase());
-  cb(null, mimeOK && extOK);
+  const allowedImageTypes = /jpeg|jpg|png|gif/;
+  const allowedCSVTypes = /csv/;
+
+  const ext = path.extname(file.originalname).toLowerCase();
+  const mimetype = file.mimetype;
+
+  const isImage = allowedImageTypes.test(ext) && allowedImageTypes.test(mimetype);
+  const isCSV = allowedCSVTypes.test(ext) && (mimetype === 'text/csv' || mimetype === 'application/vnd.ms-excel');
+
+  if (isImage || isCSV) {
+    cb(null, true);
+  } else {
+    cb(new Error('Tipo de archivo no permitido. Solo imágenes (.jpg, .png, .gif) o archivos .csv'), false);
+  }
 };
 
+// Exportar el middleware
 const upload = multer({ storage, fileFilter });
 
 export default upload;

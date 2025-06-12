@@ -1,7 +1,72 @@
 import mongoose from 'mongoose';
 import Product from '../models/product.js';
+import fs from 'fs';
+import csv from 'csv-parser'; 
+import { url } from 'inspector';
+
 
 const validateObjectIdProd = (id) => mongoose.Types.ObjectId.isValid(id); // Validar ID
+
+export const uploadProductsFromCSV = async (req, res) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({ message: 'No se subió ningún archivo' });
+    }
+    // 🧠 Obtenemos las categorías válidas desde el enum del schema
+    const allowedCategories = Product.schema.path('category').enumValues;
+
+    const filePath = req.file.path;
+    const productos = [];
+    const invalids = [];
+
+    fs.createReadStream(filePath)
+      .pipe(csv())
+      .on('data', (row) => {
+
+        const { name, stock, category, isAvailable, image } = row;
+        const parsedStock = parseInt(stock);
+
+        // Normalizamos la categoría a minúsculas para comparación
+        const categoryNormalized = category?.toLowerCase();
+
+        const isValidCategory = allowedCategories.includes(categoryNormalized);
+        if (!isValidCategory || !name || isNaN(parsedStock)) {
+          invalids.push({ name, category });
+          return;
+        }
+
+        productos.push({
+          name,
+          stock: parsedStock,
+          category: categoryNormalized,
+          isAvailable: isAvailable?.toLowerCase() === 'true',
+          image: image?.trim() || null,
+        });
+      })
+      .on('end', async () => {
+        try {
+          if (productos.length > 0) {
+            await Product.insertMany(productos);
+          }
+
+          fs.unlinkSync(filePath); // Limpiamos el archivo
+
+          res.status(200).json({
+            message: 'Carga finalizada',
+            inserted: productos.length,
+            invalids,
+          });
+        } catch (err) {
+          console.error(err);
+          res.status(500).json({ error: 'Error al guardar los productos' });
+        }
+      });
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Error al procesar el archivo CSV' });
+  }
+};
 
 export const createProduct = async (req, res) => {
     try {
