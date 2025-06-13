@@ -1,21 +1,140 @@
 <!DOCTYPE html>
 <html lang="es">
 
-<head>  
+<head>
   <title>Dashboard</title>
-  <%- include('partials/head') %>    
+  <%- include('partials/head') %>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
-<body class="bg-light background-pattern">  
+<body class="bg-light ">
   <!-- HEADER -->
   <%- include('partials/header') %>
 
-  <!-- ASIDE -->
-  <%- include('partials/aside') %>
+    <div class="container-fluid">
+      <div class="row">
+        <!-- ASIDE -->
+        <%- include('partials/aside') %>
 
-  <!-- MAIN-->
-  <main>
-  </main>    
+          <main class="col-md-9 col-lg-10 pt-4 bg-light">
+            <div class="container">
+              <h2 class="mb-4">📊 Panel de Control</h2>
+
+              <div class="row g-4">
+                <!-- Gráfico de Barras -->
+                <div class="col-md-4">
+                  <div class="card shadow">
+                    <div class="card-body">
+                      <h5 class="card-title">Ventas por Mes</h5>
+                      <canvas id="barChart"></canvas>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Gráfico de Torta -->
+                <div class="col-md-4">
+                  <div class="card shadow">
+                    <div class="card-body">
+                      <h5 class="card-title">Distribución por Categoría</h5>
+                      <canvas id="pieChart"></canvas>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Gráfico de Barras Horizontales -->
+                <div class="col-md-4">
+                  <div class="card shadow">
+                    <div class="card-body">
+                      <h5 class="card-title">Tickets por Departamento</h5>
+                      <canvas id="horizontalBarChart"></canvas>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Gráfico Extra: Línea de Evolución -->
+                <div class="col-md-4">
+                  <div class="card shadow">
+                    <div class="card-body">
+                      <h5 class="card-title">Visitas al Sitio</h5>
+                      <canvas id="lineChart"></canvas>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </main>
+      </div>
+    </div>
+
+    <!-- CHART JS SCRIPT -->
+    <script>
+      // Bar chart
+      new Chart(document.getElementById('barChart'), {
+        type: 'bar',
+        data: {
+          labels: ['Enero', 'Febrero', 'Marzo', 'Abril'],
+          datasets: [{
+            label: 'Ventas ($)',
+            data: [12000, 19000, 3000, 5000],
+            backgroundColor: '#0d6efd'
+          }]
+        },
+        options: {
+          responsive: true
+        }
+      });
+
+      // Pie chart
+      new Chart(document.getElementById('pieChart'), {
+        type: 'pie',
+        data: {
+          labels: ['Electrónica', 'Ropa', 'Alimentos'],
+          datasets: [{
+            data: [40, 30, 30],
+            backgroundColor: ['#0d6efd', '#198754', '#ffc107']
+          }]
+        },
+        options: {
+          responsive: true
+        }
+      });
+
+      // Horizontal bar chart
+      new Chart(document.getElementById('horizontalBarChart'), {
+        type: 'bar',
+        data: {
+          labels: ['Soporte', 'Ventas', 'TI', 'RRHH'],
+          datasets: [{
+            label: 'Tickets',
+            data: [25, 40, 15, 10],
+            backgroundColor: '#6610f2'
+          }]
+        },
+        options: {
+          indexAxis: 'y',
+          responsive: true
+        }
+      });
+
+      // Line chart
+      new Chart(document.getElementById('lineChart'), {
+        type: 'line',
+        data: {
+          labels: ['Lun', 'Mar', 'Mié', 'Jue', 'Vie'],
+          datasets: [{
+            label: 'Visitas',
+            data: [100, 150, 80, 200, 170],
+            fill: false,
+            borderColor: '#dc3545',
+            tension: 0.1
+          }]
+        },
+        options: {
+          responsive: true
+        }
+      });
+    </script>
 </body>
 
 </html>
