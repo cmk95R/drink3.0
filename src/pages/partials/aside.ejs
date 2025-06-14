@@ -4,7 +4,7 @@
   <div class="px-3">
     <h5 class="mb-3">Productos</h5>
     <ul class="nav flex-column">
-      <% if (user && (user.rol==='admin' || user.rol==='vendedor' )) { %>
+      <% if (user && (user.rol==='admin' || user.rol==='cliente' )) { %>
         <% // Show Dashboard to both roles %>
           <li class="nav-item">
             <button class="nav-link btn btn-outline-info" onclick="location.href='/dashboard'"><span
@@ -14,7 +14,7 @@
 
 
 
-            <% if (user && user.rol==='vendedor' ) { %>
+            <% if (user && user.rol==='cliente' ) { %>
               <li class="nav-item">
                 <button class="nav-link btn btn-outline-info" onclick="location.href='/stock'"><span
                     class="icon-stock"></span>Stock</button>
@@ -38,7 +38,7 @@
               <% } %>
 
 
-                <% if (user && (user.rol==='admin' || user.rol==='vendedor' )) { %>
+                <% if (user && (user.rol==='admin' || user.rol==='cliente' )) { %>
                   <li class="nav-item">
                     <button class="nav-link btn btn-outline-warning" onclick="location.href='/auth/profile'"><span
                         class="icon-settings"></span>Perfil</button>
