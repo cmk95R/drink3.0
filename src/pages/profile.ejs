@@ -59,9 +59,9 @@
         <div class="card p-4">
           <h5 class="card-title">Gestión de Usuarios</h5>
           <div class="mb-3 text-end">
-            <a href="/auth/register" class="btn btn-primary">
-              <i class="fas fa-user-plus me-1"></i> Registrar Usuario
-            </a>
+            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalRegistroUsuario">
+              Registrar Usuario
+            </button>
           </div>
 
           <div class="table-responsive">
@@ -100,6 +100,75 @@
     </div>
   </div>
 
+<!-- Modal Registro de Usuario -->
+<div class="modal fade" id="modalRegistroUsuario" tabindex="-1" aria-labelledby="modalRegistroUsuarioLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form action="/auth/register" method="POST">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalRegistroUsuarioLabel">Regístrese</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+
+        <div class="modal-body">
+          <!-- Nombre -->
+          <div class="mb-3">
+            <label for="name" class="form-label">Nombre de usuario</label>
+            <input type="text" class="form-control" id="name" name="name" placeholder="Nombre de usuario"
+              value="<%= formData && formData.name ? formData.name : '' %>" />
+          </div>
+
+          <!-- Email -->
+          <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" class="form-control" id="email" name="email" placeholder="Email"
+              value="<%= formData && formData.email ? formData.email : '' %>" />
+          </div>
+
+          <!-- Rol -->
+          <div class="mb-3">
+            <label for="rol" class="form-label">Rol</label>
+            <select class="form-select" id="rol" name="rol" required>
+              <option value="">Seleccione un rol</option>
+              <option value="admin" <%= formData && formData.rol === 'admin' ? 'selected' : '' %>>Admin</option>
+              <option value="cliente" <%= formData && formData.rol === 'cliente' ? 'selected' : '' %>>Cliente</option>
+            </select>
+          </div>
+
+          <!-- Contraseña -->
+          <div class="mb-3">
+            <label for="password" class="form-label">Contraseña</label>
+            <input type="password" class="form-control" id="password" name="password" placeholder="Contraseña" />
+          </div>
+
+          <!-- Edad -->
+          <div class="mb-3">
+            <label for="edad" class="form-label">Edad</label>
+            <input type="number" class="form-control" id="edad" name="edad" placeholder="Edad"
+              value="<%= formData && formData.edad ? formData.edad : '' %>" />
+          </div>
+
+          <!-- Mostrar errores -->
+          <% if (errors && errors.length > 0) { %>
+            <div class="alert alert-danger">
+              <ul class="mb-0">
+                <% errors.forEach(error => { %>
+                  <li><%= error.msg %></li>
+                <% }); %>
+              </ul>
+            </div>
+          <% } %>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="submit" class="btn btn-primary">Enviar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+  
 </body>
 
 </html>

@@ -121,9 +121,8 @@ export const deleteUser = async(req,res)=>{
         const deletedUser = await User.findByIdAndDelete(id).select('-password');
         if(!deletedUser){
             return res.status(404).json({message:'Usuario no encontrado'});
-
         }
-        res.status(204).send();
+        res.redirect('/auth/profile');
 
     }catch(error){
         console.log(error);

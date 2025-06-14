@@ -29,7 +29,7 @@ export const register = async (req,res)=>{
     await newUser.save();
     //const { password: _, ...userData } = newUser.toObject(); // Excluir password
     if (req.accepts('html')) {
-      return res.redirect('/auth/login');
+      return res.redirect('/auth/profile');
     } else {
       const { password: _, ...userData } = newUser.toObject();
       return res.status(201).json(userData);
@@ -111,7 +111,11 @@ export const profile = async (req, res) => {
       return res.redirect('/auth/login');
     }
 
-    let dataToRender = { user: userFound }; // Siempre pasamos el usuario logueado
+    let dataToRender = {
+      user: userFound,
+      formData: {},     // ✅ Esto evita el error en el EJS
+      errors: []        // ✅ Por si el EJS también los usa
+    };
 
     // Si el usuario es admin, obtener la lista de todos los usuarios
     if (userFound.rol === 'admin') {
