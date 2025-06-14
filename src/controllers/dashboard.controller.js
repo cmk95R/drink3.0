@@ -20,7 +20,7 @@ export const getDashboard = async (req, res) => {
 
     // Renderizar vista dashboard.ejs con los datos
     return res.render('dashboard', {
-      user: req.user,       // Información del usuario logueado
+      user: req.session.user,       // Información del usuario logueado
       productos,            // Lista de productos
       ordenes,              // Lista de órdenes
     });
@@ -30,5 +30,3 @@ export const getDashboard = async (req, res) => {
     return res.status(500).render('error', { message: 'Error interno del servidor' });
   }
 };
-
-

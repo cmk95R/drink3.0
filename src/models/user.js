@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { v4 as uuidv4 } from 'uuid'; // ⚠️ Asegúrate de instalar uuid con: npm install uuid
+import { v4 as uuidv4 } from 'uuid';
 
 const userSchema = new mongoose.Schema({
   name: { type: String, required: true },
@@ -19,24 +19,32 @@ const userSchema = new mongoose.Schema({
     required: true,
     minlength: 6
   },
-  edad: { type: Number, required: true },
+  edad: {
+    type: Number,
+    required: true
+  },
 
-  // ✅ Nuevo campo para uso con servidor FTP
+  // Este campo solo aplica a usuarios con rol "cliente"
+  pro: {
+    type: Boolean,
+    default: false
+  },
+
   ftpUserId: {
     type: String,
     unique: true,
-    default: uuidv4 // Se genera automáticamente al crear el usuario
+    default: uuidv4
   }
 
 }, { timestamps: true });
 
+
+ //Middleware para asegurar que solo los "clientes" tengan el campo "pro"
+userSchema.pre('save', function (next) {
+  if (this.rol !== 'cliente') {
+    this.pro = undefined; // elimina el campo si no es cliente
+  }
+  next();
+});
+
 export default mongoose.model('User', userSchema);
-
-
-
-//Genere, la creacion de la cuenta, que nos genere el usurio del server ftp
-//Usuario y nombre, el user=nombre y apalledi, una funcion de los dos
-//Que cree<usuario>:<contraseña y un usuarioftp. validacion.
-//El usuario ftp se companga del usuarip
-//user add usuario ftp id, tru o false para que lo deje passa o no.
-//?¿ Generar el id en el back,

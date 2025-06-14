@@ -109,7 +109,7 @@ export const renderOrdersPage = async (req, res) => {
     const clientes = await User.find();
     const productos = await Product.find();
 
-    res.render('orders', { orders, clients: clientes, products: productos, user: req.user   });
+    res.render('orders', { orders, clients: clientes, products: productos, user: req.session.user });
 
   } catch (error) {
     console.error(error);

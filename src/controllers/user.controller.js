@@ -75,41 +75,51 @@ export const getUserById = async(req,res)=>{
 
 
 //////////////////////////////////////updateUser///////////////////////////////////////////////////////////////////////////////
-export const updateUser = async(req,res)=>{
-    
-
-    try{
-        const{id} =req.params;
-        if(!validateObjectId(id)){
-            return res.status(400).json({message:'ID invalido'});
-        }
-        const{name,email,rol,password,edad} = req.body;
-
-        const updateFields = {name,email,rol,edad};
-        if(password){
-            updateFields.password = await bcrypt.hash(password,10);
-        }
-
-        const updateUser = await User.findByIdAndUpdate(
-            id,
-            updateFields,
-            
-            {new: true, runValidators:true}
-        ).select('-password');
-
-        if(!updateUser){
-            return res.status(404).json({message:'Usuario no encontrado'});
-        }
-
-        res.status(200).json(updateUser);
-
-    }catch(error){
-        console.log(error);
-        res.status(500).json({error:'Hubo un error pruebe mas tarde.'})
-
+export const updateUser = async (req, res) => {
+  try {
+    const { id } = req.params;
+    if (!validateObjectId(id)) {
+      return res.status(400).json({ message: 'ID invalido' });
     }
 
-}
+    const { name, email, rol, password, edad } = req.body;
+
+    const updateFields = { name, email, rol, edad };
+
+    if (password) {
+      updateFields.password = await bcrypt.hash(password, 10);
+    }
+
+    let updateQuery = {
+      $set: updateFields
+    };
+
+    if (rol === 'cliente') {
+      const userInDB = await User.findById(id);
+      updateFields.pro = userInDB?.pro ?? false;
+    } else {
+      // Si NO es cliente, se elimina el campo `pro`
+      updateQuery.$unset = { pro: "" };
+    }
+
+    const updateUser = await User.findByIdAndUpdate(
+      id,
+      updateQuery,
+      { new: true, runValidators: true }
+    ).select('-password');
+
+    if (!updateUser) {
+      return res.status(404).json({ message: 'Usuario no encontrado' });
+    }
+
+    res.status(200).json(updateUser);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: 'Hubo un error, pruebe más tarde.' });
+  }
+};
+
+
 //Delete
 export const deleteUser = async(req,res)=>{
     

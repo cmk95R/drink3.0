@@ -23,10 +23,15 @@
 
       <% if (user && user.rol === 'cliente') { %>
         <li class="nav-item">
-          <button class="nav-link btn btn-outline-info" onclick="location.href='/products'">
+          <button 
+            class="nav-link btn btn-outline-info"
+            onclick="<%= user.pro ? "location.href='/products'" : "location.href='/hire-modules'" %>"
+          >
             <span class="icon-stock"></span>Productos
           </button>
         </li>
+      <% } %>
+      <% if (user && user.rol === 'cliente') { %>
         <li class="nav-item">
           <button class="nav-link btn btn-outline-info" onclick="location.href='/orders'">
             <span class="icon-orders"></span>Órdenes

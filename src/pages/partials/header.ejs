@@ -1,3 +1,8 @@
 <header class="bg-white shadow-sm py-3">
-  <img class="logo d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none" src="../resources/imagenes/stock2b_logo_233x214.png" alt="Logo" height="85" class="me-3" /></a>
+  <img class="logo d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none" src="../resources/imagenes/stock2b_logo_233x214.png" alt="Logo" height="85" class="me-3" />
+  <% if (user && user.rol === 'cliente' && user.pro === true) { %>
+    <form action="/hire-modules/cancel-modules" method="POST">
+      <button type="submit" class="btn btn-danger">Cancelar suscripción</button>
+    </form>
+  <% } %>
 </header>

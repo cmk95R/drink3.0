@@ -7,6 +7,7 @@ import session from 'express-session';  // Importar express-session
 import indexRouter from './routes/index.routes.js';
 import authRoutes from "./routes/auth.routes.js";
 import userRoutes from "./routes/user.routes.js";//va o no va.
+import hireModulesRoutes from "./routes/hireModules.routes.js";
 import orderRoutes from "./routes/order.routes.js";
 import stockRoutes from "./routes/stock.routes.js";
 import productRoutes from "./routes/product.routes.js";
@@ -59,6 +60,7 @@ app.use(methodOverride('_method'));
 app.use('/auth',authRoutes);
 
 app.use("/users",userRoutes);//consultar- va o no va
+app.use('/hire-modules', hireModulesRoutes);
 app.use("/horario",horarioRoutes);
 app.use("/orders",orderRoutes);
 app.use("/products",productRoutes);
