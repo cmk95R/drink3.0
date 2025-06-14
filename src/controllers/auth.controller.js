@@ -85,7 +85,12 @@ export const login = async (req, res) => {
     
 
     if (req.accepts('html')) {
-      return res.redirect('/dashboard');
+        //pequeña condicional que verifica si el usuario es cliente o admin para redirigirlos a sus respectivas páginas
+        if (user.rol === 'cliente'){
+        return res.redirect('/dashboard');
+        } else if (user.rol === 'admin'){
+          return res.redirect ('/stock')
+        }
     } else {
       return res.status(200).json({ token, user: userData });
     }
