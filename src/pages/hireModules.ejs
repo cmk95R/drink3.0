@@ -1,48 +1,158 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <title>Pasate a Pro</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
   <style>
+    :root {
+      --bg-color: #f8f9fa;
+      --text-color: #212529;
+      --card-bg: #ffffff;
+    }
+
+    .dark-mode {
+      --bg-color: #121212;
+      --text-color: #f1f1f1;
+      --card-bg: #1e1e1e;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      transition: background-color 0.5s, color 0.5s;
+    }
+
+    .card {
+      background-color: var(--card-bg);
+      color: var(--text-color);
+      transition: transform 0.3s ease-in-out, background-color 0.5s, color 0.5s;
+    }
+
     .feature-icon {
       font-size: 2rem;
       color: #ffc107;
     }
+
     .fade-in {
       opacity: 0;
       transform: translateY(20px);
       animation: fadeInUp 0.6s ease forwards;
     }
+
+    .slide-in-left {
+      opacity: 0;
+      transform: translateX(-30px);
+      animation: slideInLeft 0.6s ease forwards;
+    }
+
+    .zoom-in {
+      opacity: 0;
+      transform: scale(0.8);
+      animation: zoomIn 0.6s ease forwards;
+    }
+
+    .slide-in-right {
+      opacity: 0;
+      transform: translateX(30px);
+      animation: slideInRight 0.6s ease forwards;
+    }
+
     @keyframes fadeInUp {
       to {
         opacity: 1;
         transform: translateY(0);
       }
     }
+
+    @keyframes slideInLeft {
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes slideInRight {
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes zoomIn {
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
     .card-price {
       font-size: 2rem;
       font-weight: bold;
     }
+
     .card:hover {
       transform: scale(1.03);
-      transition: transform 0.3s ease-in-out;
       z-index: 1;
     }
+
     .btn-flash {
       animation: pulse 1.5s infinite;
     }
+
+    .btn-glow {
+      box-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
+      animation: glowPulse 1.5s infinite;
+    }
+
     @keyframes pulse {
-      0%, 100% { transform: scale(1); opacity: 1; }
-      50% { transform: scale(1.05); opacity: 0.8; }
+
+      0%,
+      100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+
+      50% {
+        transform: scale(1.05);
+        opacity: 0.8;
+      }
+    }
+
+    @keyframes glowPulse {
+      0% {
+        box-shadow: 0 0 5px rgba(255, 215, 0, 0.4);
+      }
+
+      50% {
+        box-shadow: 0 0 20px rgba(255, 215, 0, 1);
+      }
+
+      100% {
+        box-shadow: 0 0 5px rgba(255, 215, 0, 0.4);
+      }
+    }
+
+    .theme-toggle {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      z-index: 999;
     }
   </style>
 </head>
+
 <body class="bg-light text-dark">
 
+  <button class="btn btn-sm btn-outline-secondary theme-toggle" onclick="toggleTheme()">
+    <i class="bi bi-moon-fill"></i> Modo Oscuro
+  </button>
+
   <div class="alert alert-info text-center m-0 rounded-0 fade-in" style="animation-delay: 0.2s">
-    🎉 ¡Fuiste seleccionado! Accedé a planes exclusivos por $0 durante un tiempo completamente arbitrario.
+    🎉 ¡Fuiste seleccionado! Accedé a planes exclusivos por $0 durante un tiempo completamente arbitrario. Tiempo
+    restante: <span id="fakeTimer">00:10:00</span>
   </div>
 
   <div class="container py-5">
@@ -52,10 +162,11 @@
     </div>
 
     <div class="row mb-5">
-      <div class="col-md-4 fade-in" style="animation-delay: 0.6s">
+      <div class="col-md-4 slide-in-left" style="animation-delay: 0.6s">
         <div class="card shadow-sm">
           <div class="card-body text-center">
-            <div class="mb-3"><i class="bi bi-box feature-icon"></i></div>
+            <div class="mb-3"><i class="bi bi-box feature-icon" data-bs-toggle="tooltip"
+                title="Un clásico con lo justo"></i></div>
             <h5 class="card-title">Plan Básico</h5>
             <p class="card-price text-muted">$0</p>
             <ul class="list-unstyled mb-3">
@@ -63,49 +174,63 @@
               <li>✔ Email lento</li>
               <li>❌ Reportes</li>
               <li>❌ Velocidad turbo</li>
+              <br>
+              <li><i>"Poné un mango, ratón. Los jueguitos de Steam no se pagan solos..."</i>🐭</li>
             </ul>
-            <button class="btn btn-outline-secondary disabled">Ya activo</button>
+            <button class="btn btn-outline-secondary disabled">Tu plan actual</button>
           </div>
         </div>
       </div>
 
-      <div class="col-md-4 fade-in" style="animation-delay: 0.8s">
+      <div class="col-md-4 zoom-in" style="animation-delay: 0.8s">
         <div class="card shadow-sm border-warning">
           <div class="card-body text-center">
-            <div class="mb-3"><i class="bi bi-lightning-charge-fill feature-icon text-warning"></i></div>
+            <div class="mb-3"><i class="bi bi-lightning-charge-fill feature-icon text-warning" data-bs-toggle="tooltip"
+                title="Una chispa de poder"></i></div>
             <h5 class="card-title text-warning">Pro</h5>
-            <p class="card-price text-warning">$599</p>
+            <p class="card-price text-warning">$9.999</p>
             <ul class="list-unstyled mb-3">
               <li>✔ Todo lo del básico</li>
               <li>✔ Gráficos impresionantes</li>
-              <li>✔ Soporte ficticio rápido</li>
-              <li>✔ Calavera de cristal</li>
+              <li>✔ Módulo "Productos"</li>
+              <li>✔ Velocidad Mach-1</li>
+              <li>✔ Calavera de cristal de Indiana Jones <button data-bs-toggle="modal" data-bs-target="#easterEggModal"
+                  style="all: unset; cursor: pointer;" title="¿👀?">💀</button></li>
+              <br>
+              <li><i>"Vas a ser promovido al rango de 'Cliente'!"</i>🏅</li>
             </ul>
-            <button class="btn btn-warning btn-flash" data-bs-toggle="modal" data-bs-target="#proModal">Activar Pro</button>
+            <button class="btn btn-warning btn-flash btn-glow" data-bs-toggle="modal" data-bs-target="#proModal">Activar
+              Pro</button>
           </div>
         </div>
       </div>
 
-      <div class="col-md-4 fade-in" style="animation-delay: 1s">
+      <div class="col-md-4 slide-in-right" style="animation-delay: 1s">
         <div class="card shadow-sm border-dark">
           <div class="card-body text-center">
-            <div class="mb-3"><i class="bi bi-gem feature-icon text-dark"></i></div>
+            <div class="mb-3"><i class="bi bi-gem feature-icon text-dark" data-bs-toggle="tooltip"
+                title="Exceso de estilo"></i></div>
             <h5 class="card-title text-dark">Ultra Pro Max</h5>
-            <p class="card-price text-dark">$2.499</p>
+            <p class="card-price text-dark">$24.999</p>
             <ul class="list-unstyled mb-3">
               <li>✔ Todo lo del Pro</li>
-              <li>✔ Modo oscuro</li>
+              <li>✔ Modo oscuro realmente "Oscuro"</li>
               <li>✔ NFT exclusivo (no transferible)</li>
-              <li>✔ Sticker en PDF</li>
+              <li>✔ Soporte ficticio 24x7</li>
+              <li>✔ Poder de los dioses ⚡</li>
+              <br>
+              <li><i>"Tenés el 51% de la empresa, sos socio mayoritario."</i>📊</li>
             </ul>
-            <button class="btn btn-dark btn-flash" data-bs-toggle="modal" data-bs-target="#proModal">Ser Ultra Max</button>
+            <button class="btn btn-dark btn-flash btn-glow" data-bs-toggle="modal" data-bs-target="#proModal">Ser Ultra
+              Max</button>
           </div>
         </div>
       </div>
     </div>
 
     <p class="text-center text-muted small fade-in" style="animation-delay: 1.2s">
-      ¿Todavía lo estás pensando? Todos los planes incluyen drama, estilo y funcionalidades absurdas.
+      ¿Todavía lo estás pensando? Todos los planes incluyen drama, estilo y funcionalidades absurdas. Ya <span
+        id="userCounter">3.412</span> personas lo activaron.
     </p>
   </div>
 
@@ -114,11 +239,14 @@
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="proModalLabel">¿Estás seguro?</h5>
+          <h5 class="modal-title" id="proModalLabel"> Genial! Estás a punto de ser Pro</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
         </div>
-        <div class="modal-body">
-          Esta acción puede causar sentimientos de superioridad, gráficos innecesarios y funcionalidades que no sabías que querías. ¿Continuar?
+        <div class="modal-body" id="modalMessage">
+          Esta acción puede causar sentimientos de superioridad, gráficos innecesarios y funcionalidades que no sabías
+          que querías. ¿Continuar?
+          
+          <i><p id="modalMessage2"></p></i>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
@@ -130,6 +258,59 @@
     </div>
   </div>
 
+  <!-- Easter Egg Modal -->
+  <div class="modal fade" id="easterEggModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content text-center">
+        <div class="modal-body">
+          <h4 class="mb-3">🎊 ¡EasterEgg desbloqueado! 😎 🎊</h4>
+          <p class="text-muted">Obtuviste nuevas funciones de dudosa utilidad, pero altísima estética</p>
+          <p class="text-muted">Sos un ser superior!</p>
+          <button class="btn btn-success" data-bs-dismiss="modal">Acepto mi destino!</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    function toggleTheme() {
+      document.body.classList.toggle('dark-mode');
+    }
+
+    // Fake countdown
+    let seconds = 600;
+    setInterval(() => {
+      seconds--;
+      const min = String(Math.floor(seconds / 60)).padStart(2, '0');
+      const sec = String(seconds % 60).padStart(2, '0');
+      document.getElementById('fakeTimer').textContent = `00:${min}:${sec}`;
+    }, 1000);
+
+    // Tooltip init
+    const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+    const tooltipList = tooltipTriggerList.map(el => new bootstrap.Tooltip(el));
+
+    // Modal frases aleatorias
+    const frases = [
+      "Te vas a ver más importante.",
+      "Te van a mirar distinto en las reuniones.",
+      "Este botón cambia vidas! (o eso creemos).",
+      "Aura +10000",
+      "Ahora tu mouse vale el doble."
+    ];
+    const modalMessage = document.getElementById('modalMessage2');
+    document.getElementById('proModal').addEventListener('show.bs.modal', () => {
+      modalMessage.textContent = frases[Math.floor(Math.random() * frases.length)];
+    });
+
+    // Fake user counter
+    let counter = 3412;
+    setInterval(() => {
+      counter++;
+      document.getElementById('userCounter').textContent = counter.toLocaleString();
+    }, 4000);
+  </script>
 </body>
+
 </html>

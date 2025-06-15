@@ -5,65 +5,64 @@
     <h5 class="mb-3">Productos</h5>
     <ul class="nav flex-column">
 
-      <% if (user && user.rol === 'cliente') { %>
+      <% if (user && user.rol==='cliente' ) { %>
         <li class="nav-item">
-          <button class="nav-link btn btn-outline-info" onclick="location.href='/dashboard'">
-            <span class="icon-dashboard"></span>Dashboard
+          <button class="nav-link btn btn-outline-info mb-1" onclick="location.href='/dashboard'">
+            <span class="icon-dashboard"></span> Dashboard
           </button>
         </li>
-      <% } %>
+        <% } %>
 
-      <% if (user && (user.rol === 'admin' || user.rol === 'cliente')) { %>
-        <li class="nav-item">
-          <button class="nav-link btn btn-outline-info" onclick="location.href='/stock'">
-            <span class="icon-stock"></span>Stock
-          </button>
-        </li>
-      <% } %>
+          <% if (user && (user.rol==='admin' || user.rol==='cliente' )) { %>
+            <li class="nav-item">
+              <button class="nav-link btn btn-outline-info mb-1" onclick="location.href='/stock'">
+                <span class="icon-stock"></span> Stock
+              </button>
+            </li>
+            <% } %>
 
-      <% if (user && user.rol === 'cliente') { %>
-        <li class="nav-item">
-          <button 
-            class="nav-link btn btn-outline-info"
-            onclick="<%= user.pro ? "location.href='/products'" : "location.href='/hire-modules'" %>"
-          >
-            <span class="icon-stock"></span>Productos
-          </button>
-        </li>
-      <% } %>
-      <% if (user && user.rol === 'cliente') { %>
-        <li class="nav-item">
-          <button class="nav-link btn btn-outline-info" onclick="location.href='/orders'">
-            <span class="icon-orders"></span>Órdenes
-          </button>
-        </li>
-        <li class="nav-item">
-          <button class="nav-link btn btn-outline-info" onclick="location.href='/horario'">
-            <span class="icon-schedule"></span>Horarios
-          </button>
-        </li>
-        <li class="nav-item">
-          <button class="nav-link btn btn-secondary" disabled>
-            <span class="icon-billing"></span>Facturación
-          </button>
-        </li>
-      <% } %>
+              <% if (user && user.rol==='cliente' ) { %>
+                <li class="nav-item">
+                  <button id="proButton" class="nav-link btn btn-outline-info mb-1"
+                    onclick="location.href='<%= user.pro ? '/products' : '/hire-modules' %>'">
+                    <span class="icon-stock"></span> Productos
+                  </button>
+                </li>
 
-      <% if (user && (user.rol === 'admin' || user.rol === 'cliente')) { %>
-        <li class="nav-item">
-          <button class="nav-link btn btn-outline-warning" onclick="location.href='/auth/profile'">
-            <span class="icon-settings"></span>Perfil
-          </button>
-        </li>
-      <% } %>
+                <% } %>
+                  <% if (user && user.rol==='cliente' ) { %>
+                    <li class="nav-item">
+                      <button class="nav-link btn btn-outline-info mb-1" onclick="location.href='/orders'">
+                        <span class="icon-orders"></span> Órdenes
+                      </button>
+                    </li>
+                    <li class="nav-item">
+                      <button class="nav-link btn btn-secondary mb-1" disabled>
+                        <span class="icon-schedule"></span> Horarios
+                      </button>
+                    </li>
+                    <li class="nav-item">
+                      <button class="nav-link btn btn-secondary mb-1" disabled>
+                        <span class="icon-billing"></span> Facturación
+                      </button>
+                    </li>
+                    <% } %>
 
-      <% if (user) { %>
-        <li class="nav-item">
-          <button class="nav-link btn btn-outline-danger" onclick="location.href='/auth/logout'">
-            <span class="icon-logout"></span>Logout
-          </button>
-        </li>
-      <% } %>
+                      <% if (user && (user.rol==='admin' || user.rol==='cliente' )) { %>
+                        <li class="nav-item">
+                          <button class="nav-link btn btn-outline-warning mb-1" onclick="location.href='/auth/profile'">
+                            <span class="icon-settings"></span> Perfil
+                          </button>
+                        </li>
+                        <% } %>
+
+                          <% if (user) { %>
+                            <li class="nav-item">
+                              <button class="nav-link btn btn-outline-danger" onclick="location.href='/auth/logout'">
+                                <span class="icon-logout"></span> Logout
+                              </button>
+                            </li>
+                            <% } %>
 
     </ul>
   </div>
