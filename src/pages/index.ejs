@@ -1,62 +1,69 @@
 <!DOCTYPE html>
-<html lang="es" data-bs-theme="auto">
+<html lang="es">
 
 <head>
-  <title>Iniciar sesión</title>  
+  <title>Iniciar sesión</title>
+  <link rel="stylesheet" href="../resources/css/index.css">  
   <%- include('partials/head') %>
 </head>
 
-<body class="d-flex align-items-center justify-content-center vh-100 bg-body-tertiary">
-
-  <main class="form-signin text-center">
-    <form id="loginForm" action="/auth/login" method="POST">
-      <img class="mb-4" src="../resources/imagenes/stock2b_logo_466x429.png" alt="Logo" width="50%" height="50%">
-      <h1 class="h3 mb-3 fw-normal">Iniciar sesión</h1>
+<body>
+  <main>
+    <form id="loginForm" action="/auth/login" method="POST" class="form-container">
+      <div class="text-center">
+        <img src="../resources/imagenes/stock2b_logo_466x429.png" alt="Logo" width="50%" height="50%">
+      </div>
+      <h1 class="text-center">Iniciar sesión</h1>
 
       <div id="errorMessages" style="color: red;"></div>
 
-      <div class="form-floating mb-2">
-        <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com" required>
+      <div class="form-group">
         <label for="email">Correo electrónico</label>
+        <input type="email" id="email" name="email" placeholder="name@example.com" required>
       </div>
 
-      <div class="form-floating mb-2">
-        <input type="password" class="form-control" id="contrasena" name="password" placeholder="Contraseña" required>
+      <div class="form-group">
         <label for="contrasena">Contraseña</label>
+        <input type="password" id="contrasena" name="password" placeholder="Contraseña" required>
       </div>
 
-      <div class="mb-3">
-        <a href="#" class="btn btn-link p-0" data-bs-toggle="modal" data-bs-target="#resetPasswordModal">¿Olvidaste tu contraseña?</a>
+      <div class="text-center">
+        <span class="link" onclick="abrirModal()">¿Olvidaste tu contraseña?</span>
       </div>
 
-      <button class="btn btn-primary w-100 mb-2" type="submit">Enviar</button>
+      <button type="submit" class="btn-color notHover">Enviar</button>
 
-      <p class="mt-5 mb-3 text-muted">&copy; 2025</p>
+      <p class="text-center mt-3 text-muted">&copy; 2025</p>
     </form>
   </main>
 
-  <!-- Modal Restablecer Contraseña -->
-  <div class="modal fade" id="resetPasswordModal" tabindex="-1" aria-labelledby="resetPasswordLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <form action="/api/reset-password" method="POST" class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="resetPasswordLabel">Restablecer Contraseña</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-        </div>
-        <div class="modal-body">
-          <p>Por favor ingresa tu correo electrónico para recibir un enlace para restablecer tu contraseña.</p>
-          <input type="email" name="email" class="form-control" placeholder="Ingresa tu correo electrónico" required>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-          <button type="submit" class="btn btn-primary">Enviar enlace</button>
-        </div>
-      </form>
-    </div>
+  <!-- Modal -->
+  <div id="resetPasswordModal" class="modal">
+    <form action="/api/reset-password" method="POST" class="modal-content">
+      <div class="modal-header">
+        <h5>Restablecer Contraseña</h5>
+        <button type="button" class="btn-close" onclick="cerrarModal()"></button>
+      </div>
+      <div class="modal-body">
+        <p>Por favor ingresa tu correo electrónico para recibir un enlace para restablecer tu contraseña.</p>
+        <input type="email" name="email" placeholder="Ingresa tu correo electrónico" required>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn-color notHover">Enviar enlace</button>
+      </div>
+    </form>
   </div>
 
   <!-- Scripts -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    function abrirModal() {
+      document.getElementById('resetPasswordModal').style.display = 'flex';
+    }
+
+    function cerrarModal() {
+      document.getElementById('resetPasswordModal').style.display = 'none';
+    }
+  </script>
   <script src="../resources/js/carrito.js"></script>
   <script src="../resources/js/notify.js"></script>
 </body>

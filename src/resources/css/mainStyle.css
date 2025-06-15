@@ -70,86 +70,8 @@ a{
   cursor:pointer;
   transition: 200ms;
 }/*Color cuando pasas el cursor por encima xd*/
-a:hover:not(#cart), button:hover{
-  color: #ee6130;
+a:hover:not(#cart), button:hover:not(.notHover){
   border-bottom: 2px solid #c7c7c7;
   padding-bottom: 5px;
   transition: all 0.3s ease;
-}
-
-/*-----------------------------------------------------------------------------*/
-/*-------------------------------ESTILADO HEADER-------------------------------*/
-/*-----------------------------------------------------------------------------*/
-.container-header{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-.container-header h1 a{
-  text-decoration: none;
-  color: white;
-}
-.box-listas{
-  padding-top: 5px;
-  display: flex;
-}
-.listas {
-    color: white;
-    list-style: none;
-    margin: 0 10px;
-}
-.listas a{
-    text-decoration: none;
-    color: white;
-}
-
-/*-----------------------------------------------------------------------------*/
-/*------------------------------------BODY-------------------------------------*/
-/*-----------------------------------------------------------------------------*/
-body {  
-  background-attachment: fixed;
-  background-size: cover; 
-  background-position: center; 
-  background-repeat: no-repeat;
-}
-  
-
-/*-----------------------------------------------------------------------------*/
-/*------------------------------ESTILADO FOOTER--------------------------------*/
-/*-----------------------------------------------------------------------------*/
-footer {
-  color: white;
-  text-align: center;
-  padding: 10px;
-  margin-top: 10px;
-  width: 100%;
-}
-.main-footer {
-  background-color: #333;
-  flex-shrink: 0;
-}
-.footer-container {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  padding-bottom: 20px;
-}
-.footer-section {
-  flex: 1;
-  min-width: 150px;
-  margin: 10px 0;
-}
-.footer-section h4 {
-  margin-bottom: 10px;
-}
-.footer-section ul {
-  list-style: none;
-}
-.footer-section li {
-  margin: 5px 0;
-}
-.footer-copyright {
-  text-align: center;
-  padding-top: 10px;
-  border-top: 1px solid #444;
 }
