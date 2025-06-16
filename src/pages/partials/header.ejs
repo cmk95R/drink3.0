@@ -1,8 +1,18 @@
-<header class="bg-white shadow-sm py-3">
-  <img class="logo d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none" src="../resources/imagenes/stock2b_logo_233x214.png" alt="Logo" height="85" class="me-3" />
-  <% if (user && user.rol === 'cliente' && user.pro === true) { %>
-    <form action="/hire-modules/cancel-modules" method="POST">
-      <button type="submit" class="btn btn-danger">Cancelar suscripción</button>
-    </form>
-  <% } %>
+<header class="bg-white shadow-sm py-3 d-flex justify-content-between align-items-center px-4">
+  <!-- Logo a la izquierda -->
+  <img src="../resources/imagenes/stock2b_logo_233x214.png" alt="Logo" height="85" />
+
+  <!-- Contenedor para los elementos del lado derecho -->
+  <div class="d-flex flex-row align-items-end gap-2">
+    <% if (user && user.rol === 'cliente' && user.pro === true) { %>
+      <form action="/hire-modules/cancel-modules" method="POST" class="mb-0">
+        <button type="submit" class="btn btn-danger">Cancelar suscripción</button>
+      </form>
+    <% } %>
+    <% if (user.rol === "cliente") { %>
+      <div class="alert alert-info py-1 px-2 m-0">
+        Usuario: <%= user.name %> | Rol: <%= user.rol %> | PRO: <%= user.pro %>
+      </div>
+    <% } %>
+  </div>
 </header>

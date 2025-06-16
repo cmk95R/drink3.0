@@ -70,6 +70,7 @@ export const login = async (req, res) => {
             id: user._id,
             name: user.name,
             rol: user.rol,
+            pro: user.pro,
             email: user.email
         };
         res.cookie('token', token, {
