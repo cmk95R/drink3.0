@@ -51,21 +51,42 @@ export const showLoginForm = (req, res) => {
 export const login = async (req, res) => {
     const { email, password } = req.body;
 
-    if (!email || !password) {
-        return handleResponse(req, res, 400, { error: 'Email y contraseña son requeridos.' }, 'index');
+    let invalidFields = [];
+
+    // Verificar si faltan campos
+    if (!email) invalidFields.push('email');
+    if (!password) invalidFields.push('password');
+
+    if (invalidFields.length > 0) {
+        return handleResponse(req, res, 400, {
+            error: 'Email y contraseña son requeridos.',
+            invalidFields
+        }, 'index');
+    }
+
+    // Validar formato del email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        return handleResponse(req, res, 400, { 
+            error: 'Introduce un correo válido.', 
+            invalidFields: ['email'] 
+        }, 'index');
     }
 
     try {
         const user = await User.findOne({ email });
-        if (!user || !(await comparePasswords(password, user.password))) {
-      return handleResponse(req, res, 401, { error: 'Credenciales inválidas.' }, 'index');
-    }
 
-        
-        // Ortorga el token a los usuarios
+        // Si no existe el usuario o la contraseña no coincide,
+        // marcar ambos campos como inválidos
+        if (!user || !(await comparePasswords(password, user.password))) {
+            return handleResponse(req, res, 401, { 
+                error: 'Credenciales inválidas.', 
+                invalidFields: ['email', 'password'] 
+            }, 'index');
+        }
+
         const token = createAccessToken({ id: user._id, rol: user.rol });
 
-        // Guardar sesión y cookie solo si usás vistas
         req.session.user = {
             id: user._id,
             name: user.name,
@@ -73,6 +94,7 @@ export const login = async (req, res) => {
             pro: user.pro,
             email: user.email
         };
+
         res.cookie('token', token, {
             httpOnly: true,
             secure: false,
@@ -82,26 +104,18 @@ export const login = async (req, res) => {
 
         const { password: _, ...userData } = user.toObject();
 
-        // Detectar si la petición espera JSON (API) o HTML (navegador)
-    
-
-    if (req.accepts('html')) {
-        //pequeña condicional que verifica si el usuario es cliente o admin para redirigirlos a sus respectivas páginas
-        if (user.rol === 'cliente'){
-        return res.redirect('/dashboard');
-        } else if (user.rol === 'admin'){
-          return res.redirect ('/stock')
+        if (req.accepts('html')) {
+            return res.redirect(user.rol === 'cliente' ? '/dashboard' : '/stock');
+        } else {
+            return res.status(200).json({ token, user: userData });
         }
-    } else {
-      return res.status(200).json({ token, user: userData });
-    }
-
-
     } catch (error) {
         console.error(error);
         return handleResponse(req, res, 500, { error: 'Error interno del servidor.' }, 'login');
     }
 };
+
+
 export const profile = async (req, res) => {
   try {
     const userFound = await User.findById(req.user.id);

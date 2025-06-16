@@ -122,3 +122,12 @@ input:hover, input:focus {
 .hidden {
   display: none;
 }
+
+.is-invalid {
+  border: 2px solid red;
+  outline: none;
+}
+
+.is-invalid:focus {
+  box-shadow: 0 0 5px red;
+}
