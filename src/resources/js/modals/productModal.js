@@ -48,39 +48,43 @@ document
 
     //Función editar Producto
 
-  const editProductModal = document.getElementById('editProductModal');
-  const editProductForm = document.getElementById('editProductForm');
+    const editModal = document.getElementById('editProductModal');
 
-  editProductModal.addEventListener('show.bs.modal', event => {
-    const button = event.relatedTarget; // Botón que disparó el modal
-    const id = button.getAttribute('data-id');
-    const name = button.getAttribute('data-name');
-    const price = button.getAttribute('data-price');
-    const stock = button.getAttribute('data-stock');
-    const category = button.getAttribute('data-category');
-    const description = button.getAttribute('data-description');
-    const image = button.getAttribute('data-image');
-    const isAvailable = button.getAttribute('data-isavailable') === 'true';
+    // Al abrir el modal de edición
+    editModal.addEventListener('show.bs.modal', function (event) {
+      const button = event.relatedTarget;
 
-    // Setear el action del form para que vaya a /products/edit/:id
-    editProductForm.action = `/stock/edit/${id}?_method=PUT`;
+      // Extraer los datos del botón
+      const id = button.getAttribute('data-id');
+      const name = button.getAttribute('data-name');
+      const stock = button.getAttribute('data-stock');
+      const category = button.getAttribute('data-category');
+      const description = button.getAttribute('data-description');
+      const image = button.getAttribute('data-image');
+      const isAvailable = button.getAttribute('data-isavailable') === 'true';
 
-    // Cargar los valores en los campos
-    document.getElementById('editName').value = name;
-    document.getElementById('editPrice').value = price;
-    document.getElementById('editStock').value = stock;
-    document.getElementById('editCategory').value = category;
-    document.getElementById('editDescription').value = description;
-    document.getElementById('editIsAvailable').checked = isAvailable;
+      // Rellenar el formulario del modal
+      document.getElementById('editName').value = name || '';
+      document.getElementById('editStock').value = stock || '';
+      document.getElementById('editCategory').value = category || '';
+      document.getElementById('editDescription').value = description || '';
 
-    // Mostrar imagen actual
-    const imgContainer = document.getElementById('currentImageContainer');
-    if(image){
-      imgContainer.innerHTML = `<img src="/uploads/${image}" alt="Imagen actual" width="100" />`;
-    } else {
-      imgContainer.innerHTML = 'No hay imagen';
-    }
-  });
+      // Mostrar imagen actual
+      const currentImageContainer = document.getElementById('currentImageContainer');
+      if (image) {
+        const imageUrl = image.startsWith('http') ? image : `/uploads/${image}`;
+        currentImageContainer.innerHTML = `<img src="${imageUrl}" alt="Imagen actual" class="img-fluid rounded">`;
+      } else {
+        currentImageContainer.innerHTML = 'Sin imagen';
+      }
+
+      // Checkbox de disponibilidad
+      document.getElementById('editIsAvailable').checked = isAvailable;
+
+      // Actualizar acción del formulario (IMPORTANTE: quitar "/edit" y poner sólo /stock/:id)
+      const form = document.getElementById('editProductForm');
+      form.action = `/stock/edit/${id}?_method=PUT`;
+    });
 
   ////////////////Alertas
 
