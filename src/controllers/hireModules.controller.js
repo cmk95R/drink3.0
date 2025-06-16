@@ -26,7 +26,7 @@ export const buyProModules = async (req, res) => {
     // (opcional) actualizar sesión en vivo
     req.session.user.pro = true;
 
-    return res.redirect('/dashboard');
+    return res.redirect('/products');
   } catch (error) {
     console.error("❌ Error al activar el plan Pro:", error);
     return res.status(500).json({ message: 'Error al activar el plan Pro.' });

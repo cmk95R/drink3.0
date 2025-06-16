@@ -1,85 +1,94 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <title>Gestión de Productos</title>
     <%- include('partials/head') %>
+    <link rel="stylesheet" href="../resources/css/blurr.css">
 </head>
 
 <body class="bg-light background-pattern">
     <!-- HEADER -->
     <%- include('partials/header') %>
 
-        <!-- LAYOUT -->
-        <div class="container-fluid ">
-            <div class="row">
-                <!-- SIDEBAR -->
-                <%- include('partials/aside') %>
+    <!-- LAYOUT -->
+    <div class="container-fluid">
+        <div class="row">
+            <!-- SIDEBAR -->
+            <%- include('partials/aside') %>
 
-                    <!-- MAIN CONTENT -->
-                    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 py-4">
-                        <div class="d-flex justify-content-between align-items-center mb-3">
-                            <h2 class="mb-0"><i class="fa-solid fa-list-check text-primary"></i>Lista de Productos</h2>
-                            <div class="form-outline" data-mdb-input-init>
-                                <input type="search" id="form1" class="form-control" placeholder="Search products..."
-                                    aria-label="Search" />
-                            </div>
-                            <button type="button" class="btn btn-info mb-3" data-bs-toggle="modal" data-bs-target="#ordersModal">
-                            <i class="fa-solid fa-clipboard-list"></i> Ver Órdenes
-                            </button>
+            <!-- MAIN CONTENT -->
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 py-4 position-relative">
+                <!-- BLUR en contenido si no tiene PRO -->
+                <div class="<%= user && !user.pro ? 'content-blur' : '' %>">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h2 class="mb-0">
+                            <i class="fa-solid fa-list-check text-primary"></i> Lista de Productos
+                        </h2>
+
+                        <div class="form-outline" data-mdb-input-init>
+                            <input type="search" id="form1" class="form-control" placeholder="Search products..."
+                                aria-label="Search" />
                         </div>
 
-                        <!-- RENDERIZADO DE CARDS DE STOCK -->
-                        <div class="row row-cols-1 row-cols-md-1">
-                            <% products.forEach(product=> { %>
-                                <div class="col mb-2" data-name="<%= product.name.toLowerCase() %>">
-                                    <!-- Acá se abren los modales individuales -->
-                                    <a data-bs-toggle="modal" data-bs-target="#detalleProducto-<%= product._id %>"
-                                        class="text-decoration-none text-dark">
-                                        <div class="card h-100 hover-shadow">
-                                            <div class="d-flex flex-row ">
-                                                <% if (product.image) { %>
-                                                    <div class="flex-shrink-0">
-                                                        <img src="<%= product.image.startsWith('http') ? product.image : '/uploads/' + product.image %>"
-                                                            alt="Imagen de <%= product.name %>"
-                                                            class="img-fluid rounded-start"
-                                                            style="width: 200px; height: auto; object-fit: cover;">
-                                                    </div>
-                                                    <% } else { %>
-                                                        <div class="flex-shrink-0 d-flex align-items-center justify-content-center bg-light"
-                                                            style="width: 200px; height: 100%;">
-                                                            <span class="text-muted">Sin imagen</span>
-                                                        </div>
-                                                        <% } %>
+                        <button type="button" class="btn btn-info mb-3" data-bs-toggle="modal" data-bs-target="#ordersModal">
+                            <i class="fa-solid fa-clipboard-list"></i> Ver Órdenes
+                        </button>
+                    </div>
 
-                                                            <div class="card-body">
-                                                                <h5 class="card-title">
-                                                                    <%= product.name %>
-                                                                </h5>
-                                                                <p class="card-text mb-2">
-                                                                    <strong>Stock:</strong>
-                                                                    <%= product.stock %><br>
-                                                                        <strong>Categoría:</strong>
-                                                                        <%= product.category %><br>
-                                                                </p>
-                                                                <span
-                                                                    class="badge <%= product.isAvailable ? 'bg-success' : 'bg-secondary' %>">
-                                                                    <%= product.isAvailable ? 'Disponible'
-                                                                        : 'No disponible' %>
-                                                                </span>
-                                                            </div>
+                    <!-- RENDERIZADO DE CARDS DE STOCK -->
+                    <div class="row row-cols-1 row-cols-md-1">
+                        <% products.forEach(product => { %>
+                            <div class="col mb-2" data-name="<%= product.name.toLowerCase() %>">
+                                <a data-bs-toggle="modal" data-bs-target="#detalleProducto-<%= product._id %>"
+                                   class="text-decoration-none text-dark">
+                                    <div class="card h-100 hover-shadow">
+                                        <div class="d-flex flex-row">
+                                            <% if (product.image) { %>
+                                                <div class="flex-shrink-0">
+                                                    <img src="<%= product.image.startsWith('http') ? product.image : '/uploads/' + product.image %>"
+                                                         alt="Imagen de <%= product.name %>"
+                                                         class="img-fluid rounded-start"
+                                                         style="width: 200px; height: auto; object-fit: cover;">
+                                                </div>
+                                            <% } else { %>
+                                                <div class="flex-shrink-0 d-flex align-items-center justify-content-center bg-light"
+                                                     style="width: 200px; height: 100%;">
+                                                    <span class="text-muted">Sin imagen</span>
+                                                </div>
+                                            <% } %>
+
+                                            <div class="card-body">
+                                                <h5 class="card-title"><%= product.name %></h5>
+                                                <p class="card-text mb-2">
+                                                    <strong>Stock:</strong> <%= product.stock %><br>
+                                                    <strong>Categoría:</strong> <%= product.category %><br>
+                                                </p>
+                                                <span class="badge <%= product.isAvailable ? 'bg-success' : 'bg-secondary' %>">
+                                                    <%= product.isAvailable ? 'Disponible' : 'No disponible' %>
+                                                </span>
                                             </div>
                                         </div>
+                                    </div>
+                                </a>
+                            </div>
+                        <% }) %>
+                    </div>
+                </div>
 
-                                    </a>
-                                </div>
-                                <% }) %>
+                <!-- OVERLAY si no tiene PRO -->
+                <% if (user && !user.pro) { %>
+                    <div class="pro-overlay position-absolute top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center">
+                        <div class="bg-white p-5 rounded shadow text-center border">
+                            <h4 class="mb-3">No tienes PRO</h4>
+                            <p class="text-muted">Accede a esta funcionalidad contratando un plan PRO.</p>
+                            <a href="/hire-modules" class="btn btn-primary">¡Quiero PENE!</a>
                         </div>
+                    </div>
+                <% } %>
 
-
-                    </main>
-            </div>
+            </main>
         </div>
+    </div>
 
         <!-- Modal individual del producto -->
         <% products.forEach(product=> { %>

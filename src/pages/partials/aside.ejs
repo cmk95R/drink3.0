@@ -21,15 +21,15 @@
             </li>
             <% } %>
 
-              <% if (user && user.rol==='cliente' ) { %>
-                <li class="nav-item">
-                  <button id="proButton" class="nav-link btn btn-outline-info mb-1"
-                    onclick="location.href='<%= user.pro ? '/products' : '/hire-modules' %>'">
-                    <span class="icon-stock"></span> Productos
-                  </button>
-                </li>
-
-                <% } %>
+                  <!-- Productos -->
+                  <% if (user && user.rol === 'cliente') { %>
+                    <li class="nav-item">
+                      <button id="proButton" class="nav-link btn btn-outline-info mb-1"
+                        onclick="location.href='/products'">
+                        <span class="icon-stock"></span> Productos
+                      </button>
+                    </li>
+                  <% } %>
                   <% if (user && user.rol==='cliente' ) { %>
                     <li class="nav-item">
                       <button class="nav-link btn btn-secondary mb-1" disabled>
