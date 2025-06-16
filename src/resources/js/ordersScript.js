@@ -157,6 +157,9 @@ orderForm.addEventListener('submit', async (e) => {
 
   const payload = { clienteId, estado, products: productsPayload };
 
+  // 🔍 DEBUG: Mostramos el contenido antes de enviar
+  console.log("Payload a enviar:", JSON.stringify(payload, null, 2));
+
   const id = orderForm.querySelector('#orderId').value;
   const url = id ? `/orders/${id}` : '/orders';
   const method = id ? 'PUT' : 'POST';

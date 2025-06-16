@@ -7,10 +7,19 @@ const validateObjectIdOrd = (id) => mongoose.Types.ObjectId.isValid(id);
 
 export const createOrder = async (req, res) => {
   try {
+
+    console.log("📦 Datos recibidos en el backend:", req.body);
+
     const { estado, clienteId, products } = req.body;
-    if (!estado || !clienteId || !products || products.length === 0) {
-      return res.status(400).json({ message: 'Todos los campos son obligatorios' });
-    }
+if (!estado) {
+  return res.status(400).json({ message: 'Estado es requerido' });
+}
+if (!clienteId) {
+  return res.status(400).json({ message: 'Cliente es requerido' });
+}
+if (!products || !Array.isArray(products) || products.length === 0) {
+  return res.status(400).json({ message: 'Debe haber al menos un producto' });
+}
 
     const newOrder = new Order({ estado, clienteId, products });
     await newOrder.save();
