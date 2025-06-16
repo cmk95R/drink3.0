@@ -24,6 +24,9 @@
                                 <input type="search" id="form1" class="form-control" placeholder="Search products..."
                                     aria-label="Search" />
                             </div>
+                            <button type="button" class="btn btn-info mb-3" data-bs-toggle="modal" data-bs-target="#ordersModal">
+                            <i class="fa-solid fa-clipboard-list"></i> Ver Órdenes
+                            </button>
                         </div>
 
                         <!-- RENDERIZADO DE CARDS DE STOCK -->
@@ -112,6 +115,134 @@
             </div>
             <% }) %>
 
+
+            <!-- Modal de Órdenes -->
+<div class="modal fade" id="ordersModal" tabindex="-1" aria-labelledby="ordersModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="ordersModalLabel">
+          <i class="fa-solid fa-clipboard-list text-primary"></i> Órdenes
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body">
+        <!-- Botón para crear nueva orden -->
+        <button id="btn-new-order" class="btn btn-primary mb-3">
+          <i class="fas fa-plus me-1"></i> Crear Nueva Orden
+        </button>
+
+        <!-- Tabla de órdenes -->
+        <div class="table-responsive">
+          <table class="table table-hover align-middle text-center table-bordered table-sm">
+            <thead class="table-dark">
+              <tr>
+                <th>ID</th>
+                <th>Cliente</th>
+                <th>Estado</th>
+                <th>Fecha</th>
+                <th>Productos</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% orders.forEach(order => { %>
+                <tr data-id="<%= order._id %>">
+                  <td><%= order._id %></td>
+                  <td><%= order.clienteId ? order.clienteId.name : 'N/A' %></td>
+                  <td><%= order.estado %></td>
+                  <td><%= new Date(order.fecha).toLocaleDateString() %></td>
+                  <td class="text-start">
+                    <ul class="list-unstyled mb-0">
+                      <% order.products.forEach(p => { %>
+                        <li>
+                          <%= p.productId ? p.productId.name : 'Producto eliminado' %> - Cantidad: <%= p.quantity %>
+                        </li>
+                      <% }) %>
+                    </ul>
+                  </td>
+                  <td>
+                    <div class="d-flex justify-content-center gap-2">
+                      <button 
+                        type="button" 
+                        class="btn btn-warning btn-sm btn-edit" 
+                        data-id="<%= order._id %>"
+                        data-bs-toggle="modal"
+                        data-bs-target="#orderModal"
+                      >
+                        Editar
+                      </button>
+                      <form method="POST" action="/orders/<%= order._id %>?_method=DELETE" class="d-inline">
+                        <button 
+                          type="button" 
+                          class="btn btn-danger btn-sm btn-cancel" 
+                          data-id="<%= order._id %>">
+                          Cancelar
+                        </button>
+                      </form>
+                    </div>
+                  </td>
+                </tr>
+              <% }) %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Crear/Editar Orden (igual que en orders.ejs) -->
+<div class="modal fade" id="orderModal" tabindex="-1" aria-labelledby="orderModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <form id="orderForm" class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="orderModalLabel">Crear/Editar Orden</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="orderId" name="orderId" />
+        <div class="mb-3">
+          <label for="clienteId" class="form-label">Cliente</label>
+        <select id="clienteId" name="clienteId" class="form-select" required>
+        <option value="">Seleccione un usuario</option>
+        <% users.forEach(user => { %>
+            <option value="<%= user._id %>"><%= user.name %></option>
+        <% }) %>
+        </select>
+        </div>
+        <div class="mb-3">
+          <label for="estado" class="form-label">Estado</label>
+          <select id="estado" name="estado" class="form-select" required>
+            <option value="pendiente">Pendiente</option>
+            <option value="procesado">Procesado</option>
+            <option value="enviado">Enviado</option>
+            <option value="entregado">Entregado</option>
+            <option value="cancelado">Cancelado</option>
+          </select>
+        </div>
+        <div id="productsContainer">
+          <label class="form-label">Productos</label>
+          <button type="button" id="btnAddProduct" class="btn btn-sm btn-success mb-2">Agregar Producto</button>
+          <div id="productsList">
+            <!-- Aquí se agregan filas dinámicamente -->
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+  window.orders = <%- JSON.stringify(orders) %>;
+window.users = <%- JSON.stringify(users) %>;
+  window.products = <%- JSON.stringify(products) %>;
+</script>
+<script src="../resources/js/ordersScript.js"></script>
                 <script src="/docs/5.0/dist/js/bootstrap.bundle.min.js"
                     integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
                     crossorigin="anonymous"></script>

@@ -1,5 +1,7 @@
 import mongoose from 'mongoose';
 import Product from '../models/product.js';
+import User from '../models/user.js';
+import Order from '../models/order.js';
 import fs from 'fs';
 import csv from 'csv-parser'; 
 import { url } from 'inspector';
@@ -189,13 +191,16 @@ export const deleteProduct = async (req, res) => {
 
 // Renderizar la vista de productos
 export const renderProductsPage = async (req, res) => {
-    try {
-        const products = await Product.find();
-        res.render('products', { products });
-    } catch (error) {
-        console.log(error);
-        res.status(500).send('Error al cargar productos');
-    }
+  try {
+    const products = await Product.find();
+    const orders = await Order.find().populate('clienteId').populate('products.productId');
+    const users = await User.find();
+
+    res.render('products', { products, orders, users });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send('Error al cargar productos y órdenes');
+  }
 };
 
 // Obtener todos los productos

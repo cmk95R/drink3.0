@@ -13,7 +13,7 @@ function createProductRow(productId = '', quantity = 1) {
   div.classList.add('d-flex', 'mb-2', 'gap-2', 'align-items-center');
 
   const select = document.createElement('select');
-  select.name = 'productId'; // 🔥 Cambiamos el name para recolectar datos
+  select.name = 'productId';
   select.classList.add('form-select');
   select.required = true;
   products.forEach(p => {
@@ -26,7 +26,7 @@ function createProductRow(productId = '', quantity = 1) {
 
   const inputQty = document.createElement('input');
   inputQty.type = 'number';
-  inputQty.name = 'quantity'; // 🔥 Cambiamos el name para recolectar datos
+  inputQty.name = 'quantity';
   inputQty.classList.add('form-control');
   inputQty.min = 1;
   inputQty.value = quantity;
@@ -49,16 +49,20 @@ btnAddProduct.addEventListener('click', () => {
 });
 
 btnNewOrder.addEventListener('click', () => {
+  // Elimina cualquier backdrop si quedó visible
+  document.querySelectorAll('.modal-backdrop').forEach(b => b.remove());
+
+  // Cierra otros modales
+  const ordersModalInstance = bootstrap.Modal.getInstance(document.getElementById('ordersModal'));
+  if (ordersModalInstance) ordersModalInstance.hide();
+
   orderForm.reset();
   productsList.innerHTML = '';
   orderForm.querySelector('#orderId').value = '';
   orderModal.show();
 });
 
-
-
-//Función Cancelar orden
-
+// Función cancelar orden
 document.querySelectorAll('.btn-cancel').forEach(btn => {
   btn.addEventListener('click', async (e) => {
     const id = e.target.dataset.id;
@@ -108,10 +112,13 @@ document.querySelectorAll('.btn-cancel').forEach(btn => {
   });
 });
 
-//Función modificar orden
-
+// Función editar orden
 document.querySelectorAll('.btn-edit').forEach(btn => {
   btn.addEventListener('click', (e) => {
+    // 🔧 Cierra el modal de órdenes si está abierto
+    const ordersModalInstance = bootstrap.Modal.getInstance(document.getElementById('ordersModal'));
+    if (ordersModalInstance) ordersModalInstance.hide();
+
     const id = e.target.dataset.id;
     const order = orders.find(o => o._id === id);
     if (!order) return alert('Orden no encontrada');
@@ -196,4 +203,15 @@ orderForm.addEventListener('submit', async (e) => {
       confirmButtonText: 'OK'
     });
   }
+});
+
+// 🔁 Cierra automáticamente otros modales al abrir orderModal
+document.getElementById('orderModal').addEventListener('show.bs.modal', () => {
+  const modals = document.querySelectorAll('.modal.show');
+  modals.forEach(modalEl => {
+    const modalInstance = bootstrap.Modal.getInstance(modalEl);
+    if (modalInstance && modalEl.id !== 'orderModal') {
+      modalInstance.hide();
+    }
+  });
 });

@@ -42,17 +42,6 @@ export const getOrdersById = async (req, res) => {
   }
 };
 
-export const getAllOrders = async (req, res) => {
-  try {
-    const orders = await Order.find()
-      .populate('clienteId')
-      .populate('products.productId');
-    res.status(200).json(orders);
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ error: 'Hubo un error, pruebe más tarde' });
-  }
-};
 
 export const updateOrder = async (req, res) => {
   
@@ -97,22 +86,5 @@ export const cancelOrder = async (req, res) => {
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: 'Hubo un error, prueba más tarde.' });
-  }
-};
-
-export const renderOrdersPage = async (req, res) => {
-  try {
-    const orders = await Order.find()
-      .populate('clienteId')
-      .populate('products.productId');
-
-    const clientes = await User.find();
-    const productos = await Product.find();
-
-    res.render('orders', { orders, clients: clientes, products: productos, user: req.session.user });
-
-  } catch (error) {
-    console.error(error);
-    res.status(500).send('Error al cargar la página de órdenes');
   }
 };
