@@ -112,7 +112,7 @@ export const updateUser = async (req, res) => {
       return res.status(404).json({ message: 'Usuario no encontrado' });
     }
 
-    res.status(200).json(updateUser);
+    res.redirect('/auth/profile');
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: 'Hubo un error, pruebe más tarde.' });
