@@ -6,7 +6,6 @@ import fs from 'fs';
 import csv from 'csv-parser'; 
 import { url } from 'inspector';
 
-
 const validateObjectIdProd = (id) => mongoose.Types.ObjectId.isValid(id); // Validar ID
 
 export const uploadProductsFromCSV = async (req, res) => {
@@ -119,6 +118,7 @@ export const getProductById = async (req, res) => {
         res.status(500).json({ error: 'Hubo un error, pruebe más tarde' });
     }
 };
+
 // Actualizar un producto
 export const updateProduct = async (req, res) => {
     try {
@@ -196,6 +196,7 @@ export const renderProductsPage = async (req, res) => {
     const orders = await Order.find().populate('clienteId').populate('products.productId');
     const users = await User.find();
 
+    // NO pasamos user explícitamente, ya está en res.locals.user
     res.render('products', { products, orders, users });
   } catch (error) {
     console.log(error);
@@ -207,10 +208,12 @@ export const renderProductsPage = async (req, res) => {
 export const renderStockPage = async (req, res) => {
   try {
     const products = await Product.find();
-    res.render('stock', { products }); // renderización de página :v
+    // NO pasamos user explícitamente, ya está en res.locals.user
+    res.render('stock', { products });
   } catch (error) {
     console.error(error);
     res.status(500).send('Hubo un error al obtener los productos');
   }
 };
+
 

@@ -7,22 +7,33 @@ const validateObjectIdOrd = (id) => mongoose.Types.ObjectId.isValid(id);
 
 export const createOrder = async (req, res) => {
   try {
-
     console.log("📦 Datos recibidos en el backend:", req.body);
-
     const { estado, clienteId, products } = req.body;
-if (!estado) {
-  return res.status(400).json({ message: 'Estado es requerido' });
-}
-if (!clienteId) {
-  return res.status(400).json({ message: 'Cliente es requerido' });
-}
-if (!products || !Array.isArray(products) || products.length === 0) {
-  return res.status(400).json({ message: 'Debe haber al menos un producto' });
-}
+
+    if (!estado) return res.status(400).json({ message: 'Estado es requerido' });
+    if (!clienteId) return res.status(400).json({ message: 'Cliente es requerido' });
+    if (!products || !Array.isArray(products) || products.length === 0)
+      return res.status(400).json({ message: 'Debe haber al menos un producto' });
+
+    // Validar y actualizar stock de productos
+    for (const item of products) {
+      const product = await Product.findById(item.productId);
+      if (!product) {
+        return res.status(404).json({ message: `Producto con ID ${item.productId} no encontrado` });
+      }
+
+      if (product.stock < item.quantity) {
+        return res.status(400).json({ message: `No hay suficiente stock de ${product.nombre}` });
+      }
+
+      // Descontar stock
+      product.stock -= item.quantity;
+      await product.save();
+    }
 
     const newOrder = new Order({ estado, clienteId, products });
     await newOrder.save();
+
     res.status(200).json(newOrder);
   } catch (error) {
     console.log(error);
