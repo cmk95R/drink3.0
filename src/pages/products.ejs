@@ -28,12 +28,16 @@
                         <div class="form-outline" data-mdb-input-init>
                             <input type="search" id="form1" class="form-control" placeholder="Search products..."
                                 aria-label="Search" />
-                        </div>
+                        </div><!-- Botón para crear nueva orden -->
+                            <button id="btn-new-order" class="btn btn-primary mb-3">
+                          <i class="fas fa-plus me-1"></i> Crear Nueva Orden
+                         </button>
 
                         <button type="button" class="btn btn-info mb-3" data-bs-toggle="modal" data-bs-target="#ordersModal">
                             <i class="fa-solid fa-clipboard-list"></i> Ver Órdenes
                         </button>
                     </div>
+
 
                     <!-- RENDERIZADO DE CARDS DE STOCK -->
                     <div class="row row-cols-1 row-cols-md-1">
@@ -136,10 +140,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
       </div>
       <div class="modal-body">
-        <!-- Botón para crear nueva orden -->
-        <button id="btn-new-order" class="btn btn-primary mb-3">
-          <i class="fas fa-plus me-1"></i> Crear Nueva Orden
-        </button>
+        
 
         <!-- Tabla de órdenes -->
         <div class="table-responsive">
