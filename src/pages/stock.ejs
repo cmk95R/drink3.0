@@ -32,7 +32,7 @@
               </div>
 
               <!-- RENDERIZADO DE CARDS DE STOCK -->
-              <div id="productList" class="row row-cols-1 row-cols-md-5 g-4">
+              <div id="productList" class="row row-cols-1 row-cols-md-5 g-4 overflow-y-auto" style="max-height: 78vh;">
                 <% products.forEach(product=> { %>
                   <div class="col" data-name="<%= product.name.toLowerCase() %>">
                     <a data-bs-toggle="modal" data-bs-target="#detalleProducto-<%= product._id %>"

@@ -13,8 +13,19 @@
   /* sombra ligera */
 }
 
+.overflow-y-auto {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE 10+ */
+}
+
+.overflow-y-auto::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Edge */
+}
+
+
 main, .aside {
   background-color: #d8d4d2;
+  max-height: 86.5vh;
 }
 
 header {

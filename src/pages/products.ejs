@@ -41,7 +41,7 @@
 
 
               <!-- RENDERIZADO DE CARDS DE STOCK -->
-              <div class="row row-cols-1 row-cols-md-2">
+              <div class="row row-cols-1 row-cols-md-2 overflow-y-auto" style="max-height: 75vh;">
                 <% products.forEach(product=> { %>
                   <div class="col mb-2" data-name="<%= product.name.toLowerCase() %>">
                     <a data-bs-toggle="modal" data-bs-target="#detalleProducto-<%= product._id %>"
