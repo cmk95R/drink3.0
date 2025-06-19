@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Chatbot Simulado</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <style>
+    #chat-widget {
+      position: fixed;
+      bottom: 1rem;
+      right: 1rem;
+      width: 320px;
+      max-height: 500px;
+      z-index: 9999;
+      font-family: sans-serif;
+    }
+    #chat-box {
+      display: none;
+      background: white;
+      border: 1px solid #ccc;
+      border-radius: 0.75rem;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      overflow: hidden;
+      height: 400px;
+      display: flex;
+      flex-direction: column;
+    }
+    #chat-header {
+      background: #0d6efd;
+      color: white;
+      padding: 0.75rem 1rem;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    #chat-history {
+      flex: 1;
+      padding: 0.5rem;
+      overflow-y: scroll;
+    }
+    .chat-bubble {
+      padding: 0.5rem 0.75rem;
+      margin-bottom: 0.5rem;
+      border-radius: 0.75rem;
+      max-width: 85%;
+      clear: both;
+    }
+    .user { background: #e9ecef; align-self: flex-end; margin-left: auto; }
+    .bot { background: #d1e7dd; align-self: flex-start; margin-right: auto; }
+  </style>
+</head>
+<body>
+
+<div id="chat-widget">
+  <div id="chat-box">
+    <div id="chat-header" onclick="toggleChat()">💬 Asistente Virtual</div>
+    <div id="chat-history" class="d-flex flex-column"></div>
+    <div id="chat-controls">
+      <div class="list-group">
+        <button class="list-group-item list-group-item-action" onclick="repetirPedido()">🔄 Repetir pedido</button>
+        <button class="list-group-item list-group-item-action" onclick="document.getElementById('csvInput').click()">📦 Subir CSV</button>
+        <input type="file" id="csvInput" class="d-none" onchange="subirCSV(this.files[0])" />
+        <button class="list-group-item list-group-item-action" onclick="exportarHistorial()">📤 Exportar historial</button>
+        <button class="list-group-item list-group-item-action text-danger" onclick="abrirWhatsApp()">🧑‍💬 Hablar con operador</button>
+      </div>
+    </div>
+  </div>
+  <button id="chat-toggle" class="btn btn-primary rounded-circle" onclick="toggleChat()" style="width:3.5rem;height:3.5rem;">
+    💬
+  </button>
+</div>
+
+<script>
+  const chatBox = document.getElementById('chat-box');
+  const toggleBtn = document.getElementById('chat-toggle');
+  const chatHistory = document.getElementById('chat-history');
+
+  function toggleChat() {
+    const isVisible = chatBox.style.display === 'block';
+    chatBox.style.display = isVisible ? 'none' : 'block';
+    if (!isVisible) mensajeBienvenida();
+  }
+
+  function mostrarMensaje(texto, clase = 'bot') {
+    const bubble = document.createElement('div');
+    bubble.className = 'chat-bubble ' + clase;
+    bubble.innerText = texto;
+    chatHistory.appendChild(bubble);
+    chatHistory.scrollTop = chatHistory.scrollHeight;
+  }
+
+  function mensajeBienvenida() {
+    if (!sessionStorage.getItem("saludoMostrado")) {
+      mostrarMensaje("👋 ¡Hola! Soy tu asistente virtual.");
+      mostrarMensaje("¿En qué puedo ayudarte hoy? Elegí una opción del menú.");
+      sessionStorage.setItem("saludoMostrado", "true");
+    }
+  }
+
+  async function repetirPedido() {
+    mostrarMensaje("Quiero repetir mi último pedido", 'user');
+    try {
+      const res = await fetch('/api/repeat-order', { method: 'POST' });
+      const json = await res.json();
+      mostrarMensaje("✅ Pedido repetido: " + json.status);
+    } catch {
+      mostrarMensaje("❌ Error al repetir el pedido.");
+    }
+  }
+
+  async function subirCSV(file) {
+    mostrarMensaje("Voy a subir un archivo CSV...", 'user');
+    const form = new FormData();
+    form.append('file', file);
+    try {
+      const res = await fetch('/api/upload-csv', {
+        method: 'POST',
+        body: form
+      });
+      const json = await res.json();
+      mostrarMensaje("✅ Archivo subido: " + json.message);
+    } catch {
+      mostrarMensaje("❌ Error al subir el CSV.");
+    }
+  }
+
+  async function exportarHistorial() {
+    mostrarMensaje("Exportar historial de pedidos", 'user');
+    try {
+      const res = await fetch('/api/export-history');
+      const blob = await res.blob();
+      const url = URL.createObjectURL(blob);
+      mostrarMensaje(`📁 Tu historial está listo:`, 'bot');
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'historial.csv';
+      link.innerText = "Descargar historial";
+      link.className = "btn btn-link btn-sm";
+      chatHistory.appendChild(link);
+      chatHistory.scrollTop = chatHistory.scrollHeight;
+    } catch {
+      mostrarMensaje("❌ No se pudo exportar el historial.");
+    }
+  }
+
+  function abrirWhatsApp() {
+    mostrarMensaje("Quiero hablar con un operador", 'user');
+    window.open('https://wa.me/549XXXXXXXXXX', '_blank');
+    mostrarMensaje("🧑‍💬 Te estamos derivando a WhatsApp...");
+  }
+
+  function mostrarOpciones() {
+  const contenedor = document.createElement('div');
+  contenedor.className = 'chat-bubble bot d-flex flex-column gap-2';
+
+  const opciones = [
+    { texto: "🔄 Repetir pedido", accion: repetirPedido },
+    { texto: "📦 Subir CSV", accion: () => document.getElementById('csvInput').click() },
+    { texto: "📤 Exportar historial", accion: exportarHistorial },
+    { texto: "🧑‍💬 Hablar con operador", accion: abrirWhatsApp }
+  ];
+
+  opciones.forEach(op => {
+    const btn = document.createElement('button');
+    btn.className = 'btn btn-sm btn-outline-primary text-start';
+    btn.innerText = op.texto;
+    btn.onclick = op.accion;
+    contenedor.appendChild(btn);
+  });
+
+  chatHistory.appendChild(contenedor);
+  chatHistory.scrollTop = chatHistory.scrollHeight;
+}
+
+</script>
+
+</body>
+</html>
