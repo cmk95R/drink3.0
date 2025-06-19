@@ -8,64 +8,84 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
-<body class="bg-light ">
+<body class="background-pattern">
   <!-- HEADER -->
   <%- include('partials/header') %>
 
-    <div class="container-fluid">
-      <div class="row">
-        <!-- ASIDE -->
-        <%- include('partials/aside') %>
+    <!-- LAYOUT-->
+    <main>
+      <div class="container-fluid">
+        <div class="row">
+          <!-- ASIDE -->
+          <%- include('partials/aside') %>
 
-          <main class="col-md-9 col-lg-10 pt-4 bg-light">
-            <div class="container">
-              <h2 class="mb-4">📊 Panel de Control</h2>
+            <main class="col-md-9 col-lg-10 pt-4">
+              <div class="container">
+                <h2 class="mb-4">📊 Dashboard</h2>
 
-              <div class="row g-4">
-                <!-- Gráfico de Barras -->
-                <div class="col-md-4">
-                  <div class="card shadow">
-                    <div class="card-body">
-                      <h5 class="card-title">Ventas por Mes</h5>
-                      <canvas id="barChart"></canvas>
+                <div id="chartsCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
+
+                  <div class="carousel-inner">
+                    <!-- Slide 1: Ventas por Mes -->
+                    <div class="carousel-item active">
+                      <div class="card shadow mx-auto" style="max-width: 1200px;">
+                        <div class="card-body">
+                          <h5 class="card-title">Ventas por Mes</h5>
+                          <canvas id="barChart" style="width: 100%; height: 500px;"></canvas>
+                        </div>
+                      </div>
                     </div>
+
+                    <!-- Slide 2: Tickets por Departamento -->
+                    <div class="carousel-item">
+                      <div class="card shadow mx-auto" style="max-width: 1200px;">
+                        <div class="card-body">
+                          <h5 class="card-title">Tickets por Departamento</h5>
+                          <canvas id="horizontalBarChart" style="width: 100%; height: 150px;"></canvas>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Slide 3: Visitas al Sitio -->
+                    <div class="carousel-item">
+                      <div class="card shadow mx-auto" style="max-width: 1200px;">
+                        <div class="card-body">
+                          <h5 class="card-title">Visitas al Sitio</h5>
+                          <canvas id="lineChart" style="width: 100%; height: 150px;"></canvas>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Slide 4: Pie Chart -->
+                    <div class="carousel-item">
+                      <div class="card shadow mx-auto" style="max-width: 600px;">
+                        <div class="card-body">
+                          <h5 class="card-title text-center">Distribución por Categoría</h5>
+                          <canvas id="pieChart" style="width: 100%; height: 300px;"></canvas>
+                        </div>
+                      </div>
+                    </div>
+
                   </div>
+
+                  <!-- Controles -->
+                  <button class="carousel-control-prev" type="button" data-bs-target="#chartsCarousel"
+                    data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon"></span>
+                  </button>
+                  <button class="carousel-control-next" type="button" data-bs-target="#chartsCarousel"
+                    data-bs-slide="next">
+                    <span class="carousel-control-next-icon"></span>
+                  </button>
+
                 </div>
 
-                <!-- Gráfico de Torta -->
-                <div class="col-md-4">
-                  <div class="card shadow">
-                    <div class="card-body">
-                      <h5 class="card-title">Distribución por Categoría</h5>
-                      <canvas id="pieChart"></canvas>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Gráfico de Barras Horizontales -->
-                <div class="col-md-4">
-                  <div class="card shadow">
-                    <div class="card-body">
-                      <h5 class="card-title">Tickets por Departamento</h5>
-                      <canvas id="horizontalBarChart"></canvas>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Gráfico Extra: Línea de Evolución -->
-                <div class="col-md-4">
-                  <div class="card shadow">
-                    <div class="card-body">
-                      <h5 class="card-title">Visitas al Sitio</h5>
-                      <canvas id="lineChart"></canvas>
-                    </div>
-                  </div>
-                </div>
               </div>
-            </div>
-          </main>
+
+            </main>
+        </div>
       </div>
-    </div>
+    </main>
 
     <!-- CHART JS SCRIPT -->
     <script>
@@ -73,10 +93,10 @@
       new Chart(document.getElementById('barChart'), {
         type: 'bar',
         data: {
-          labels: ['Enero', 'Febrero', 'Marzo', 'Abril'],
+          labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio'],
           datasets: [{
             label: 'Ventas ($)',
-            data: [12000, 19000, 3000, 5000],
+            data: [120000, 190000, 76000, 58000, 138000, 87000],
             backgroundColor: '#0d6efd'
           }]
         },
@@ -89,10 +109,18 @@
       new Chart(document.getElementById('pieChart'), {
         type: 'pie',
         data: {
-          labels: ['Electrónica', 'Ropa', 'Alimentos'],
+          labels: ['Cerveza', 'Vino', 'Licores', 'Destilados', 'Fermentados Especiales', 'Aperitivos', 'Cocktails'],
           datasets: [{
-            data: [40, 30, 30],
-            backgroundColor: ['#0d6efd', '#198754', '#ffc107']
+            data: [25, 15, 10, 20, 8, 12, 10], // proporciones inventadas
+            backgroundColor: [
+              '#0d6efd',  // azul (Cerveza)
+              '#dc3545',  // rojo (Vino)
+              '#ffc107',  // amarillo (Licores)
+              '#198754',  // verde (Destilados)
+              '#6f42c1',  // violeta (Fermentados)
+              '#fd7e14',  // naranja (Aperitivos)
+              '#20c997'   // turquesa (Cocktails)
+            ]
           }]
         },
         options: {
@@ -104,11 +132,27 @@
       new Chart(document.getElementById('horizontalBarChart'), {
         type: 'bar',
         data: {
-          labels: ['Soporte', 'Ventas', 'TI', 'RRHH'],
+          labels: [
+            'Hoteles',
+            'Restaurantes',
+            'Bares',
+            'Eventos',
+            'Tiendas Gourmet',
+            'Casinos',
+            'Catering Corporativo'
+          ],
           datasets: [{
-            label: 'Tickets',
-            data: [25, 40, 15, 10],
-            backgroundColor: '#6610f2'
+            label: 'Clientes',
+            data: [30, 40, 25, 20, 10, 15, 18],
+            backgroundColor: [
+              '#0d6efd', // Hoteles - azul
+              '#dc3545', // Restaurantes - rojo
+              '#198754', // Bares - verde
+              '#ffc107', // Eventos - amarillo
+              '#6f42c1', // Tiendas Gourmet - violeta
+              '#fd7e14', // Casinos - naranja
+              '#20c997'  // Catering Corporativo - turquesa
+            ]
           }]
         },
         options: {
@@ -121,19 +165,62 @@
       new Chart(document.getElementById('lineChart'), {
         type: 'line',
         data: {
-          labels: ['Lun', 'Mar', 'Mié', 'Jue', 'Vie'],
-          datasets: [{
-            label: 'Visitas',
-            data: [100, 150, 80, 200, 170],
-            fill: false,
-            borderColor: '#dc3545',
-            tension: 0.1
-          }]
+          labels: [
+            'Día 1', 'Día 2', 'Día 3', 'Día 4', 'Día 5', 'Día 6', 'Día 7',
+            'Día 8', 'Día 9', 'Día 10', 'Día 11', 'Día 12', 'Día 13', 'Día 14'
+          ],
+          datasets: [
+            {
+              label: 'Visitas',
+              data: [120, 140, 130, 150, 160, 170, 180, 175, 165, 155, 160, 170, 180, 190],
+              fill: false,
+              borderColor: '#dc3545',
+              tension: 0.1,
+              yAxisID: 'y'
+            },
+            {
+              label: 'Ventas',
+              data: [25, 30, 28, 35, 40, 42, 45, 44, 43, 40, 41, 45, 50, 52],
+              fill: false,
+              borderColor: '#198754',
+              tension: 0.1,
+              yAxisID: 'y1'
+            }
+          ]
         },
         options: {
-          responsive: true
+          responsive: true,
+          interaction: {
+            mode: 'index',
+            intersect: false
+          },
+          stacked: false,
+          scales: {
+            y: {
+              type: 'linear',
+              display: true,
+              position: 'left',
+              title: {
+                display: true,
+                text: 'Visitas'
+              }
+            },
+            y1: {
+              type: 'linear',
+              display: true,
+              position: 'right',
+              grid: {
+                drawOnChartArea: false
+              },
+              title: {
+                display: true,
+                text: 'Ventas'
+              }
+            }
+          }
         }
       });
+
     </script>
 </body>
 

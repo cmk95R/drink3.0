@@ -1,6 +1,6 @@
 <!-- SIDEBAR -->
 
-<nav class="col-md-2 col-lg-2 d-md-block border-end vh-100 pt-4 bg-light" style="text-decoration: none">
+<nav class="col-md-2 col-lg-2 d-md-block border-end vh-100 pt-4 aside" style="text-decoration: none">
   <div class="px-3">
     <h5 class="mb-3">Productos</h5>
     <ul class="nav flex-column">
@@ -30,12 +30,7 @@
                 </li>
 
                 <% } %>
-                  <% if (user && user.rol==='cliente' ) { %>
-                    <li class="nav-item">
-                      <button class="nav-link btn btn-outline-info mb-1" onclick="location.href='/orders'">
-                        <span class="icon-orders"></span> Órdenes
-                      </button>
-                    </li>
+                  <% if (user && user.rol==='cliente' ) { %>                    
                     <li class="nav-item">
                       <button class="nav-link btn btn-secondary mb-1" disabled>
                         <span class="icon-schedule"></span> Horarios
