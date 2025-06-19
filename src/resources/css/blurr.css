@@ -1,12 +1,12 @@
 .content-blur {
-  filter: blur(7.5px);
+  filter: blur(12px);
   pointer-events: none;
   user-select: none;
 }
 
 .pro-overlay {
   z-index: 1000;
-  background-image: url(https://i.pinimg.com/736x/f7/33/e5/f733e5bfc1c650ab84e414d454a0c992.jpg);
+  /* background-image: url(https://i.pinimg.com/736x/f7/33/e5/f733e5bfc1c650ab84e414d454a0c992.jpg); */
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
