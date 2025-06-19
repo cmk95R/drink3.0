@@ -1,76 +1,80 @@
-    .form-signin {
-      max-width: 330px;
-      padding: 1rem;
-    }
-    .form-signin .form-floating:focus-within {
-      z-index: 2;
-    }
-    .form-signin input[type="email"],
-    .form-signin input[type="password"] {
-      margin-bottom: -1px;
-      border-radius: 0;
-    }
+.outlined-p {
+  border: 1px solid #ccc;
+  /* borde suave gris claro */
+  border-radius: 6px;
+  /* bordes redondeados */
+  padding: 8px 12px;
+  /* espacio interno */
+  text-align: center;
+  /* centrado texto */
+  background-color: #f9f9f9;
+  /* fondo muy suave */
+  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.05);
+  /* sombra ligera */
+}
 
-    .background-pattern {
-    background-color: #f8f9fa;
-    background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%239C92AC' fill-opacity='0.05' fill-rule='evenodd'%3E%3Cpath d='M0 40L40 0H20L0 20M40 40V20L20 40'/%3E%3C/g%3E%3C/svg%3E");
-  }
+main, .aside {
+  background-color: #d8d4d2;
+}
 
+header {
+  background-color:#c97137;
+}
 
+.barras {
+  height: 30%;
+}
 
+.form-signin {
+  max-width: 330px;
+  padding: 1rem;
+}
 
+.form-signin .form-floating:focus-within {
+  z-index: 2;
+}
 
-/* PLAYGROUND */
+.form-signin input[type="email"],
+.form-signin input[type="password"] {
+  margin-bottom: -1px;
+  border-radius: 0;
+}
 
-    .sidebar {
-      min-height: 100vh;
-      background-color: #343a40;
-    }
-
-    .sidebar a {
-      color: #fff;
-      text-decoration: none;
-      display: block;
-      padding: 0.75rem 1rem;
-    }
-
-    .sidebar a:hover {
-      background-color: #495057;
-    }
-
-    .product-image {
-      max-width: 80px;
-      max-height: 80px;
-      object-fit: cover;
-      border-radius: 5px;
-    }
-
-
+.background-pattern {
+  background-color: #f8f9fa;
+  background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%239C92AC' fill-opacity='0.05' fill-rule='evenodd'%3E%3Cpath d='M0 40L40 0H20L0 20M40 40V20L20 40'/%3E%3C/g%3E%3C/svg%3E");
+}
 
 /*-----------------------------------------------------------------------------*/
 /*-----------------------------ASPECTOS GENERALES------------------------------*/
 /*-----------------------------------------------------------------------------*/
 @import url("https://fonts.googleapis.com/css?family=Montserrat|Montserrat+Alternates|Poppins&display=swap");
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   font-family: "Montserrat Alternates", sans-serif;
 }
-header {    
-    text-align: left;
-    padding: 20px;
-    top: 0;
-    width: 100%;
-    margin-bottom: 10px;
+
+header {
+  text-align: left;
+  padding: 20px;
+  top: 0;
+  width: 100%;
+  margin-bottom: 10px;
 }
-a{
+
+a {
   background-color: unset;
-  border:unset;
-  cursor:pointer;
+  border: unset;
+  cursor: pointer;
   transition: 200ms;
-}/*Color cuando pasas el cursor por encima xd*/
-a:hover:not(#cart), button:hover:not(.notHover){
+}
+
+/*Color cuando pasas el cursor por encima xd*/
+a:hover:not(#cart),
+button:hover:not(.notHover) {
   border-bottom: 2px solid #c7c7c7;
   padding-bottom: 5px;
   transition: all 0.3s ease;
